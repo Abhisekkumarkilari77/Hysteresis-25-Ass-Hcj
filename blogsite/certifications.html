@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Certifications | Diploma Guy</title>
+  <meta name="description" content="Browse certifications and badges. CSS-only filtering with radio buttons, no JavaScript." />
+  <style>
+    :root{
+      --bg:#ffffff;--text:#0b1f16;--primary:#16a34a;--muted:#e6f3ea;--border:#d1e7d9;--radius:.675rem;--max:1120px
+    }
+    *{box-sizing:border-box}html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+    a{color:var(--primary)}a:hover{text-decoration:underline}
+    .container{max-width:var(--max);margin-inline:auto;padding:1rem}
+    header{border-bottom:1px solid var(--border);background:linear-gradient(0deg,var(--bg),var(--muted))}
+    .topbar{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:0.75rem 0}
+    nav ul{display:flex;gap:1rem;list-style:none;margin:0;padding:0;flex-wrap:wrap}
+    nav a{display:inline-block;padding:.5rem .75rem;border-radius:.5rem}
+    nav a:hover,nav a:focus{background:var(--muted);text-decoration:none}
+    h1{margin:.5rem 0}
+    .grid{display:grid;gap:1rem}
+    @media(min-width:720px){.grid-3{grid-template-columns:repeat(3,1fr)}}
+    .card{border:1px solid var(--border);border-radius:.675rem;padding:1rem;background:#fff}
+    .badge{aspect-ratio:3/2;background:var(--muted);border:1px dashed var(--border);border-radius:.5rem;display:flex;align-items:center;justify-content:center;color:#2a4f3b;font-weight:700;overflow:hidden}
+    .badge img{width:60%;height:60%;object-fit:contain;border-radius:.5rem}
+    /* CSS-only filters */
+    .filters{display:flex;gap:.5rem;flex-wrap:wrap;margin:.5rem 0}
+    .filters input{position:absolute;inset:auto auto auto -9999px}
+    .filters label{cursor:pointer;border:1px solid var(--border);border-radius:999px;padding:.4rem .9rem;background:#fff}
+    /* default: all */
+    .item{display:block}
+    #flt-ai:checked ~ .list .item:not([data-cat="ai"]){display:none}
+    #flt-blockchain:checked ~ .list .item:not([data-cat="blockchain"]){display:none}
+    #flt-cloud:checked ~ .list .item:not([data-cat="cloud"]){display:none}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container topbar">
+      <div class="brand"><a href="index.html" style="text-decoration:none;color:inherit;font-weight:700"> Diploma Guy</a></div>
+      <nav aria-label="Primary">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="articles.html">Articles</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a aria-current="page" href="certifications.html">Certifications</a></li>
+          <li><a href="about.html">Profile</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <h1>Certifications</h1>
+    <div class="filters">
+      <input type="radio" name="cat" id="flt-all" checked>
+      <input type="radio" name="cat" id="flt-ai">
+      <input type="radio" name="cat" id="flt-blockchain">
+      <input type="radio" name="cat" id="flt-cloud">
+      <label for="flt-all">All</label>
+      <label for="flt-ai">AI / ML</label>
+      <label for="flt-blockchain">Blockchain</label>
+      <label for="flt-cloud">Cloud</label>
+    </div>
+
+    <div class="grid grid-3 list">
+      <article class="card item" data-cat="ai">
+        <div class="badge" aria-label="Badge"><img src="certificate/agentic.jpeg" alt="Badge" /></div>
+        <h3>Agentic ai day</h3>
+        <p class="meta">google developer challenge• 2025</p>
+      </article>
+      <article class="card item" data-cat="blockchain">
+        <div class="badge"> <img src="certificate/blockchain.jpeg" alt="Badge" /></div>
+        <h3>Blockchain Developer</h3>
+        <p class="meta">linkdin learning • 2024</p>
+      </article>
+      <article class="card item" data-cat="cloud">
+        <div class="badge"><img src="certificate/hack.jpeg" alt="Badge" /></div>
+        <h3>Career smith hack</h3>
+        <p class="meta"> code thanthra • 2024</p>
+      </article>
+
+      <article class="card item" data-cat="blockchain">
+        <div class="badge"><img src="certificate/skill.jpg" alt="Badge" /></div>
+        <h3>Solidity gaming work shop</h3>
+        <p class="meta">Apssdc• 2024</p>
+      </article>
+     
+    </div>
+  </main>
+
+  <footer style="border-top:1px solid var(--border);padding:1.25rem 0;margin-top:2rem">
+    <div class="container" style="display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap">
+      <p class="meta">© 2025 Diploma Guy</p>
+      <nav aria-label="Sitemap">
+        <a href="index.html">Home</a> ·
+        <a href="articles.html">Articles</a> ·
+        <a href="gallery.html">Gallery</a> ·
+        <a href="about.html">Profile</a> ·
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>

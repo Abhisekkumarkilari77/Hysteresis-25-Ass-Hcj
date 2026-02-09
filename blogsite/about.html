@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Profile / About |  Diploma Guy</title>
+  <meta name="description" content="About K. Abhisek Kumar — summary, skills, experience timeline, projects, education, and links." />
+  <style>
+    :root{--bg:#ffffff;--text:#0b1f16;--primary:#16a34a;--muted:#e6f3ea;--border:#d1e7d9;--radius:.675rem;--max:960px}
+    *{box-sizing:border-box}html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+    a{color:var(--primary)}a:hover{text-decoration:underline}
+    .container{max-width:var(--max);margin-inline:auto;padding:1rem}
+    header{border-bottom:1px solid var(--border);background:linear-gradient(0deg,var(--bg),var(--muted))}
+    .topbar{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:0.75rem 0}
+    nav ul{display:flex;gap:1rem;list-style:none;margin:0;padding:0;flex-wrap:wrap}
+    nav a{display:inline-block;padding:.5rem .75rem;border-radius:.5rem}
+    nav a:hover,nav a:focus{background:var(--muted);text-decoration:none}
+    h1,h2{margin:.5rem 0}
+    .card{border:1px solid var(--border);background:#fff;border-radius:.675rem;padding:1rem}
+    .grid{display:grid;gap:1rem}
+    @media(min-width:720px){.grid-2{grid-template-columns:1fr 1fr}}
+    .avatar{inline-size:120px;block-size:120px;border-radius:999px;background:var(--muted);border:1px dashed var(--border);display:grid;place-items:center;font-weight:700}
+    .tag{display:inline-block;border:1px solid var(--border);border-radius:999px;padding:.25rem .6rem;margin:.15rem 0;background:#fff}
+    /* Timeline */
+    .timeline{position:relative;margin:0;padding:0 0 0 1.25rem;list-style:none}
+    .timeline::before{content:"";position:absolute;left:.45rem;top:0;bottom:0;width:2px;background:var(--border)}
+    .timeline li{position:relative;margin:0 0 1rem}
+    .timeline li::marker{content:""}
+    .timeline li::before{content:"";position:absolute;left:-.11rem;top:.4rem;width:.75rem;height:.75rem;border-radius:999px;background:var(--primary)}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container topbar">
+      <div class="brand"><a href="index.html" style="text-decoration:none;color:inherit;font-weight:700"> Diploma Guy</a></div>
+      <nav aria-label="Primary">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="articles.html">Articles</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="certifications.html">Certifications</a></li>
+          <li><a aria-current="page" href="about.html">Profile</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="card" style="display:flex;gap:1rem;align-items:center;flex-wrap:wrap">
+      <div class="avatar" aria-label="Profile photo"><img src="gallary/IMG-20251014-WA0006.jpg" alt="Project 1" style="width: 120px; height: 120px; object-fit: cover; border-radius: 50%;"></div>
+      <div style="flex:1;min-inline-size:260px">
+        <h1 style="margin:0">K. Abhisek Kumar</h1>
+        <p style="margin:.25rem 0 0">Technology Enthusiast | Full‑Stack Developer | AI & Blockchain Researcher</p>
+        <p class="meta" style="margin:.25rem 0 0">Location: Anantapur, India</p>
+        <p style="margin:.75rem 0 0"><a class="tag" href="contact.html">Hire Me</a> <a class="tag" href="contact.html">Request a Talk</a></p>
+      </div>
+    </section>
+
+    <section style="margin-top:1rem" aria-labelledby="about-summary">
+      <h2 id="about-summary">Summary</h2>
+      <div class="card">
+        <p>"I am a passionate technology professional specializing in software development, AI, blockchain, and digital payment solutions. With hands-on experience in building scalable applications, I focus on delivering innovative solutions that solve real-world problems. I love sharing knowledge through blogs, tutorials, and research publications."</p>
+      </div>
+    </section>
+
+    <section style="margin-top:1rem" aria-labelledby="skills">
+      <h2 id="skills">Skills</h2>
+      <div class="card">
+        <p><strong>Programming:</strong> Python, Java, JavaScript, React, Django</p>
+        <p><strong>Blockchain:</strong> Smart Contracts, L2 Solutions, Stablecoins</p>
+        <p><strong>Data & AI:</strong> Machine Learning, Deep Learning, RL</p>
+        <p><strong>Web & UI:</strong> HTML, CSS, Tailwind, Bootstrap</p>
+        <p><strong>Tools:</strong> Git, GitHub, Netlify, Vercel, Cloudinary</p>
+      </div>
+    </section>
+
+    <section style="margin-top:1rem" aria-labelledby="experience">
+      <h2 id="experience">Experience Timeline</h2>
+      <div class="card">
+        <ul class="timeline">
+          <li>
+            <p><strong>2025 – Present:</strong> Founder & Developer at XyloPay — Blockchain-based digital payment platform</p>
+          </li>
+          <li>
+            <p><strong>2024 – 2025:</strong> Full‑Stack Developer & AI Research Intern — Projects in AI and Blockchain</p>
+          </li>
+          <li>
+            <p><strong>2023 – 2024:</strong> Software Developer Intern — Web & Mobile applications</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section style="margin-top:1rem" aria-labelledby="achievements">
+      <h2 id="achievements">Certifications & Achievements</h2>
+      <div class="card">
+        <ul>
+          <li>Certified in AI / Machine Learning / Blockchain / Python</li>
+          <li>Published research on Reinforcement Learning and QKD</li>
+          <li>Multiple completed projects in tech blogging and web apps</li>
+        </ul>
+      </div>
+    </section>
+
+    <section style="margin-top:1rem" aria-labelledby="projects">
+      <h2 id="projects">Projects</h2>
+      <div class="grid grid-2">
+        <article class="card">
+          <h3>XyloPay</h3>
+          <p>Blockchain-based multi-currency payment platform.</p>
+        </article>
+        <article class="card">
+          <h3>CampusHireHub</h3>
+          <p>Unified college placement portal.</p>
+        </article>
+        <article class="card">
+          <h3>TechSpot Blog</h3>
+          <p>Personal tech blog & knowledge-sharing platform.</p>
+        </article>
+        <article class="card">
+          <h3>Nexus AI</h3>
+          <p>Specialized AI chatbot platform.</p>
+        </article>
+      </div>
+    </section>
+
+    <section style="margin-top:1rem" aria-labelledby="education">
+      <h2 id="education">Education</h2>
+      <div class="card">
+        <p>B.Tech in Computer Science / Engineering — Your College</p>
+        <p>Courses in AI, ML, Blockchain, and Web Development</p>
+      </div>
+    </section>
+
+    <section style="margin-top:1rem" aria-labelledby="links">
+      <h2 id="links">Links</h2>
+      <div class="card">
+       <p><strong>LinkedIn:</strong> <a href="#">https://www.linkedin.com/in/abhisek-kumar-kilari-48a324320</a></p>
+    <p><strong>gmail:</strong> <a href="#">kabhisekkumar65@gmail.com</a></p>
+        <p><a class="tag" href="#">Download Resume</a></p>
+      </div>
+    </section>
+  </main>
+
+  <footer style="border-top:1px solid var(--border);padding:1.25rem 0;margin-top:2rem">
+    <div class="container" style="display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap">
+      <p class="meta">© 2025 Diploma Guy</p>
+      <nav aria-label="Sitemap">
+        <a href="index.html">Home</a> ·
+        <a href="articles.html">Articles</a> ·
+        <a href="gallery.html">Gallery</a> ·
+        <a href="certifications.html">Certifications</a> ·
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>

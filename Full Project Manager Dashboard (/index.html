@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Full Project Manager Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-root">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar__logo">
+        <span class="sidebar__logo-mark">PM</span>
+        <span class="sidebar__logo-text">Project Manager</span>
+      </div>
+      <nav class="sidebar__nav">
+        <button class="nav-item nav-item--active" data-view="dashboard">Dashboard</button>
+        <button class="nav-item" data-view="projects">Projects</button>
+        <button class="nav-item" data-view="tasks">Tasks</button>
+        <button class="nav-item" data-view="team">Team</button>
+        <button class="nav-item" data-view="reports">Reports</button>
+        <button class="nav-item" data-view="settings">Settings</button>
+      </nav>
+      <div class="sidebar__footer">
+        <button class="sidebar__collapse-btn" id="sidebarToggle" aria-label="Toggle sidebar">
+          ‹
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main content -->
+    <div class="main">
+      <!-- Top bar -->
+      <header class="topbar">
+        <div class="topbar__left">
+          <h1 class="topbar__title">Dashboard</h1>
+          <span class="topbar__subtitle">Enterprise Project Overview</span>
+        </div>
+        <div class="topbar__center">
+          <div class="topbar__search">
+            <input
+              type="search"
+              id="globalSearch"
+              placeholder="Search projects, tasks, team..."
+            />
+          </div>
+        </div>
+        <div class="topbar__right">
+          <button class="icon-btn" id="notifBtn" aria-label="Notifications">
+            ⓘ
+          </button>
+          <button class="icon-btn" id="themeToggle" aria-label="Toggle theme">
+            ☾
+          </button>
+          <div class="user-pill">
+            <div class="user-pill__avatar">PM</div>
+            <div class="user-pill__meta">
+              <span class="user-pill__name">Alex Morgan</span>
+              <span class="user-pill__role" id="roleLabel">Manager View</span>
+            </div>
+            <button class="icon-btn icon-btn--small" id="roleToggle" aria-label="Toggle role view">
+              ⇄
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <!-- Views container -->
+      <main class="content">
+        <!-- Dashboard Overview -->
+        <section class="view view--active" id="view-dashboard">
+          <div class="grid grid--kpis">
+            <article class="kpi-card" id="kpi-total-projects">
+              <div class="kpi-card__icon">📁</div>
+              <div class="kpi-card__body">
+                <span class="kpi-card__label">Total Projects</span>
+                <span class="kpi-card__value" data-kpi="totalProjects">0</span>
+              </div>
+            </article>
+            <article class="kpi-card" id="kpi-active-projects">
+              <div class="kpi-card__icon">▶</div>
+              <div class="kpi-card__body">
+                <span class="kpi-card__label">Active Projects</span>
+                <span class="kpi-card__value" data-kpi="activeProjects">0</span>
+              </div>
+            </article>
+            <article class="kpi-card" id="kpi-completed-projects">
+              <div class="kpi-card__icon">✔</div>
+              <div class="kpi-card__body">
+                <span class="kpi-card__label">Completed Projects</span>
+                <span class="kpi-card__value" data-kpi="completedProjects">0</span>
+              </div>
+            </article>
+            <article class="kpi-card" id="kpi-overdue-tasks">
+              <div class="kpi-card__icon">⚠</div>
+              <div class="kpi-card__body">
+                <span class="kpi-card__label">Overdue Tasks</span>
+                <span class="kpi-card__value" data-kpi="overdueTasks">0</span>
+              </div>
+            </article>
+            <article class="kpi-card" id="kpi-team-utilization">
+              <div class="kpi-card__icon">👥</div>
+              <div class="kpi-card__body">
+                <span class="kpi-card__label">Team Utilization</span>
+                <span class="kpi-card__value" data-kpi="teamUtilization">0%</span>
+              </div>
+            </article>
+          </div>
+
+          <div class="grid grid--main">
+            <section class="panel">
+              <header class="panel__header">
+                <h2 class="panel__title">Project Progress</h2>
+              </header>
+              <div class="panel__body">
+                <canvas id="projectProgressChart" height="200"></canvas>
+              </div>
+            </section>
+
+            <section class="panel">
+              <header class="panel__header">
+                <h2 class="panel__title">Task Completion</h2>
+              </header>
+              <div class="panel__body">
+                <canvas id="taskCompletionChart" height="200"></canvas>
+              </div>
+            </section>
+
+            <section class="panel panel--wide">
+              <header class="panel__header">
+                <h2 class="panel__title">Upcoming & Overdue</h2>
+              </header>
+              <div class="panel__body" id="deadlineList">
+                <!-- Deadlines populated by JS -->
+              </div>
+            </section>
+
+            <section class="panel panel--wide">
+              <header class="panel__header">
+                <h2 class="panel__title">Recent Activity</h2>
+              </header>
+              <div class="panel__body activity-feed" id="activityFeed">
+                <!-- Activity items populated by JS -->
+              </div>
+            </section>
+          </div>
+        </section>
+
+        <!-- Projects View -->
+        <section class="view" id="view-projects">
+          <header class="view__header">
+            <div>
+              <h2>Projects</h2>
+              <p>Manage project lifecycle, priorities, and ownership.</p>
+            </div>
+            <div class="view__header-actions">
+              <select id="projectStatusFilter">
+                <option value="all">All Statuses</option>
+                <option value="planning">Planning</option>
+                <option value="in_progress">In Progress</option>
+                <option value="completed">Completed</option>
+                <option value="on_hold">On Hold</option>
+              </select>
+              <select id="projectPriorityFilter">
+                <option value="all">All Priorities</option>
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+                <option value="critical">Critical</option>
+              </select>
+              <select id="projectSort">
+                <option value="deadline_asc">Deadline ↑</option>
+                <option value="deadline_desc">Deadline ↓</option>
+                <option value="progress_asc">Progress ↑</option>
+                <option value="progress_desc">Progress ↓</option>
+              </select>
+              <button class="primary-btn" id="addProjectBtn">+ New Project</button>
+            </div>
+          </header>
+          <div class="table-wrapper">
+            <table class="data-table" id="projectsTable">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Manager</th>
+                  <th>Start</th>
+                  <th>Deadline</th>
+                  <th>Status</th>
+                  <th>Progress</th>
+                  <th>Priority</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Rows populated by JS -->
+              </tbody>
+            </table>
+            <div class="empty-state" id="projectsEmptyState">
+              <h3>No projects yet</h3>
+              <p>Create your first project to get started.</p>
+              <button class="primary-btn" id="emptyAddProjectBtn">Create Project</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Tasks / Kanban View -->
+        <section class="view" id="view-tasks">
+          <header class="view__header">
+            <div>
+              <h2>Tasks Board</h2>
+              <p>Kanban view for tasks within the selected project.</p>
+            </div>
+            <div class="view__header-actions">
+              <select id="taskProjectSelect"></select>
+              <button class="primary-btn" id="addTaskBtn">+ New Task</button>
+            </div>
+          </header>
+          <div class="kanban" id="kanbanBoard">
+            <div class="kanban__column" data-status="todo">
+              <header>To Do</header>
+              <div class="kanban__list" id="kanban-todo"></div>
+            </div>
+            <div class="kanban__column" data-status="in_progress">
+              <header>In Progress</header>
+              <div class="kanban__list" id="kanban-in_progress"></div>
+            </div>
+            <div class="kanban__column" data-status="review">
+              <header>Review</header>
+              <div class="kanban__list" id="kanban-review"></div>
+            </div>
+            <div class="kanban__column" data-status="completed">
+              <header>Completed</header>
+              <div class="kanban__list" id="kanban-completed"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Team View -->
+        <section class="view" id="view-team">
+          <header class="view__header">
+            <div>
+              <h2>Team</h2>
+              <p>Overview of team members, workload, and availability.</p>
+            </div>
+            <div class="view__header-actions">
+              <button class="secondary-btn" id="addMemberBtn">+ Add Member</button>
+            </div>
+          </header>
+          <div class="grid grid--team">
+            <section class="panel panel--wide">
+              <header class="panel__header">
+                <h2 class="panel__title">Team Directory</h2>
+              </header>
+              <div class="panel__body" id="teamDirectory">
+                <!-- Member cards -->
+              </div>
+            </section>
+            <section class="panel">
+              <header class="panel__header">
+                <h2 class="panel__title">Workload</h2>
+              </header>
+              <div class="panel__body">
+                <canvas id="teamWorkloadChart" height="200"></canvas>
+              </div>
+            </section>
+          </div>
+        </section>
+
+        <!-- Reports View -->
+        <section class="view" id="view-reports">
+          <header class="view__header">
+            <div>
+              <h2>Reports</h2>
+              <p>Export project and task data for external analysis.</p>
+            </div>
+            <div class="view__header-actions">
+              <button class="secondary-btn" id="exportProjectsCsvBtn">Export Projects CSV</button>
+              <button class="secondary-btn" id="exportTasksCsvBtn">Export Tasks CSV</button>
+            </div>
+          </header>
+          <div class="panel panel--wide">
+            <div class="panel__body">
+              <p>Use the export buttons above to download structured CSV reports of your current projects and tasks.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Settings View -->
+        <section class="view" id="view-settings">
+          <header class="view__header">
+            <div>
+              <h2>Settings</h2>
+              <p>Adjust dashboard preferences and behavior (local only).</p>
+            </div>
+          </header>
+          <div class="panel panel--wide">
+            <div class="panel__body settings">
+              <div class="settings__group">
+                <h3>Theme</h3>
+                <p>Toggle between light and dark enterprise themes.</p>
+                <button class="secondary-btn" id="settingsThemeToggle">Toggle Theme</button>
+              </div>
+              <div class="settings__group">
+                <h3>Dashboard</h3>
+                <label>
+                  <input type="checkbox" id="setting-showActivity" checked />
+                  Show activity feed on dashboard
+                </label>
+                <label>
+                  <input type="checkbox" id="setting-showDeadlines" checked />
+                  Show upcoming & overdue panel
+                </label>
+              </div>
+              <div class="settings__group">
+                <h3>Power User</h3>
+                <p>Keyboard shortcuts (local only):</p>
+                <ul>
+                  <li><kbd>1</kbd> … <kbd>6</kbd> – switch main views</li>
+                  <li><kbd>N</kbd> – new project (Projects view)</li>
+                  <li><kbd>T</kbd> – new task (Tasks view)</li>
+                  <li><kbd>/</kbd> – focus global search</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <!-- Modal Backdrop -->
+  <div class="modal-backdrop" id="modalBackdrop" hidden>
+    <div class="modal" id="modalContainer">
+      <!-- Modal content injected by JS -->
+    </div>
+  </div>
+
+  <!-- Notifications dropdown -->
+  <div class="notif-panel" id="notifPanel" hidden>
+    <header class="notif-panel__header">
+      <h3>Notifications</h3>
+      <button class="icon-btn icon-btn--small" id="notifCloseBtn">✕</button>
+    </header>
+    <div class="notif-panel__body" id="notifList"></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
+

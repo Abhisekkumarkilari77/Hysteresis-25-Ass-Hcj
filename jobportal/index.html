@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JobPortal - Find Your Next Opportunity</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1 class="logo">JobPortal</h1>
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Search job titles, keywords...">
+                <button id="searchBtn">Search</button>
+            </div>
+            <nav class="nav">
+                <a href="#" class="nav-link active" data-view="listings">Jobs</a>
+                <a href="#" class="nav-link" data-view="saved">Saved</a>
+                <a href="#" class="nav-link" data-view="recent">Recent</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="container">
+            <aside class="filters" id="filtersPanel">
+                <div class="filters-header">
+                    <h2>Filters</h2>
+                    <button id="clearFilters">Clear All</button>
+                </div>
+                
+                <div class="filter-group">
+                    <h3>Location</h3>
+                    <select id="locationFilter">
+                        <option value="">All Locations</option>
+                        <option value="Remote">Remote</option>
+                        <option value="New York">New York</option>
+                        <option value="San Francisco">San Francisco</option>
+                        <option value="London">London</option>
+                        <option value="Berlin">Berlin</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <h3>Job Type</h3>
+                    <label><input type="checkbox" value="Full-time" class="job-type-filter"> Full-time</label>
+                    <label><input type="checkbox" value="Part-time" class="job-type-filter"> Part-time</label>
+                    <label><input type="checkbox" value="Contract" class="job-type-filter"> Contract</label>
+                    <label><input type="checkbox" value="Internship" class="job-type-filter"> Internship</label>
+                </div>
+
+                <div class="filter-group">
+                    <h3>Experience</h3>
+                    <label><input type="checkbox" value="Entry Level" class="experience-filter"> Entry Level</label>
+                    <label><input type="checkbox" value="Mid Level" class="experience-filter"> Mid Level</label>
+                    <label><input type="checkbox" value="Senior Level" class="experience-filter"> Senior Level</label>
+                    <label><input type="checkbox" value="Lead" class="experience-filter"> Lead</label>
+                </div>
+
+                <div class="filter-group">
+                    <h3>Company</h3>
+                    <select id="companyFilter">
+                        <option value="">All Companies</option>
+                        <option value="TechCorp">TechCorp</option>
+                        <option value="InnovateLabs">InnovateLabs</option>
+                        <option value="DataSystems">DataSystems</option>
+                        <option value="CloudWorks">CloudWorks</option>
+                        <option value="FinanceHub">FinanceHub</option>
+                    </select>
+                </div>
+            </aside>
+
+            <div class="content">
+                <div class="content-header">
+                    <h2 id="resultsCount">Loading...</h2>
+                    <select id="sortSelect">
+                        <option value="newest">Newest First</option>
+                        <option value="oldest">Oldest First</option>
+                        <option value="relevance">Most Relevant</option>
+                    </select>
+                </div>
+
+                <div id="jobListings"></div>
+                <div id="jobDetail" class="hidden"></div>
+                <div id="emptyState" class="hidden">
+                    <p>No jobs found matching your criteria.</p>
+                    <button id="resetFiltersBtn">Reset Filters</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <button id="filterToggle" class="filter-toggle">Filters</button>
+
+    <div id="applyModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Apply for Position</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>This is a demo application. In a real scenario, you would submit your application here.</p>
+                <button class="btn-primary" id="submitApplication">Submit Application</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

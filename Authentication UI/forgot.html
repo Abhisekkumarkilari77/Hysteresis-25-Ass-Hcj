@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reset Password | Auth UI</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body data-page="forgot" class="light-theme">
+    <div id="toast-container"></div>
+
+    <main class="auth-wrapper">
+      <section class="auth-card fade-in-up">
+        <header class="auth-header">
+          <div class="brand">
+            <span class="brand-mark"></span>
+            <span class="brand-text">Hysteresis Auth</span>
+          </div>
+          <button class="theme-toggle" type="button" aria-label="Toggle dark mode">
+            <span class="theme-toggle-thumb"></span>
+            <span class="theme-toggle-label">Light</span>
+          </button>
+        </header>
+
+        <h1 class="auth-title">Reset your password</h1>
+        <p class="auth-subtitle">
+          Enter your email and we’ll send reset instructions (UI only).
+        </p>
+
+        <form id="forgot-form" class="auth-form" novalidate>
+          <div class="form-field">
+            <label for="forgot-email">Email address</label>
+            <input
+              id="forgot-email"
+              name="email"
+              type="email"
+              autocomplete="email"
+              required
+            />
+            <p class="field-error" aria-live="polite"></p>
+          </div>
+
+          <button
+            id="forgot-submit"
+            class="btn btn-primary btn-full"
+            type="submit"
+            disabled
+          >
+            <span class="btn-label">Send reset link</span>
+            <span class="btn-spinner" aria-hidden="true"></span>
+          </button>
+
+          <p class="inline-success" id="forgot-success" aria-live="polite"></p>
+        </form>
+
+        <footer class="auth-footer">
+          <p>
+            Remembered your password?
+            <a href="login.html" class="link">Back to login</a>
+          </p>
+        </footer>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+  </html>

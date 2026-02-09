@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Home |  Diploma Guy</title>
+  <meta name="description" content="TechSpot Blog - Latest articles, research papers, projects, and certifications. All in a clean, green, and fast HTML+CSS site." />
+  <style>
+    :root{
+      --bg:#ffffff;
+      --text:#0b1f16;          /* very dark greenish text */
+      --primary:#16a34a;       /* green 600 */
+      --muted:#e6f3ea;         /* light green tint */
+      --border:#d1e7d9;        /* pale green border */
+      --radius:0.675rem;
+      --max:1120px;
+    }
+    /* Base */
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif}
+    a{color:var(--primary);text-decoration:none}
+    a:hover{text-decoration:underline}
+    img{max-width:100%;height:auto;display:block}
+    .container{max-width:var(--max);margin-inline:auto;padding:1rem}
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+    /* Layout */
+    header{border-bottom:1px solid var(--border);background:linear-gradient(0deg,var(--bg),var(--muted))}
+    .topbar{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:0.75rem 0}
+    nav ul{display:flex;gap:1rem;list-style:none;padding:0;margin:0;flex-wrap:wrap}
+    nav a{display:inline-block;padding:0.5rem 0.75rem;border-radius:0.5rem}
+    nav a:focus,nav a:hover{background:var(--muted);text-decoration:none}
+    .brand{font-weight:700;letter-spacing:.2px}
+    /* Hero */
+    .hero{padding-block:3rem}
+    .hero-card{background:var(--muted);border:1px solid var(--border);border-radius:var(--radius);padding:2rem;display:grid;gap:1rem}
+    .hero h1{font-size:clamp(1.75rem,4vw,2.5rem);line-height:1.2;margin:0}
+    .hero p{margin:0}
+    .cta{display:flex;gap:.75rem;flex-wrap:wrap}
+    .btn{display:inline-block;padding:0.65rem 1rem;border-radius:0.6rem;border:1px solid var(--primary);color:#fff;background:var(--primary);font-weight:600}
+    .btn.secondary{background:transparent;color:var(--primary)}
+    .btn:focus,.btn:hover{filter:brightness(0.95);text-decoration:none}
+    /* Sections */
+    section{padding-block:2rem;border-top:1px solid var(--border)}
+    h2{margin:0 0 .75rem;font-size:1.35rem}
+    .grid{display:grid;gap:1rem}
+    @media(min-width:720px){.grid-3{grid-template-columns:repeat(3,1fr)}.grid-2{grid-template-columns:repeat(2,1fr)}}
+    .card{border:1px solid var(--border);border-radius:var(--radius);padding:1rem;background:#fff}
+    .placeholder{background:var(--muted);border:1px dashed var(--border);border-radius:0.5rem;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;color:#2a4f3b;font-weight:600}
+    .meta{font-size:.85rem;color:#2a4f3b}
+    /* Carousel (CSS-only via radio) */
+     .carousel {
+    position: relative;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: #fff;
+  }
+  .slides {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 100%;
+    transition: transform .5s ease;
+  }
+  .slide {
+    padding: 1rem;
+    text-align: center;
+  }
+  .slide img {
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    border-radius: .5rem;
+    display: block;
+    margin: 0 auto 1rem;
+  }
+  .carousel-controls {
+    display: flex;
+    gap: .5rem;
+    justify-content: center;
+    padding: .75rem;
+    border-top: 1px solid var(--border);
+    background: #fff;
+  }
+  .dot {
+    inline-size: 12px;
+    block-size: 12px;
+    border-radius: 999px;
+    border: 2px solid var(--primary);
+    cursor: pointer;
+  }
+  input[name="feature"] {
+    position: absolute;
+    inset: auto auto auto -9999px;
+  }
+  #f1:checked ~ .slides { transform: translateX(0); }
+  #f2:checked ~ .slides { transform: translateX(-100%); }
+  #f3:checked ~ .slides { transform: translateX(-200%); }
+  label[for^="f"] { cursor: pointer; }
+
+    /* Footer */
+    footer{border-top:1px solid var(--border);padding-block:2rem;background:var(--bg)}
+    .footer-cols{display:grid;gap:1rem}
+    @media(min-width:720px){.footer-cols{grid-template-columns:2fr 1fr 1fr}}
+    .small{font-size:.9rem;color:#2a4f3b}
+  </style>
+</head>
+<body>
+  <a class="sr-only" href="#main">Skip to content</a>
+  <header>
+    <div class="container topbar">
+      <div class="brand"> Diploma Guy</div>
+      <nav aria-label="Primary">
+        <ul>
+          <li><a aria-current="page" href="index (1).html">Home</a></li>
+          <li><a href="articles.html">Articles</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="certifications.html">Certifications</a></li>
+          <li><a href="about.html">Profile</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="container">
+     Hero 
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-card">
+        <h1 id="hero-title">Build, Learn, and Share Technology</h1>
+        <p>Deep dives into software engineering, AI research, and blockchain—written clearly, shipped fast.</p>
+        <div class="cta">
+          <a class="btn" href="articles.html">Read Latest Article</a>
+          <a class="btn secondary" href="contact.html">Subscribe / Contact</a>
+        </div>
+      </div>
+    </section>
+
+   <section aria-labelledby="featured-title">
+  <h2 id="featured-title">Featured Articles</h2>
+  <div class="carousel">
+    <input type="radio" name="feature" id="f1" checked>
+    <input type="radio" name="feature" id="f2">
+    <input type="radio" name="feature" id="f3">
+
+    <div class="slides">
+      <article class="slide" id="slide1">
+        <img src="articleim/api.png" alt="Designing Scalable APIs">
+        <h3>Designing Scalable APIs</h3>
+        <p class="meta">Tech • May 2025 • 8 min read</p>
+        <p>Principles and patterns for building robust, evolvable API platforms.</p>
+        <p><a href="articles.html">Read more</a></p>
+      </article>
+      <article class="slide" id="slide2">
+        <img src="articleim/mlop.png" alt="Shipping ML Systems to Production">
+        <h3>Shipping ML Systems to Production</h3>
+        <p class="meta">AI/ML • Apr 2025 • 10 min read</p>
+        <p>From prototyping to monitoring—an end-to-end workflow that works.</p>
+        <p><a href="articles.html">Read more</a></p>
+      </article>
+      <article class="slide" id="slide3">
+        <img src="articleim/model.png" alt="Auditing Smart Contracts">
+        <h3>Auditing Smart Contracts</h3>
+        <p class="meta">Blockchain • Mar 2025 • 7 min read</p>
+        <p>Common pitfalls and how to avoid catastrophic on-chain bugs.</p>
+        <p><a href="articles.html">Read more</a></p>
+      </article>
+    </div>
+
+    <div class="carousel-controls" role="tablist" aria-label="Featured Articles">
+      <label class="dot" for="f1" role="tab" aria-controls="slide1" aria-label="Slide 1"></label>
+      <label class="dot" for="f2" role="tab" aria-controls="slide2" aria-label="Slide 2"></label>
+      <label class="dot" for="f3" role="tab" aria-controls="slide3" aria-label="Slide 3"></label>
+    </div>
+  </div>
+</section>
+
+     Latest Posts 
+    <section aria-labelledby="latest-title">
+      <h2 id="latest-title">Latest Posts</h2>
+      <div class="grid grid-3">
+        <article class="card">
+         <img src="articleim/event.png" alt="Post cover"/>
+          <h3>Event-Driven Architectures Explained</h3>
+          <p class="meta">May 10, 2025 • Systems</p>
+          <p>When events beat requests—and how to design clean contracts.</p>
+          <p><a href="articles.html">Read more</a></p>
+        </article>
+        <article class="card">
+    <img src="articleim/vector.png" alt="Post cover"/>
+          <h3>Vector Databases for RAG</h3>
+          <p class="meta">May 3, 2025 • AI</p>
+          <p>Tradeoffs across indexing, recall, and cost for production RAG.</p>
+          <p><a href="articles.html">Read more</a></p>
+        </article>
+        <article class="card">
+           <img src="articleim/znk sharj.png" alt="Post cover"/>
+          <h3>Intro to zk-SNARKs</h3>
+          <p class="meta">Apr 26, 2025 • Blockchain</p>
+          <p>A practical primer on zero-knowledge proofs and applications.</p>
+          <p><a href="articles.html">Read more</a></p>
+        </article>
+      </div>
+    </section>
+
+     Quick Bio 
+    <section aria-labelledby="bio-title">
+      <h2 id="bio-title">About the Author</h2>
+      <div class="card" style="display:flex;gap:1rem;align-items:flex-start;flex-wrap:wrap">
+        <div class="placeholder" style="inline-size:96px;block-size:96px;aspect-ratio:auto;border-radius:999px" role="img" aria-label="Profile photo">Photo</div>
+        <div style="flex:1;min-inline-size:260px">
+          <p><strong>K. Abhisek Kumar</strong> — Technology Enthusiast • Full‑Stack Developer • AI & Blockchain Researcher.</p>
+          <p><a href="about.html">View Profile</a></p>
+        </div>
+      </div>
+    </section>
+
+     Newsletter (mailto) 
+    <section aria-labelledby="news-title">
+      <h2 id="news-title">Newsletter</h2>
+      <form class="card" action="mailto:hello@example.com" method="post" enctype="text/plain">
+        <label for="email">Email address</label><br/>
+        <input id="email" name="email" type="email" required placeholder="you@example.com" style="inline-size:100%;padding:.6rem;border:1px solid var(--border);border-radius:.5rem;margin:.5rem 0"/>
+        <button class="btn" type="submit">Subscribe</button>
+      </form>
+    </section>
+
+    
+
+   
+  </main>
+
+  <footer>
+    <div class="container footer-cols">
+      <div>
+        <strong>TechSpot Blog</strong>
+        <p class="small">Deep tech writing for builders. © 2025</p>
+      </div>
+      <nav aria-label="Sitemap">
+        <ul style="list-style:none;padding:0;margin:0;display:grid;gap:.25rem">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="articles.html">Articles</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="certifications.html">Certifications</a></li>
+          <li><a href="about.html">Profile</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+      <div>
+        <p class="small">Email: kabhisekkumar65@example.com</p>
+        <p class="small"><a href="#top">Back to top</a></p>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

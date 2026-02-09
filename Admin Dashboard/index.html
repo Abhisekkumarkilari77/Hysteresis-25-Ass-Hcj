@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body class="theme-light">
+    <!-- Auth shell: login / sign-up -->
+    <div class="auth-shell">
+      <div class="auth-card">
+        <div class="auth-card__intro">
+          <h1 class="auth-card__title">Hysteresis Admin</h1>
+          <p class="auth-card__subtitle">
+            Sign in to access the admin dashboard, manage users and review key metrics.
+          </p>
+          <ul class="auth-card__highlights">
+            <li>Local-only demo authentication (no backend)</li>
+            <li>Persistent layout &amp; theme preferences</li>
+            <li>Static analytics and tables for UI testing</li>
+          </ul>
+
+          <div class="auth-demo">
+            <span class="auth-demo__label">Demo admin account</span>
+            <div class="auth-demo__row">
+              <span>Email</span>
+              <code>admin@demo.com</code>
+            </div>
+            <div class="auth-demo__row">
+              <span>Password</span>
+              <code>Admin@123</code>
+            </div>
+          </div>
+        </div>
+
+        <div class="auth-card__forms">
+          <div class="auth-tabs" role="tablist">
+            <button
+              type="button"
+              class="auth-tab is-active"
+              data-auth-tab="login"
+              role="tab"
+              aria-selected="true"
+            >
+              Login
+            </button>
+            <button
+              type="button"
+              class="auth-tab"
+              data-auth-tab="signup"
+              role="tab"
+              aria-selected="false"
+            >
+              Sign up
+            </button>
+          </div>
+
+          <form id="loginForm" class="auth-form" novalidate>
+            <div class="auth-field">
+              <label class="auth-label" for="loginEmail">Email</label>
+              <input
+                id="loginEmail"
+                class="auth-input"
+                type="email"
+                required
+                autocomplete="username"
+                placeholder="you@example.com"
+                value="admin@demo.com"
+              />
+            </div>
+            <div class="auth-field">
+              <label class="auth-label" for="loginPassword">Password</label>
+              <input
+                id="loginPassword"
+                class="auth-input"
+                type="password"
+                required
+                autocomplete="current-password"
+                placeholder="Enter your password"
+                value="Admin@123"
+              />
+            </div>
+            <button type="submit" class="pill-button auth-submit">
+              Sign in
+            </button>
+            <p class="auth-error" id="loginError" aria-live="polite"></p>
+          </form>
+
+          <form id="signupForm" class="auth-form is-hidden" novalidate>
+            <div class="auth-field">
+              <label class="auth-label" for="signupName">Full name</label>
+              <input
+                id="signupName"
+                class="auth-input"
+                type="text"
+                required
+                autocomplete="name"
+                placeholder="Jane Doe"
+              />
+            </div>
+            <div class="auth-field">
+              <label class="auth-label" for="signupEmail">Email</label>
+              <input
+                id="signupEmail"
+                class="auth-input"
+                type="email"
+                required
+                autocomplete="email"
+                placeholder="you@example.com"
+              />
+            </div>
+            <div class="auth-field">
+              <label class="auth-label" for="signupPassword">Password</label>
+              <input
+                id="signupPassword"
+                class="auth-input"
+                type="password"
+                required
+                autocomplete="new-password"
+                placeholder="Create a strong password"
+              />
+            </div>
+            <button type="submit" class="pill-button auth-submit">
+              Create account
+            </button>
+            <p class="auth-error" id="signupError" aria-live="polite"></p>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="app-shell">
+      <!-- Sidebar -->
+      <aside class="sidebar" aria-label="Main navigation">
+        <div class="sidebar__header">
+          <div class="sidebar__brand">
+            <div class="sidebar__logo">HA</div>
+            <div class="sidebar__title-group">
+              <span class="sidebar__title">Hysteresis Admin</span>
+              <span class="sidebar__subtitle">Control Panel</span>
+            </div>
+          </div>
+          <button
+            class="sidebar__toggle"
+            type="button"
+            aria-label="Toggle sidebar"
+          >
+            &#9776;
+          </button>
+        </div>
+
+        <nav class="sidebar__nav">
+          <a href="#" class="sidebar__link is-active" data-section="dashboard">
+            <span class="sidebar__icon">🏠</span>
+            <span class="sidebar__text">Dashboard</span>
+          </a>
+          <a href="#" class="sidebar__link" data-section="analytics">
+            <span class="sidebar__icon">📈</span>
+            <span class="sidebar__text">Analytics</span>
+          </a>
+          <a href="#" class="sidebar__link" data-section="users">
+            <span class="sidebar__icon">👥</span>
+            <span class="sidebar__text">Users</span>
+          </a>
+          <a href="#" class="sidebar__link" data-section="reports">
+            <span class="sidebar__icon">📊</span>
+            <span class="sidebar__text">Reports</span>
+          </a>
+          <a href="#" class="sidebar__link" data-section="settings">
+            <span class="sidebar__icon">⚙️</span>
+            <span class="sidebar__text">Settings</span>
+          </a>
+        </nav>
+
+        <div class="sidebar__footer">
+          <button
+            class="sidebar__theme-toggle"
+            type="button"
+            aria-label="Toggle light/dark theme"
+          >
+            <span class="theme-toggle__icon">🌙</span>
+            <span class="theme-toggle__text">Dark mode</span>
+          </button>
+        </div>
+      </aside>
+
+      <!-- Main area -->
+      <div class="main">
+        <!-- Top navigation bar -->
+        <header class="topbar">
+          <div class="topbar__left">
+            <h1 class="topbar__title">Dashboard</h1>
+            <span class="topbar__subtitle">Overview &amp; insights</span>
+          </div>
+
+          <div class="topbar__center">
+            <div class="search">
+              <span class="search__icon">🔍</span>
+              <input
+                type="search"
+                class="search__input"
+                placeholder="Search (UI only)"
+                aria-label="Search"
+              />
+            </div>
+          </div>
+
+          <div class="topbar__right">
+            <button
+              class="topbar__icon-button"
+              type="button"
+              aria-label="Notifications"
+            >
+              <span class="topbar__icon">🔔</span>
+              <span class="topbar__badge">3</span>
+            </button>
+
+            <div class="topbar__profile">
+              <button
+                class="profile__button"
+                type="button"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                <span class="profile__avatar">AS</span>
+                <span class="profile__meta">
+                  <span class="profile__name">Admin Supervisor</span>
+                  <span class="profile__role">System Admin</span>
+                </span>
+                <span class="profile__chevron">▾</span>
+              </button>
+              <div class="profile__dropdown" aria-label="User menu">
+                <button type="button" class="profile__menu-item">
+                  View profile
+                </button>
+                <button type="button" class="profile__menu-item">
+                  Account settings
+                </button>
+                <button type="button" class="profile__menu-item profile__menu-item--danger">
+                  Sign out
+                </button>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <!-- Main dashboard content -->
+        <main class="content">
+          <!-- Statistics cards -->
+          <section class="section">
+            <header class="section__header">
+              <div>
+                <h2 class="section__title">Key metrics</h2>
+                <p class="section__subtitle">
+                  High-level snapshot of platform performance.
+                </p>
+              </div>
+            </header>
+
+            <div class="cards-grid">
+              <article class="card metric-card">
+                <div class="metric-card__header">
+                  <div class="metric-card__icon metric-card__icon--blue">
+                    👥
+                  </div>
+                  <span class="metric-card__label">Total Users</span>
+                </div>
+                <div class="metric-card__body">
+                  <div class="metric-card__value">12,480</div>
+                  <div class="metric-card__meta">
+                    <span class="metric-card__trend metric-card__trend--up">
+                      +8.2% vs last month
+                    </span>
+                    <span class="metric-card__hint">Active user accounts</span>
+                  </div>
+                </div>
+              </article>
+
+              <article class="card metric-card">
+                <div class="metric-card__header">
+                  <div class="metric-card__icon metric-card__icon--green">
+                    💰
+                  </div>
+                  <span class="metric-card__label">Revenue</span>
+                </div>
+                <div class="metric-card__body">
+                  <div class="metric-card__value">$248,900</div>
+                  <div class="metric-card__meta">
+                    <span class="metric-card__trend metric-card__trend--up">
+                      +12.5% vs last quarter
+                    </span>
+                    <span class="metric-card__hint">Recurring &amp; one‑time</span>
+                  </div>
+                </div>
+              </article>
+
+              <article class="card metric-card">
+                <div class="metric-card__header">
+                  <div class="metric-card__icon metric-card__icon--amber">
+                    📦
+                  </div>
+                  <span class="metric-card__label">Orders</span>
+                </div>
+                <div class="metric-card__body">
+                  <div class="metric-card__value">3,214</div>
+                  <div class="metric-card__meta">
+                    <span class="metric-card__trend metric-card__trend--neutral">
+                      +0.9% vs last week
+                    </span>
+                    <span class="metric-card__hint">Processed successfully</span>
+                  </div>
+                </div>
+              </article>
+
+              <article class="card metric-card">
+                <div class="metric-card__header">
+                  <div class="metric-card__icon metric-card__icon--indigo">
+                    📈
+                  </div>
+                  <span class="metric-card__label">Growth</span>
+                </div>
+                <div class="metric-card__body">
+                  <div class="metric-card__value">27.3%</div>
+                  <div class="metric-card__meta">
+                    <span class="metric-card__trend metric-card__trend--up">
+                      Healthy growth rate
+                    </span>
+                    <span class="metric-card__hint">Trailing 12 months</span>
+                  </div>
+                </div>
+              </article>
+            </div>
+          </section>
+
+          <!-- Charts -->
+          <section class="section">
+            <header class="section__header section__header--with-actions">
+              <div>
+                <h2 class="section__title">Performance</h2>
+                <p class="section__subtitle">
+                  Trends across revenue and order volume.
+                </p>
+              </div>
+              <div class="section__actions">
+                <button class="pill-button pill-button--outline" type="button">
+                  Last 12 months
+                </button>
+                <button class="pill-button" type="button">
+                  This year
+                </button>
+              </div>
+            </header>
+
+            <div class="charts-grid">
+              <article class="card chart-card">
+                <header class="chart-card__header">
+                  <div>
+                    <h3 class="chart-card__title">Monthly growth</h3>
+                    <p class="chart-card__subtitle">
+                      Line chart (static data, canvas based).
+                    </p>
+                  </div>
+                  <div class="chart-card__legend">
+                    <span class="legend-item">
+                      <span class="legend-swatch legend-swatch--primary"></span>
+                      Growth %
+                    </span>
+                  </div>
+                </header>
+                <div class="chart-card__body">
+                  <canvas
+                    id="growthLineChart"
+                    width="600"
+                    height="260"
+                    aria-label="Monthly growth chart"
+                    role="img"
+                  ></canvas>
+                </div>
+              </article>
+
+              <article class="card chart-card">
+                <header class="chart-card__header">
+                  <div>
+                    <h3 class="chart-card__title">Sales by channel</h3>
+                    <p class="chart-card__subtitle">
+                      Bar chart (static data, canvas based).
+                    </p>
+                  </div>
+                  <div class="chart-card__legend">
+                    <span class="legend-item">
+                      <span class="legend-swatch legend-swatch--primary"></span>
+                      Online
+                    </span>
+                    <span class="legend-item">
+                      <span class="legend-swatch legend-swatch--muted"></span>
+                      Retail
+                    </span>
+                  </div>
+                </header>
+                <div class="chart-card__body">
+                  <canvas
+                    id="salesBarChart"
+                    width="600"
+                    height="260"
+                    aria-label="Sales by channel chart"
+                    role="img"
+                  ></canvas>
+                </div>
+              </article>
+            </div>
+          </section>
+
+          <!-- Table -->
+          <section class="section">
+            <header class="section__header section__header--with-actions">
+              <div>
+                <h2 class="section__title">Recent users</h2>
+                <p class="section__subtitle">
+                  Latest user accounts with status overview.
+                </p>
+              </div>
+              <div class="section__actions">
+                <button
+                  class="pill-button pill-button--outline"
+                  type="button"
+                  id="exportCsvButton"
+                >
+                  Export CSV
+                </button>
+              </div>
+            </header>
+
+            <div class="table-card card">
+              <div class="table-toolbar">
+                <div class="table-toolbar__left">
+                  <span class="table-toolbar__label">Showing 8 of 8 users</span>
+                </div>
+                <div class="table-toolbar__right">
+                  <button class="chip" type="button">All</button>
+                  <button class="chip chip--muted" type="button">Active</button>
+                  <button class="chip chip--muted" type="button">Pending</button>
+                  <button class="chip chip--muted" type="button">Blocked</button>
+                </div>
+              </div>
+
+              <div class="table-wrapper">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th scope="col">
+                        Name
+                        <span class="sort-indicator">↕</span>
+                      </th>
+                      <th scope="col">Email</th>
+                      <th scope="col">Status</th>
+                      <th scope="col">
+                        Date
+                        <span class="sort-indicator">↕</span>
+                      </th>
+                      <th scope="col" class="data-table__cell--actions">
+                        Action
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody id="userTableBody">
+                    <tr>
+                      <td data-label="Name">Jane Cooper</td>
+                      <td data-label="Email">jane.cooper@example.com</td>
+                      <td data-label="Status">
+                        <span class="status-badge status-badge--active">
+                          Active
+                        </span>
+                      </td>
+                      <td data-label="Date">2026-02-02</td>
+                      <td
+                        class="data-table__cell--actions"
+                        data-label="Action"
+                      >
+                        <button class="table-action table-action--primary" type="button">
+                          View
+                        </button>
+                        <button class="table-action" type="button">
+                          Edit
+                        </button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td data-label="Name">Cody Fisher</td>
+                      <td data-label="Email">cody.fisher@example.com</td>
+                      <td data-label="Status">
+                        <span class="status-badge status-badge--pending">
+                          Pending
+                        </span>
+                      </td>
+                      <td data-label="Date">2026-01-29</td>
+                      <td
+                        class="data-table__cell--actions"
+                        data-label="Action"
+                      >
+                        <button class="table-action table-action--primary" type="button">
+                          View
+                        </button>
+                        <button class="table-action" type="button">
+                          Edit
+                        </button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td data-label="Name">Kristin Watson</td>
+                      <td data-label="Email">kristin.watson@example.com</td>
+                      <td data-label="Status">
+                        <span class="status-badge status-badge--active">
+                          Active
+                        </span>
+                      </td>
+                      <td data-label="Date">2026-01-26</td>
+                      <td
+                        class="data-table__cell--actions"
+                        data-label="Action"
+                      >
+                        <button class="table-action table-action--primary" type="button">
+                          View
+                        </button>
+                        <button class="table-action" type="button">
+                          Edit
+                        </button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td data-label="Name">Savannah Nguyen</td>
+                      <td data-label="Email">savannah.nguyen@example.com</td>
+                      <td data-label="Status">
+                        <span class="status-badge status-badge--blocked">
+                          Blocked
+                        </span>
+                      </td>
+                      <td data-label="Date">2026-01-12</td>
+                      <td
+                        class="data-table__cell--actions"
+                        data-label="Action"
+                      >
+                        <button class="table-action table-action--primary" type="button">
+                          View
+                        </button>
+                        <button class="table-action" type="button">
+                          Edit
+                        </button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td data-label="Name">Jerome Bell</td>
+                      <td data-label="Email">jerome.bell@example.com</td>
+                      <td data-label="Status">
+                        <span class="status-badge status-badge--active">
+                          Active
+                        </span>
+                      </td>
+                      <td data-label="Date">2025-12-30</td>
+                      <td
+                        class="data-table__cell--actions"
+                        data-label="Action"
+                      >
+                        <button class="table-action table-action--primary" type="button">
+                          View
+                        </button>
+                        <button class="table-action" type="button">
+                          Edit
+                        </button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td data-label="Name">Courtney Henry</td>
+                      <td data-label="Email">courtney.henry@example.com</td>
+                      <td data-label="Status">
+                        <span class="status-badge status-badge--pending">
+                          Pending
+                        </span>
+                      </td>
+                      <td data-label="Date">2025-12-17</td>
+                      <td
+                        class="data-table__cell--actions"
+                        data-label="Action"
+                      >
+                        <button class="table-action table-action--primary" type="button">
+                          View
+                        </button>
+                        <button class="table-action" type="button">
+                          Edit
+                        </button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td data-label="Name">Darlene Robertson</td>
+                      <td data-label="Email">darlene.robertson@example.com</td>
+                      <td data-label="Status">
+                        <span class="status-badge status-badge--active">
+                          Active
+                        </span>
+                      </td>
+                      <td data-label="Date">2025-11-03</td>
+                      <td
+                        class="data-table__cell--actions"
+                        data-label="Action"
+                      >
+                        <button class="table-action table-action--primary" type="button">
+                          View
+                        </button>
+                        <button class="table-action" type="button">
+                          Edit
+                        </button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td data-label="Name">Leslie Alexander</td>
+                      <td data-label="Email">leslie.alexander@example.com</td>
+                      <td data-label="Status">
+                        <span class="status-badge status-badge--blocked">
+                          Blocked
+                        </span>
+                      </td>
+                      <td data-label="Date">2025-10-21</td>
+                      <td
+                        class="data-table__cell--actions"
+                        data-label="Action"
+                      >
+                        <button class="table-action table-action--primary" type="button">
+                          View
+                        </button>
+                        <button class="table-action" type="button">
+                          Edit
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <footer class="table-footer">
+                <div class="table-footer__left">
+                  <span class="table-footer__text">Rows per page</span>
+                  <select class="table-footer__select" aria-label="Rows per page">
+                    <option value="8" selected>8</option>
+                    <option value="16">16</option>
+                    <option value="32">32</option>
+                  </select>
+                </div>
+                <div class="table-footer__right">
+                  <span class="table-footer__text">1–8 of 8</span>
+                  <button
+                    class="table-footer__pager table-footer__pager--disabled"
+                    type="button"
+                    aria-label="Previous page"
+                  >
+                    ‹
+                  </button>
+                  <button
+                    class="table-footer__pager table-footer__pager--active"
+                    type="button"
+                  >
+                    1
+                  </button>
+                  <button
+                    class="table-footer__pager table-footer__pager--disabled"
+                    type="button"
+                    aria-label="Next page"
+                  >
+                    ›
+                  </button>
+                </div>
+              </footer>
+            </div>
+          </section>
+
+          <!-- Empty state example (hidden by default, can be shown later) -->
+          <section class="section section--empty" aria-hidden="true">
+            <div class="empty-state card">
+              <h2 class="empty-state__title">No data available</h2>
+              <p class="empty-state__description">
+                Once new records are created, they will appear in this view.
+              </p>
+              <button class="pill-button" type="button">Create first record</button>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+  </html>
+

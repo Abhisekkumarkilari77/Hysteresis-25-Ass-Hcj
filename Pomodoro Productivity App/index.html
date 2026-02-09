@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pomodoro Productivity</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="timer-card">
+            <div class="session-info">
+                <h2 id="session-type">Focus Session</h2>
+                <div class="session-progress">
+                    <span id="session-count">1</span> / 4
+                </div>
+            </div>
+            
+            <div class="timer-display">
+                <div class="progress-ring">
+                    <svg class="progress-svg" width="200" height="200">
+                        <circle class="progress-bg" cx="100" cy="100" r="90"></circle>
+                        <circle class="progress-bar" cx="100" cy="100" r="90"></circle>
+                    </svg>
+                    <div class="time-text" id="timer">25:00</div>
+                </div>
+            </div>
+            
+            <div class="controls">
+                <button id="start-btn" class="btn primary">Start</button>
+                <button id="pause-btn" class="btn secondary" disabled>Pause</button>
+                <button id="reset-btn" class="btn secondary">Reset</button>
+            </div>
+            
+            <div class="settings">
+                <div class="setting-group">
+                    <label>Focus (min):</label>
+                    <input type="number" id="focus-duration" value="25" min="1" max="60">
+                </div>
+                <div class="setting-group">
+                    <label>Short Break (min):</label>
+                    <input type="number" id="short-break" value="5" min="1" max="30">
+                </div>
+                <div class="setting-group">
+                    <label>Long Break (min):</label>
+                    <input type="number" id="long-break" value="15" min="1" max="60">
+                </div>
+            </div>
+        </div>
+        
+        <div class="stats-panel">
+            <h3>Today's Progress</h3>
+            <div class="stat-item">
+                <span>Completed Sessions:</span>
+                <span id="completed-sessions">0</span>
+            </div>
+            <div class="stat-item">
+                <span>Total Focus Time:</span>
+                <span id="total-time">0h 0m</span>
+            </div>
+            <button id="reset-day" class="btn secondary small">Reset Today</button>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>

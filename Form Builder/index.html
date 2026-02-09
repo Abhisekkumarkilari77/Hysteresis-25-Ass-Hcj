@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Form Builder</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+    <!-- Header -->
+    <header class="header">
+      <h1 class="logo">Form Builder</h1>
+      <div class="header-actions">
+        <button type="button" class="btn btn-secondary" id="resetBtn" aria-label="Reset form builder">Reset Builder</button>
+        <button type="button" class="btn btn-primary" id="togglePreviewBtn">Preview Mode</button>
+        <button type="button" class="btn btn-icon" id="themeToggleBtn" aria-label="Toggle light/dark mode" title="Toggle theme">☀</button>
+      </div>
+    </header>
+
+    <main class="main">
+      <!-- Sidebar: Available Form Elements -->
+      <aside class="sidebar" id="sidebar">
+        <h2 class="sidebar-title">Form Elements</h2>
+        <p class="sidebar-hint">Click to add a field</p>
+        <div class="field-buttons">
+          <button type="button" class="field-btn" data-type="text">Text Input</button>
+          <button type="button" class="field-btn" data-type="email">Email Input</button>
+          <button type="button" class="field-btn" data-type="number">Number Input</button>
+          <button type="button" class="field-btn" data-type="textarea">Textarea</button>
+          <button type="button" class="field-btn" data-type="checkbox">Checkbox</button>
+          <button type="button" class="field-btn" data-type="radio">Radio Buttons</button>
+          <button type="button" class="field-btn" data-type="select">Dropdown</button>
+          <button type="button" class="field-btn" data-type="date">Date Input</button>
+        </div>
+      </aside>
+
+      <!-- Form Canvas -->
+      <section class="canvas-section">
+        <div class="canvas-header" id="canvasHeader">
+          <div class="header-edit" id="headerEdit">
+            <input type="text" class="form-title-input" id="formTitle" placeholder="Form Title" value="Untitled Form">
+            <textarea class="form-desc-input" id="formDescription" placeholder="Form description (optional)" rows="2"></textarea>
+          </div>
+          <div class="header-preview hidden" id="headerPreview">
+            <h2 class="preview-title" id="previewTitle">Untitled Form</h2>
+            <p class="preview-desc" id="previewDesc"></p>
+          </div>
+        </div>
+
+        <div class="canvas" id="formCanvas">
+          <!-- Empty state -->
+          <div class="empty-state" id="emptyState">
+            <span class="empty-icon">📋</span>
+            <p>No form fields yet</p>
+            <p class="empty-hint">Add fields from the sidebar to get started</p>
+          </div>
+          <!-- Form fields will be rendered here -->
+          <div class="fields-container" id="fieldsContainer"></div>
+        </div>
+
+        <!-- Export button (shown in edit mode) -->
+        <div class="canvas-footer" id="canvasFooter">
+          <button type="button" class="btn btn-outline" id="exportJsonBtn">Export JSON</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Modal for field configuration -->
+  <div class="modal-overlay" id="modalOverlay" aria-hidden="true">
+    <div class="modal" role="dialog" aria-labelledby="modalTitle" aria-modal="true">
+      <div class="modal-header">
+        <h2 id="modalTitle">Edit Field</h2>
+        <button type="button" class="modal-close" id="modalClose" aria-label="Close modal">&times;</button>
+      </div>
+      <div class="modal-body" id="modalBody">
+        <!-- Dynamic field config form -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="modalCancel">Cancel</button>
+        <button type="button" class="btn btn-primary" id="modalSave">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

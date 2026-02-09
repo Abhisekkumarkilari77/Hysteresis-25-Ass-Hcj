@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chat UI Simulator</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="app-root">
+      <header class="chat-header">
+        <div class="chat-header-left">
+          <div class="chat-avatar" aria-hidden="true">C</div>
+          <div class="chat-title-group">
+            <div class="chat-title">Chat UI Simulator</div>
+            <div class="chat-status" id="chat-status">Offline • Local Only</div>
+          </div>
+        </div>
+        <div class="chat-header-right">
+          <button
+            class="icon-button"
+            id="theme-toggle"
+            type="button"
+            aria-label="Toggle light or dark theme"
+          >
+            <span class="icon-moon" aria-hidden="true"></span>
+          </button>
+          <button
+            class="icon-button"
+            id="clear-chat"
+            type="button"
+            aria-label="Clear chat history"
+          >
+            <span class="icon-trash" aria-hidden="true"></span>
+          </button>
+        </div>
+      </header>
+
+      <main class="chat-main" aria-label="Chat conversation">
+        <section class="chat-info-bar">
+          <div class="chat-username-wrapper">
+            <span class="chat-username-label">You as:</span>
+            <button
+              class="chat-username-display"
+              id="username-display"
+              type="button"
+              aria-label="Edit display name"
+            >
+              <span id="username-text"></span>
+            </button>
+            <input
+              id="username-input"
+              class="chat-username-input"
+              type="text"
+              maxlength="32"
+              autocomplete="off"
+              aria-label="Display name"
+            />
+          </div>
+        </section>
+
+        <section class="chat-messages-wrapper">
+          <div id="empty-state" class="empty-state">
+            <h2 class="empty-state-title">Start your local conversation</h2>
+            <p class="empty-state-subtitle">
+              This simulator works entirely offline. Messages, settings, and replies are
+              stored in your browser using Local Storage.
+            </p>
+            <ul class="empty-state-tips">
+              <li>Type a message below and press Enter or Send.</li>
+              <li>Toggle light/dark theme with the moon icon.</li>
+              <li>Edit your name by tapping it above.</li>
+            </ul>
+          </div>
+
+          <div id="messages" class="chat-messages" aria-live="polite"></div>
+
+          <div id="typing-indicator" class="typing-indicator" aria-hidden="true">
+            <span class="typing-dot"></span>
+            <span class="typing-dot"></span>
+            <span class="typing-dot"></span>
+          </div>
+        </section>
+      </main>
+
+      <footer class="chat-footer">
+        <form id="message-form" class="message-form" autocomplete="off">
+          <input
+            id="message-input"
+            class="message-input"
+            type="text"
+            placeholder="Type a message..."
+            autocomplete="off"
+            aria-label="Type a message"
+          />
+          <button
+            class="send-button"
+            id="send-button"
+            type="submit"
+            aria-label="Send message"
+          >
+            Send
+          </button>
+        </form>
+      </footer>
+    </div>
+
+    <template id="message-template">
+      <article class="message">
+        <div class="message-bubble">
+          <div class="message-text"></div>
+          <div class="message-meta">
+            <span class="message-sender"></span>
+            <span class="message-time"></span>
+          </div>
+          <button
+            class="message-delete"
+            type="button"
+            aria-label="Delete message"
+          >
+            ×
+          </button>
+        </div>
+      </article>
+    </template>
+
+    <template id="system-message-template">
+      <article class="message message-system">
+        <div class="message-system-text"></div>
+      </article>
+    </template>
+
+    <template id="date-separator-template">
+      <div class="date-separator">
+        <span class="date-separator-label"></span>
+      </div>
+    </template>
+
+    <script src="script.js" defer></script>
+  </body>
+</html>
+

@@ -1,0 +1,249 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #4a5568;
+}
+
+.container {
+    display: flex;
+    gap: 2rem;
+    max-width: 1000px;
+    width: 100%;
+    padding: 1rem;
+}
+
+.timer-card {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    flex: 1;
+    max-width: 400px;
+}
+
+.session-info {
+    margin-bottom: 2rem;
+}
+
+.session-info h2 {
+    color: #2d3748;
+    margin-bottom: 0.5rem;
+    font-weight: 300;
+}
+
+.session-progress {
+    color: #718096;
+    font-size: 0.9rem;
+}
+
+.timer-display {
+    margin: 2rem 0;
+    position: relative;
+}
+
+.progress-ring {
+    position: relative;
+    display: inline-block;
+}
+
+.progress-svg {
+    transform: rotate(-90deg);
+}
+
+.progress-bg {
+    fill: none;
+    stroke: #e2e8f0;
+    stroke-width: 8;
+}
+
+.progress-bar {
+    fill: none;
+    stroke: #81c784;
+    stroke-width: 8;
+    stroke-linecap: round;
+    stroke-dasharray: 565.48;
+    stroke-dashoffset: 565.48;
+    transition: stroke-dashoffset 1s ease;
+}
+
+.time-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2.5rem;
+    font-weight: 300;
+    color: #2d3748;
+}
+
+.controls {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin: 2rem 0;
+}
+
+.btn {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 25px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.btn.primary {
+    background: #81c784;
+    color: white;
+}
+
+.btn.primary:hover {
+    background: #66bb6a;
+    transform: translateY(-2px);
+}
+
+.btn.secondary {
+    background: #e2e8f0;
+    color: #4a5568;
+}
+
+.btn.secondary:hover {
+    background: #cbd5e0;
+}
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.btn.small {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+}
+
+.settings {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 1rem;
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid #e2e8f0;
+}
+
+.setting-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.setting-group label {
+    font-size: 0.9rem;
+    color: #718096;
+}
+
+.setting-group input {
+    padding: 0.5rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 1rem;
+}
+
+.stats-panel {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    flex: 0 0 250px;
+    height: fit-content;
+}
+
+.stats-panel h3 {
+    color: #2d3748;
+    margin-bottom: 1.5rem;
+    font-weight: 300;
+}
+
+.stat-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #f7fafc;
+}
+
+.stat-item:last-of-type {
+    border-bottom: none;
+    margin-bottom: 2rem;
+}
+
+/* Break session styling */
+.break-session .progress-bar {
+    stroke: #64b5f6;
+}
+
+.break-session .session-info h2 {
+    color: #1976d2;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .timer-card {
+        max-width: none;
+        width: 100%;
+    }
+    
+    .stats-panel {
+        flex: none;
+        width: 100%;
+    }
+    
+    .controls {
+        flex-wrap: wrap;
+    }
+    
+    .time-text {
+        font-size: 2rem;
+    }
+    
+    .settings {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .timer-card {
+        padding: 1.5rem;
+    }
+    
+    .progress-svg {
+        width: 150px;
+        height: 150px;
+    }
+    
+    .progress-bg, .progress-bar {
+        r: 65;
+    }
+    
+    .time-text {
+        font-size: 1.8rem;
+    }
+}

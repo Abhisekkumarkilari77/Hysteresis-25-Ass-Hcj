@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Habit Tracker · Calendar Heatmap</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="app-header">
+        <div class="header-main">
+          <h1 class="app-title">Habit Tracker</h1>
+          <p class="header-subtitle">Build quiet, steady progress over time.</p>
+        </div>
+        <div class="header-meta">
+          <div class="header-date" id="currentDate"></div>
+          <p class="header-motivation" id="motivationLine">
+            Small steps today become strong habits tomorrow.
+          </p>
+        </div>
+      </header>
+
+      <main class="app-main">
+        <!-- Add Habit Section -->
+        <section class="card add-habit-section" aria-labelledby="addHabitHeading">
+          <div class="card-header">
+            <h2 id="addHabitHeading">Add a habit</h2>
+            <p class="card-subtitle">Keep it small, clear, and sustainable.</p>
+          </div>
+          <form id="addHabitForm" class="add-habit-form">
+            <div class="form-row">
+              <label class="form-field">
+                <span class="field-label">Habit name</span>
+                <input
+                  type="text"
+                  id="habitNameInput"
+                  required
+                  maxlength="60"
+                  placeholder="e.g. Read 10 pages"
+                />
+              </label>
+            </div>
+            <div class="form-row">
+              <label class="form-field">
+                <span class="field-label optional">Description (optional)</span>
+                <input
+                  type="text"
+                  id="habitDescriptionInput"
+                  maxlength="120"
+                  placeholder="Why this habit matters to you"
+                />
+              </label>
+            </div>
+            <div class="form-row form-row-inline">
+              <label class="form-field inline">
+                <span class="field-label">Start date</span>
+                <input type="date" id="habitStartDateInput" />
+              </label>
+              <label class="form-field inline">
+                <span class="field-label">Frequency</span>
+                <select id="habitFrequencyInput">
+                  <option value="daily" selected>Daily</option>
+                  <option value="weekdays">Weekdays</option>
+                  <option value="custom" disabled>Custom (coming soon)</option>
+                </select>
+              </label>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary">
+                Add habit
+              </button>
+            </div>
+          </form>
+          <p class="microcopy">
+            Aim for habits that feel almost too easy to skip. Consistency beats
+            intensity.
+          </p>
+        </section>
+
+        <!-- Today's Habits -->
+        <section
+          class="card today-section"
+          aria-labelledby="todayHabitsHeading"
+        >
+          <div class="card-header">
+            <h2 id="todayHabitsHeading">Today</h2>
+            <p class="card-subtitle" id="todaySummary">
+              See what you chose to show up for today.
+            </p>
+          </div>
+          <div id="todayHabitsEmpty" class="empty-state">
+            <p class="empty-title">No habits yet</p>
+            <p class="empty-body">
+              Add a habit above to begin tracking gentle, consistent progress.
+            </p>
+          </div>
+          <ul
+            id="todayHabitList"
+            class="habit-list"
+            aria-label="Today's habits"
+          ></ul>
+        </section>
+
+        <!-- Calendar & Stats Layout -->
+        <section class="grid-two-column">
+          <!-- Calendar Heatmap -->
+          <section
+            class="card heatmap-section"
+            aria-labelledby="heatmapHeading"
+          >
+            <div class="card-header">
+              <div class="card-header-main">
+                <h2 id="heatmapHeading">Consistency calendar</h2>
+                <p class="card-subtitle">
+                  Each square is a day. Deeper greens mean more completion.
+                </p>
+              </div>
+              <div class="heatmap-legend" aria-hidden="true">
+                <span class="legend-label">Less</span>
+                <span class="legend-swatch heatmap-level-0"></span>
+                <span class="legend-swatch heatmap-level-1"></span>
+                <span class="legend-swatch heatmap-level-2"></span>
+                <span class="legend-swatch heatmap-level-3"></span>
+                <span class="legend-label">More</span>
+              </div>
+            </div>
+            <div class="heatmap-controls">
+              <button
+                type="button"
+                class="chip chip-active"
+                data-range="year"
+                id="rangeYearBtn"
+              >
+                Last 12 months
+              </button>
+              <button
+                type="button"
+                class="chip"
+                data-range="month"
+                id="rangeMonthBtn"
+              >
+                This month
+              </button>
+            </div>
+            <div class="heatmap-wrapper">
+              <div class="heatmap-weekdays">
+                <span>Mon</span>
+                <span></span>
+                <span>Wed</span>
+                <span></span>
+                <span>Fri</span>
+                <span></span>
+                <span>Sun</span>
+              </div>
+              <div
+                id="heatmapGrid"
+                class="heatmap-grid"
+                aria-label="Calendar heatmap"
+                role="grid"
+              ></div>
+            </div>
+            <div id="heatmapEmpty" class="empty-state small">
+              <p class="empty-title">Your calendar will grow with you</p>
+              <p class="empty-body">
+                Once you complete habits, days will gently fill in with color.
+              </p>
+            </div>
+          </section>
+
+          <!-- Stats Panel -->
+          <section class="card stats-section" aria-labelledby="statsHeading">
+            <div class="card-header">
+              <h2 id="statsHeading">Progress &amp; stats</h2>
+              <p class="card-subtitle">
+                A calm overview of how your effort adds up.
+              </p>
+            </div>
+            <div class="stats-grid">
+              <div class="stat-card">
+                <p class="stat-label">Current streak</p>
+                <p class="stat-value" id="currentStreakValue">0 days</p>
+                <p class="stat-footnote" id="currentStreakNote">
+                  Every string of days starts with one.
+                </p>
+              </div>
+              <div class="stat-card">
+                <p class="stat-label">Longest streak</p>
+                <p class="stat-value" id="longestStreakValue">0 days</p>
+                <p class="stat-footnote">
+                  Your best run of showing up so far.
+                </p>
+              </div>
+              <div class="stat-card">
+                <p class="stat-label">Habits completed today</p>
+                <p class="stat-value" id="completedTodayValue">0</p>
+                <p class="stat-footnote" id="completedTodayNote">
+                  Check off at least one habit to keep the chain alive.
+                </p>
+              </div>
+              <div class="stat-card">
+                <p class="stat-label">Overall completion</p>
+                <p class="stat-value" id="completionRateValue">0%</p>
+                <p class="stat-footnote">
+                  Based on completed vs. possible habit check-ins.
+                </p>
+              </div>
+            </div>
+          </section>
+        </section>
+      </main>
+
+      <footer class="app-footer">
+        <p class="footer-text">
+          Data is stored locally in your browser. This is your quiet space to
+          experiment with habits.
+        </p>
+      </footer>
+    </div>
+
+    <!-- Tooltip element -->
+    <div id="tooltip" class="tooltip" role="tooltip" aria-hidden="true"></div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
+

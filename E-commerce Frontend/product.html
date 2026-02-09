@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hysteresis Shop – Product Details</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body data-page="product">
+    <header class="site-header">
+      <div class="container header-inner">
+        <a href="index.html" class="logo">
+          <span class="logo-mark">H</span>
+          <span class="logo-text">Hysteresis Shop</span>
+        </a>
+        <div class="header-actions">
+          <a href="cart.html" class="cart-link">
+            <span class="cart-icon">🛒</span>
+            <span class="cart-label">Cart</span>
+            <span class="cart-count-badge" id="cart-count">0</span>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main class="page-main">
+      <div class="container product-detail-layout">
+        <a href="index.html" class="link-muted back-link">← Back to shopping</a>
+
+        <section class="product-detail">
+          <div class="product-media">
+            <img
+              id="product-image"
+              src=""
+              alt=""
+              class="product-detail-image"
+            />
+            <div class="product-media-strip" id="product-thumbnails">
+              <!-- Optional gallery thumbnails -->
+            </div>
+          </div>
+
+          <div class="product-info">
+            <h1 id="product-name"></h1>
+            <div class="product-meta">
+              <div class="product-price-row">
+                <span id="product-price" class="product-price"></span>
+                <span id="product-stock" class="product-stock"></span>
+              </div>
+              <div class="product-rating-row">
+                <span id="product-rating" class="rating-pill"></span>
+                <span id="product-reviews" class="rating-count"></span>
+              </div>
+            </div>
+
+            <p id="product-description" class="product-description"></p>
+
+            <form id="add-to-cart-form" class="add-to-cart-form">
+              <label class="field">
+                <span class="field-label">Quantity</span>
+                <input
+                  id="quantity-input"
+                  class="input"
+                  type="number"
+                  min="1"
+                  value="1"
+                  step="1"
+                />
+              </label>
+              <button
+                type="submit"
+                id="add-to-cart-button"
+                class="btn btn-primary"
+              >
+                Add to Cart
+              </button>
+            </form>
+
+            <div class="product-specs">
+              <h2>Specifications</h2>
+              <dl id="product-specs-list" class="specs-list">
+                <!-- Specs injected by JS -->
+              </dl>
+            </div>
+          </div>
+        </section>
+
+        <section class="product-detail-extra">
+          <h2>Shipping & Returns</h2>
+          <ul>
+            <li>Fast, reliable shipping (mocked for demo purposes).</li>
+            <li>No real payments are processed on this demo site.</li>
+            <li>Designed to demonstrate modern e-commerce UX patterns.</li>
+          </ul>
+        </section>
+
+        <section class="related-products">
+          <div class="section-heading">
+            <h2>You may also like</h2>
+          </div>
+          <div id="related-product-grid" class="product-grid">
+            <!-- Related products injected by JS -->
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <div id="toast" class="toast" aria-live="polite"></div>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <p>Mock product details UI for demonstration. No real inventory or orders.</p>
+      </div>
+    </footer>
+
+    <script src="js/products.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+  </html>
+

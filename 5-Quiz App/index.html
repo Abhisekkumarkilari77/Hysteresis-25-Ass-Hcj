@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Application</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Welcome Screen -->
+        <div id="welcomeScreen" class="screen active">
+            <h1>Quiz Application</h1>
+            <p>Test your knowledge with 10 multiple-choice questions</p>
+            <div id="savedScores" class="saved-scores"></div>
+            <button onclick="startQuiz()" class="btn btn-primary">Start Quiz</button>
+            <button onclick="clearSavedData()" class="btn btn-secondary">Clear Saved Data</button>
+        </div>
+
+        <!-- Quiz Screen -->
+        <div id="quizScreen" class="screen">
+            <div class="quiz-header">
+                <div class="question-counter">
+                    <span id="currentQuestion">1</span> of <span id="totalQuestions">10</span>
+                </div>
+                <div class="progress-bar">
+                    <div id="progressFill" class="progress-fill"></div>
+                </div>
+            </div>
+
+            <div class="quiz-body">
+                <h2 id="questionText" class="question-text"></h2>
+                <div id="optionsContainer" class="options-container"></div>
+            </div>
+
+            <div class="quiz-footer">
+                <button id="prevBtn" onclick="previousQuestion()" class="btn btn-secondary">Previous</button>
+                <button id="nextBtn" onclick="nextQuestion()" class="btn btn-primary" disabled>Next</button>
+            </div>
+        </div>
+
+        <!-- Result Screen -->
+        <div id="resultScreen" class="screen">
+            <h1>Quiz Completed!</h1>
+            <div class="result-card">
+                <div class="score-display">
+                    <div class="score-number" id="finalScore">0</div>
+                    <div class="score-label">out of <span id="totalScore">10</span></div>
+                </div>
+                <div class="percentage" id="percentage">0%</div>
+                <div class="performance-message" id="performanceMessage"></div>
+                <div class="result-details">
+                    <div class="result-item">
+                        <span class="result-label">Correct:</span>
+                        <span id="correctCount" class="result-value correct">0</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Incorrect:</span>
+                        <span id="incorrectCount" class="result-value incorrect">0</span>
+                    </div>
+                </div>
+            </div>
+            <div class="result-actions">
+                <button onclick="restartQuiz()" class="btn btn-primary">Restart Quiz</button>
+                <button onclick="reviewAnswers()" class="btn btn-secondary">Review Answers</button>
+            </div>
+        </div>
+
+        <!-- Review Screen -->
+        <div id="reviewScreen" class="screen">
+            <h1>Answer Review</h1>
+            <div id="reviewContainer" class="review-container"></div>
+            <button onclick="backToResults()" class="btn btn-primary">Back to Results</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

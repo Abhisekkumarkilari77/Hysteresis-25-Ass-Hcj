@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login | Auth UI</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body data-page="login" class="light-theme">
+    <div id="toast-container"></div>
+
+    <main class="auth-wrapper">
+      <section class="auth-card fade-in-up">
+        <header class="auth-header">
+          <div class="brand">
+            <span class="brand-mark"></span>
+            <span class="brand-text">Hysteresis Auth</span>
+          </div>
+          <button class="theme-toggle" type="button" aria-label="Toggle dark mode">
+            <span class="theme-toggle-thumb"></span>
+            <span class="theme-toggle-label">Light</span>
+          </button>
+        </header>
+
+        <h1 class="auth-title">Welcome back</h1>
+        <p class="auth-subtitle">Sign in to access your dashboard.</p>
+        <p class="auth-subtitle">
+          Default login (UI only) – Email: <strong>demo@example.com</strong>,
+          Password: <strong>Password123</strong>
+        </p>
+
+        <form id="login-form" class="auth-form" novalidate>
+          <div class="form-field">
+            <label for="login-identifier">Email or username</label>
+            <input
+              id="login-identifier"
+              name="identifier"
+              type="text"
+              autocomplete="username"
+              required
+            />
+            <p class="field-error" aria-live="polite"></p>
+          </div>
+
+          <div class="form-field form-field--password">
+            <label for="login-password">Password</label>
+            <div class="password-input-wrapper">
+              <input
+                id="login-password"
+                name="password"
+                type="password"
+                autocomplete="current-password"
+                required
+              />
+              <button
+                class="password-toggle"
+                type="button"
+                aria-label="Show password"
+              >
+                Show
+              </button>
+            </div>
+            <p class="field-error" aria-live="polite"></p>
+          </div>
+
+          <div class="form-row form-row--between">
+            <label class="checkbox">
+              <input id="remember-me" name="remember" type="checkbox" />
+              <span class="checkbox-box"></span>
+              <span class="checkbox-label">Remember me</span>
+            </label>
+            <a href="forgot.html" class="link">Forgot password?</a>
+          </div>
+
+          <button
+            id="login-submit"
+            class="btn btn-primary btn-full"
+            type="submit"
+            disabled
+          >
+            <span class="btn-label">Log in</span>
+            <span class="btn-spinner" aria-hidden="true"></span>
+          </button>
+        </form>
+
+        <footer class="auth-footer">
+          <p>
+            Don’t have an account?
+            <a href="signup.html" class="link">Sign up</a>
+          </p>
+        </footer>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+  </html>

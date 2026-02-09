@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hysteresis Shop – Home</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body data-page="home">
+    <header class="site-header">
+      <div class="container header-inner">
+        <a href="index.html" class="logo">
+          <span class="logo-mark">H</span>
+          <span class="logo-text">Hysteresis Shop</span>
+        </a>
+        <div class="header-actions">
+          <form class="search-form" id="search-form">
+            <input
+              type="search"
+              id="search-input"
+              class="search-input"
+              placeholder="Search for products"
+              autocomplete="off"
+            />
+          </form>
+          <a href="cart.html" class="cart-link">
+            <span class="cart-icon">🛒</span>
+            <span class="cart-label">Cart</span>
+            <span class="cart-count-badge" id="cart-count">0</span>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main class="page-main">
+      <section class="hero-section">
+        <div class="container hero-inner">
+          <div class="hero-copy">
+            <h1>Shop trusted products with a clean, modern experience.</h1>
+            <p>
+              Curated electronics, accessories, and lifestyle products with a focus on
+              quality, price transparency, and a frictionless checkout journey.
+            </p>
+          </div>
+          <div class="hero-meta">
+            <div class="hero-stat">
+              <span class="hero-stat-label">Secure checkout</span>
+              <span class="hero-stat-value">Mocked, frontend only</span>
+            </div>
+            <div class="hero-stat">
+              <span class="hero-stat-label">Products</span>
+              <span class="hero-stat-value" id="hero-product-count">0</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="product-section">
+        <div class="container">
+          <div class="product-toolbar">
+            <h2>Featured Products</h2>
+            <div class="toolbar-controls">
+              <label class="field">
+                <span class="field-label">Category</span>
+                <select id="category-filter" class="select">
+                  <option value="all">All categories</option>
+                </select>
+              </label>
+              <label class="field">
+                <span class="field-label">Sort by</span>
+                <select id="sort-filter" class="select">
+                  <option value="featured">Featured</option>
+                  <option value="price-asc">Price: Low to High</option>
+                  <option value="price-desc">Price: High to Low</option>
+                  <option value="rating-desc">Rating: High to Low</option>
+                </select>
+              </label>
+            </div>
+          </div>
+
+          <div id="product-grid" class="product-grid">
+            <!-- Products injected by JS -->
+          </div>
+
+          <p id="product-empty-state" class="empty-state" hidden>
+            No products match your search. Try adjusting your filters.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <div id="toast" class="toast" aria-live="polite"></div>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <p>Mock e-commerce UI for portfolio use. No real purchases are processed.</p>
+        <p>Built with semantic HTML, modern CSS, and vanilla JavaScript.</p>
+      </div>
+    </footer>
+
+    <script src="js/products.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+  </html>
+

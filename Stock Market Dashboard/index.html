@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stock Market Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell" data-theme="light">
+      <header class="header">
+        <div class="header-left">
+          <div class="logo">
+            <span class="logo-mark">SM</span>
+            <span class="logo-text">Stock Monitor</span>
+          </div>
+          <div class="market-status" id="marketStatus"></div>
+        </div>
+        <div class="header-center">
+          <div class="search-wrapper">
+            <input
+              type="search"
+              id="searchInput"
+              class="search-input"
+              placeholder="Search by symbol or company..."
+            />
+          </div>
+        </div>
+        <div class="header-right">
+          <div class="market-toggle">
+            <button class="toggle-button active" data-market="india">
+              India
+            </button>
+            <button class="toggle-button" data-market="us">US</button>
+          </div>
+          <button class="icon-button" id="themeToggle" aria-label="Toggle theme">
+            <span class="icon-moon"></span>
+          </button>
+        </div>
+      </header>
+
+      <main class="main">
+        <section class="top-bar">
+          <div class="last-updated" id="lastUpdated"></div>
+          <button class="ghost-button" id="refreshButton">Refresh data</button>
+        </section>
+
+        <section class="indices-section">
+          <div class="section-header">
+            <h2>Market overview</h2>
+          </div>
+          <div class="indices-grid" id="indicesGrid"></div>
+        </section>
+
+        <section class="controls-section">
+          <div class="filters">
+            <div class="filter-group">
+              <label for="sectorFilter">Sector</label>
+              <select id="sectorFilter">
+                <option value="all">All sectors</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <label for="capFilter">Market cap</label>
+              <select id="capFilter">
+                <option value="all">All</option>
+                <option value="large">Large cap</option>
+                <option value="mid">Mid cap</option>
+                <option value="small">Small cap</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <label>Price range</label>
+              <div class="range-row">
+                <input
+                  type="number"
+                  id="priceMin"
+                  class="range-input"
+                  placeholder="Min"
+                  min="0"
+                />
+                <span class="range-separator">–</span>
+                <input
+                  type="number"
+                  id="priceMax"
+                  class="range-input"
+                  placeholder="Max"
+                  min="0"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="sorting">
+            <div class="filter-group">
+              <label for="sortField">Sort by</label>
+              <select id="sortField">
+                <option value="percent">% change</option>
+                <option value="price">Price</option>
+                <option value="volume">Volume</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <label for="sortDirection">Order</label>
+              <select id="sortDirection">
+                <option value="desc">High → Low</option>
+                <option value="asc">Low → High</option>
+              </select>
+            </div>
+          </div>
+        </section>
+
+        <section class="content-layout">
+          <section class="stocks-section">
+            <div class="section-header">
+              <h2>Stocks</h2>
+              <div class="trend-toggle" id="trendToggle">
+                <button class="toggle-button-sm active" data-range="daily">
+                  Daily
+                </button>
+                <button class="toggle-button-sm" data-range="weekly">
+                  Weekly
+                </button>
+                <button class="toggle-button-sm" data-range="monthly">
+                  Monthly
+                </button>
+              </div>
+            </div>
+            <div class="stocks-grid" id="stocksGrid"></div>
+            <div class="empty-state" id="stocksEmptyState" hidden>
+              No stocks match the current filters.
+            </div>
+          </section>
+
+          <aside class="side-panels">
+            <section class="panel">
+              <div class="section-header compact">
+                <h3>Top movers</h3>
+                <div class="tab-toggle" id="moversTabs">
+                  <button
+                    class="toggle-button-sm active"
+                    data-movers-tab="gainers"
+                  >
+                    Gainers
+                  </button>
+                  <button class="toggle-button-sm" data-movers-tab="losers">
+                    Losers
+                  </button>
+                </div>
+              </div>
+              <div class="movers-tables">
+                <table class="movers-table" id="gainersTable">
+                  <thead>
+                    <tr>
+                      <th>Symbol</th>
+                      <th class="text-right">% Chg</th>
+                      <th class="text-right">Price</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+                <table class="movers-table" id="losersTable" hidden>
+                  <thead>
+                    <tr>
+                      <th>Symbol</th>
+                      <th class="text-right">% Chg</th>
+                      <th class="text-right">Price</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+            </section>
+
+            <section class="panel">
+              <div class="section-header compact">
+                <h3>Watchlist</h3>
+              </div>
+              <div class="watchlist" id="watchlistPanel">
+                <div class="empty-state small" id="watchlistEmpty">
+                  No stocks in your watchlist yet.
+                </div>
+                <ul class="watchlist-list" id="watchlistList"></ul>
+              </div>
+            </section>
+
+            <section class="panel panel-news">
+              <div class="section-header compact">
+                <h3>Market news</h3>
+              </div>
+              <ul class="news-list" id="newsList"></ul>
+            </section>
+          </aside>
+        </section>
+      </main>
+
+      <footer class="footer">
+        <div class="footer-left">
+          <span class="disclaimer-label">Disclaimer</span>
+          <span class="disclaimer-text">
+            Mock data for educational use only. Not investment advice.
+          </span>
+        </div>
+        <div class="footer-right">
+          <span>Data source: Simulated (Yahoo Finance & NSE style)</span>
+        </div>
+      </footer>
+    </div>
+    <script src="stocksData.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
+

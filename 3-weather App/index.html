@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App - LocalStorage</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Weather Dashboard</h1>
+            <p class="subtitle">Manage your weather data</p>
+        </header>
+
+        <div class="weather-card">
+            <div class="weather-icon" id="weatherIcon">☀️</div>
+            <div class="temperature" id="temperature">22°C</div>
+            <div class="city" id="city">London</div>
+            <div class="condition" id="condition">Sunny</div>
+            
+            <div class="details">
+                <div class="detail-item">
+                    <span class="label">Humidity</span>
+                    <span class="value" id="humidity">65%</span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Wind Speed</span>
+                    <span class="value" id="windSpeed">12 km/h</span>
+                </div>
+            </div>
+        </div>
+
+        <button class="toggle-btn" id="toggleForm">Update Weather</button>
+
+        <div class="form-card" id="formCard">
+            <h2>Update Weather Data</h2>
+            <form id="weatherForm">
+                <div class="form-group">
+                    <label for="cityInput">City Name</label>
+                    <input type="text" id="cityInput" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="tempInput">Temperature (°C)</label>
+                    <input type="number" id="tempInput" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="conditionInput">Weather Condition</label>
+                    <select id="conditionInput" required>
+                        <option value="Sunny">☀️ Sunny</option>
+                        <option value="Cloudy">☁️ Cloudy</option>
+                        <option value="Rainy">🌧️ Rainy</option>
+                        <option value="Snowy">❄️ Snowy</option>
+                        <option value="Stormy">⛈️ Stormy</option>
+                        <option value="Foggy">🌫️ Foggy</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="humidityInput">Humidity (%)</label>
+                    <input type="number" id="humidityInput" min="0" max="100" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="windInput">Wind Speed (km/h)</label>
+                    <input type="number" id="windInput" min="0" required>
+                </div>
+                
+                <button type="submit" class="submit-btn">Save Weather</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

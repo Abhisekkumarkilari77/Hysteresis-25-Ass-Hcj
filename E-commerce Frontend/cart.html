@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hysteresis Shop – Cart</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body data-page="cart">
+    <header class="site-header">
+      <div class="container header-inner">
+        <a href="index.html" class="logo">
+          <span class="logo-mark">H</span>
+          <span class="logo-text">Hysteresis Shop</span>
+        </a>
+        <div class="header-actions">
+          <a href="cart.html" class="cart-link is-current">
+            <span class="cart-icon">🛒</span>
+            <span class="cart-label">Cart</span>
+            <span class="cart-count-badge" id="cart-count">0</span>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main class="page-main">
+      <div class="container cart-layout">
+        <section class="cart-items-section">
+          <h1>Your Cart</h1>
+          <p class="muted-text">
+            Review the items in your cart before proceeding to checkout.
+          </p>
+
+          <div id="cart-empty-state" class="empty-state" hidden>
+            Your cart is currently empty. Start shopping to add products.
+            <a href="index.html" class="link-muted">Browse products</a>
+          </div>
+
+          <div id="cart-items" class="cart-items">
+            <!-- Cart items injected by JS -->
+          </div>
+        </section>
+
+        <aside class="cart-summary">
+          <div class="summary-card">
+            <h2>Order Summary</h2>
+            <div class="summary-row">
+              <span>Subtotal</span>
+              <span id="summary-subtotal">₹0</span>
+            </div>
+            <div class="summary-row">
+              <span>Estimated shipping</span>
+              <span id="summary-shipping">₹0</span>
+            </div>
+            <div class="summary-divider"></div>
+            <div class="summary-row summary-total">
+              <span>Total</span>
+              <span id="summary-total">₹0</span>
+            </div>
+
+            <button
+              id="checkout-button"
+              class="btn btn-primary summary-cta"
+              type="button"
+            >
+              Proceed to Checkout
+            </button>
+
+            <button
+              id="continue-shopping-button"
+              class="btn btn-ghost"
+              type="button"
+            >
+              Continue Shopping
+            </button>
+
+            <p class="summary-note">
+              This is a demo checkout. Payments are not processed and no real orders
+              are created.
+            </p>
+          </div>
+        </aside>
+      </div>
+    </main>
+
+    <div id="toast" class="toast" aria-live="polite"></div>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <p>Cart and order summary UI implemented with localStorage-powered state.</p>
+      </div>
+    </footer>
+
+    <script src="js/products.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+  </html>
+

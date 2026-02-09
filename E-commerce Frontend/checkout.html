@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hysteresis Shop – Checkout</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body data-page="checkout">
+    <header class="site-header">
+      <div class="container header-inner">
+        <a href="index.html" class="logo">
+          <span class="logo-mark">H</span>
+          <span class="logo-text">Hysteresis Shop</span>
+        </a>
+        <div class="header-actions">
+          <a href="cart.html" class="cart-link">
+            <span class="cart-icon">🛒</span>
+            <span class="cart-label">Cart</span>
+            <span class="cart-count-badge" id="cart-count">0</span>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main class="page-main">
+      <div class="container checkout-layout" id="checkout-container">
+        <section class="checkout-form-section">
+          <h1>Checkout</h1>
+          <p class="muted-text">
+            This is a UI-only checkout to demonstrate a production-style flow. No real
+            payments are processed.
+          </p>
+
+          <form id="checkout-form" class="checkout-form">
+            <fieldset>
+              <legend>Shipping address</legend>
+              <div class="field-grid">
+                <label class="field">
+                  <span class="field-label">Full name</span>
+                  <input
+                    type="text"
+                    name="fullName"
+                    class="input"
+                    autocomplete="name"
+                    required
+                  />
+                </label>
+                <label class="field">
+                  <span class="field-label">Email</span>
+                  <input
+                    type="email"
+                    name="email"
+                    class="input"
+                    autocomplete="email"
+                    required
+                  />
+                </label>
+              </div>
+              <label class="field">
+                <span class="field-label">Address line</span>
+                <input
+                  type="text"
+                  name="address"
+                  class="input"
+                  autocomplete="street-address"
+                  required
+                />
+              </label>
+              <div class="field-grid">
+                <label class="field">
+                  <span class="field-label">City</span>
+                  <input type="text" name="city" class="input" required />
+                </label>
+                <label class="field">
+                  <span class="field-label">State</span>
+                  <input type="text" name="state" class="input" required />
+                </label>
+                <label class="field">
+                  <span class="field-label">PIN code</span>
+                  <input
+                    type="text"
+                    name="postalCode"
+                    class="input"
+                    inputmode="numeric"
+                    required
+                  />
+                </label>
+              </div>
+              <label class="field">
+                <span class="field-label">Phone</span>
+                <input
+                  type="tel"
+                  name="phone"
+                  class="input"
+                  autocomplete="tel"
+                  required
+                />
+              </label>
+            </fieldset>
+
+            <fieldset>
+              <legend>Payment method (demo)</legend>
+              <div class="radio-group">
+                <label class="radio-option">
+                  <input
+                    type="radio"
+                    name="paymentMethod"
+                    value="card"
+                    checked
+                  />
+                  <span>
+                    <span class="radio-title">Credit / Debit card</span>
+                    <span class="radio-subtitle">Simulated card entry (no real charge)</span>
+                  </span>
+                </label>
+                <label class="radio-option">
+                  <input type="radio" name="paymentMethod" value="upi" />
+                  <span>
+                    <span class="radio-title">UPI</span>
+                    <span class="radio-subtitle">Mock UPI flow for UX demonstration</span>
+                  </span>
+                </label>
+                <label class="radio-option">
+                  <input type="radio" name="paymentMethod" value="cod" />
+                  <span>
+                    <span class="radio-title">Cash on delivery</span>
+                    <span class="radio-subtitle">Pay upon delivery (demo only)</span>
+                  </span>
+                </label>
+              </div>
+            </fieldset>
+
+            <button
+              id="place-order-button"
+              type="submit"
+              class="btn btn-primary"
+            >
+              Place Order
+            </button>
+
+            <p class="summary-note">
+              For portfolio use only. Implement backend validation and payment handling
+              before going live.
+            </p>
+          </form>
+        </section>
+
+        <aside class="checkout-summary">
+          <div class="summary-card">
+            <h2>Order Summary</h2>
+            <div id="checkout-items" class="summary-items">
+              <!-- Items injected by JS -->
+            </div>
+            <div class="summary-row">
+              <span>Subtotal</span>
+              <span id="checkout-subtotal">₹0</span>
+            </div>
+            <div class="summary-row">
+              <span>Estimated shipping</span>
+              <span id="checkout-shipping">₹0</span>
+            </div>
+            <div class="summary-divider"></div>
+            <div class="summary-row summary-total">
+              <span>Total</span>
+              <span id="checkout-total">₹0</span>
+            </div>
+          </div>
+        </aside>
+      </div>
+
+      <section
+        id="checkout-confirmation"
+        class="checkout-confirmation container"
+        hidden
+      >
+        <div class="confirmation-card">
+          <h1>Order placed successfully (demo)</h1>
+          <p>
+            Thank you for exploring this e-commerce frontend. In a real
+            application, this is where you would see order details, tracking
+            information, and next steps.
+          </p>
+          <p id="confirmation-order-id" class="confirmation-order-id"></p>
+          <button
+            type="button"
+            id="confirmation-continue"
+            class="btn btn-primary"
+          >
+            Continue Shopping
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <div id="toast" class="toast" aria-live="polite"></div>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <p>Checkout UI is for demonstration only. No payments are processed.</p>
+      </div>
+    </footer>
+
+    <script src="js/products.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+  </html>
+

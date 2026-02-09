@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Real-time Crypto Price Tracker</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="app-root">
+      <header class="app-header">
+        <div class="header-left">
+          <h1 class="app-title">Real-time Crypto Price Tracker</h1>
+          <div class="market-status" id="market-status">
+            <span class="status-dot status-unknown"></span>
+            <span class="status-text">Status: Initializing…</span>
+          </div>
+        </div>
+        <div class="header-right">
+          <div class="last-updated" id="last-updated">
+            Last updated: <span class="last-updated-value">–</span>
+          </div>
+          <button class="theme-toggle-btn" id="theme-toggle-btn" type="button">
+            Toggle theme
+          </button>
+        </div>
+      </header>
+
+      <main class="app-main">
+        <section class="sidebar">
+          <div class="controls-card">
+            <h2 class="section-title">Market Controls</h2>
+            <div class="control-group">
+              <label for="currency-select">Display currency</label>
+              <select id="currency-select">
+                <option value="USD">USD – US Dollar</option>
+                <option value="EUR">EUR – Euro</option>
+                <option value="INR">INR – Indian Rupee</option>
+              </select>
+            </div>
+
+            <div class="control-group control-inline">
+              <label class="inline-label">
+                <input type="checkbox" id="favorites-only-toggle" />
+                Show favorites only
+              </label>
+            </div>
+          </div>
+
+          <div class="legend-card">
+            <h3 class="legend-title">Legend</h3>
+            <ul class="legend-list">
+              <li><span class="legend-dot legend-gain"></span> 24h gain</li>
+              <li><span class="legend-dot legend-loss"></span> 24h loss</li>
+              <li>Click a row to view its chart</li>
+              <li>Click ★ to add/remove favorites</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="content">
+          <div id="error-banner" class="error-banner hidden"></div>
+
+          <section class="crypto-list-section">
+            <div class="section-header">
+              <h2 class="section-title">Top Cryptocurrencies</h2>
+              <span class="section-subtitle">Live prices &amp; 24h changes</span>
+            </div>
+
+            <div class="crypto-table-wrapper">
+              <table class="crypto-table">
+                <thead>
+                  <tr>
+                    <th class="col-favorite"></th>
+                    <th class="col-name">Coin</th>
+                    <th
+                      class="col-price sortable"
+                      data-sort-key="price"
+                      id="th-price"
+                    >
+                      Price
+                      <span class="sort-indicator" data-for="price">↕</span>
+                    </th>
+                    <th
+                      class="col-change sortable"
+                      data-sort-key="change"
+                      id="th-change"
+                    >
+                      24h %
+                      <span class="sort-indicator" data-for="change">↕</span>
+                    </th>
+                    <th class="col-trend">Trend</th>
+                  </tr>
+                </thead>
+                <tbody id="crypto-table-body">
+                  <!-- Rows injected by script.js -->
+                </tbody>
+              </table>
+            </div>
+
+            <div id="loading-indicator" class="loading-indicator">
+              <div class="spinner"></div>
+              <span>Loading live market data…</span>
+            </div>
+          </section>
+
+          <section class="chart-section">
+            <div class="section-header">
+              <h2 class="section-title" id="chart-title">
+                Price chart
+              </h2>
+              <span
+                class="section-subtitle"
+                id="chart-subtitle"
+              >Select a coin to view its recent price movement.</span>
+            </div>
+
+            <div class="selected-coin-summary" id="selected-coin-summary">
+              <!-- Populated dynamically -->
+            </div>
+
+            <div class="chart-card">
+              <canvas id="price-chart" aria-label="Price chart" role="img"></canvas>
+            </div>
+          </section>
+        </section>
+      </main>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
+

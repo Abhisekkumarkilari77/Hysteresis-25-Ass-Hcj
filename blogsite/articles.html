@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Articles | Diploma Guy</title>
+  <meta name="description" content="Browse all articles, latest tech posts, and research papers. CSS-only tabs and filters, no JavaScript." />
+ <style>bg:#ffffff;--text:#0b1f16;--primary:#16a34a;--muted:#e6f3ea;--border:#d1e7d9;--radius:0.675rem;--max:1120px;}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;}
+a{color:var(--primary);}
+a:hover{text-decoration:underline;}
+.container{max-width:var(--max);margin-inline:auto;padding:1rem;}
+header{border-bottom:1px solid var(--border);background:linear-gradient(0deg,var(--bg),var(--muted));}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:0.75rem 0;}
+nav ul{display:flex;gap:1rem;list-style:none;margin:0;padding:0;flex-wrap:wrap;}
+nav a{display:inline-block;padding:.5rem .75rem;border-radius:.5rem;}
+nav a:hover,nav a:focus{background:var(--muted);text-decoration:none;}
+h1,h2,h3{margin:.5rem 0;}
+.grid{display:grid;gap:1rem;}
+@media(min-width:720px){.grid-3{grid-template-columns:repeat(3,1fr);}.grid-2{grid-template-columns:repeat(2,1fr);}}
+.card{border:1px solid var(--border);border-radius:var(--radius);padding:1rem;background:#fff;}
+.card img{width:100px;height:100px;object-fit:cover;border-radius:.5rem;display:block;margin-bottom:.5rem;}
+.meta{font-size:.85rem;color:#2a4f3b;}
+.tabs{margin-top:1rem;}
+.tabs input{position:absolute;inset:auto auto auto -9999px;}
+.tab-labels{display:flex;gap:.5rem;flex-wrap:wrap;}
+.tab-labels label{cursor:pointer;border:1px solid var(--border);border-radius:999px;padding:.4rem .9rem;background:#fff;}
+.tab-content{margin-top:1rem;}
+#tab-all:checked ~ .tab-content #panel-all,#tab-tech:checked ~ .tab-content #panel-tech,#tab-papers:checked ~ .tab-content #panel-papers{display:block;}
+.panel{display:none;}
+</style>
+</head>
+<body>
+  <header>
+    <div class="container topbar">
+      <div class="brand">
+        <a href="index.html" style="text-decoration:none;color:inherit;font-weight:700"> Diploma Guy</a>
+      </div>
+      <nav aria-label="Primary">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a aria-current="page" href="articles.html">Articles</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="certifications.html">Certifications</a></li>
+          <li><a href="about.html">Profile</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <h1>Articles</h1>
+    <p class="meta">Explore latest tech articles and research papers.</p>
+
+    <div class="tabs">
+      <input type="radio" name="tabs" id="tab-all" checked>
+      <input type="radio" name="tabs" id="tab-tech">
+      <input type="radio" name="tabs" id="tab-papers">
+
+      <div class="tab-labels" role="tablist" aria-label="Articles Tabs">
+        <label role="tab" for="tab-all" aria-controls="panel-all">All</label>
+        <label role="tab" for="tab-tech" aria-controls="panel-tech">Tech Articles</label>
+        <label role="tab" for="tab-papers" aria-controls="panel-papers">Research Papers</label>
+      </div>
+
+      <div class="tab-content">
+        <section id="panel-all" class="panel" aria-labelledby="tab-all">
+          <div class="grid grid-3">
+            <article class="card">
+              <img src="articleim/event.png" alt="Post cover">
+              <h3>Event-Driven Architectures Explained</h3>
+              <p class="meta">Systems • May 10, 2025 • 8 min</p>
+              <p>When events beat requests—and how to design clean contracts.</p>
+              <p><a href="#">Read Article</a></p>
+            </article>
+            <article class="card">
+              <img src="articleim/event.png" alt="Post cover">
+              <h3>Vector Databases for RAG</h3>
+              <p class="meta">AI • May 3, 2025 • 10 min</p>
+              <p>Tradeoffs across indexing, recall, and cost for production RAG.</p>
+              <p><a href="#">Read Article</a></p>
+            </article>
+            <article class="card">
+              <img src="articleim/event.png" alt="Post cover">
+              <h3>Auditing Smart Contracts</h3>
+              <p class="meta">Blockchain • Apr 26, 2025 • 7 min</p>
+              <p>Common pitfalls and how to avoid catastrophic on-chain bugs.</p>
+              <p><a href="#">Read Article</a></p>
+            </article>
+          </div>
+        </section>
+
+        <section id="panel-tech" class="panel" aria-labelledby="tab-tech">
+          <div class="grid grid-3">
+            <article class="card">
+              <img src="articleim/event.png" alt="Post cover">
+              <h3>Designing Scalable APIs</h3>
+              <p class="meta">Tech • May 2025</p>
+              <p>Principles and patterns for building robust, evolvable API platforms.</p>
+              <p><a href="#">Read Article</a></p>
+            </article>
+            <article class="card">
+              <img src="articleim/event.png" alt="Post cover">
+              <h3>Reliable CI/CD for Monorepos</h3>
+              <p class="meta">DevOps • Apr 2025</p>
+              <p>Getting fast builds and confident releases without scripts sprawl.</p>
+              <p><a href="#">Read Article</a></p>
+            </article>
+            <article class="card">
+              <img src="articleim/event.png" alt="Post cover">
+              <h3>State Machines for Frontends</h3>
+              <p class="meta">Frontend • Mar 2025</p>
+              <p>Model UIs as statecharts to reduce complexity and surprises.</p>
+              <p><a href="#">Read Article</a></p>
+            </article>
+          </div>
+        </section>
+
+        <section id="panel-papers" class="panel" aria-labelledby="tab-papers">
+          <div class="grid grid-2">
+            <article class="card">
+              <h3>Efficient RAG with Sparse + Dense Retrieval</h3>
+              <p class="meta">Authors: K. A. Kumar, et al. • 2025</p>
+              <p>We analyze hybrid retrieval strategies for improved precision at low latency.</p>
+              <p><a href="#">Abstract / PDF</a></p>
+            </article>
+            <article class="card">
+              <h3>Secure Payment Channels on L2</h3>
+              <p class="meta">Authors: K. A. Kumar, et al. • 2024</p>
+              <p>Protocol design for low-fee, high-throughput blockchain payments.</p>
+              <p><a href="#">Abstract / PDF</a></p>
+            </article>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer style="border-top:1px solid var(--border);padding:1.25rem 0;margin-top:2rem">
+    <div class="container" style="display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap">
+      <p class="meta">© 2025 Diploma Guy</p>
+      <nav aria-label="Sitemap">
+        <a href="index.html">Home</a> ·
+        <a href="gallery.html">Gallery</a> ·
+        <a href="certifications.html">Certifications</a> ·
+        <a href="about.html">Profile</a> ·
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>

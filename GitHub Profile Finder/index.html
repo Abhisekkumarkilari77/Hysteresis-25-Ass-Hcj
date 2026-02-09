@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Profile Finder</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1 class="logo">🔍 GitHub Profile Finder</h1>
+                <p class="tagline">Search for GitHub users and explore their profiles</p>
+            </div>
+        </header>
+
+        <!-- Search Section -->
+        <section class="search-section">
+            <div class="search-container">
+                <input 
+                    type="text" 
+                    id="searchInput" 
+                    class="search-input" 
+                    placeholder="Enter GitHub username..."
+                    autocomplete="off"
+                >
+                <button id="searchBtn" class="search-btn">Search</button>
+            </div>
+            <div id="error" class="error-message"></div>
+
+            <!-- Recent Searches -->
+            <div id="recentSearchesContainer" class="recent-searches-container" style="display: none;">
+                <div class="recent-searches-header">
+                    <p class="recent-label">💾 Recent Searches:</p>
+                    <button id="clearHistoryBtn" class="clear-history-btn" title="Clear all history">Clear</button>
+                </div>
+                <div id="recentSearchesList" class="recent-searches-list"></div>
+            </div>
+        </section>
+
+        <!-- Loading State -->
+        <div id="loading" class="loading" style="display: none;">
+            <div class="spinner"></div>
+            <p>Searching...</p>
+        </div>
+
+        <!-- Profile Section -->
+        <section id="profileSection" class="profile-section" style="display: none;">
+            <!-- Profile Card -->
+            <div class="profile-card">
+                <div class="profile-header">
+                    <img id="avatar" class="avatar" src="" alt="User Avatar">
+                    <div class="profile-info">
+                        <h2 id="name" class="full-name"></h2>
+                        <p id="username" class="user-handle"></p>
+                        <p id="bio" class="bio"></p>
+                        <div class="profile-meta">
+                            <span id="location" class="meta-item">
+                                <strong>📍</strong>
+                            </span>
+                            <span id="company" class="meta-item">
+                                <strong>🏢</strong>
+                            </span>
+                            <span id="blog" class="meta-item">
+                                <strong>🔗</strong>
+                            </span>
+                            <span id="joinDate" class="meta-item">
+                                <strong>📅</strong>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stats -->
+                <div class="stats-container">
+                    <div class="stat-card">
+                        <div class="stat-number" id="repoCount">0</div>
+                        <div class="stat-label">Repositories</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="followerCount">0</div>
+                        <div class="stat-label">Followers</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="followingCount">0</div>
+                        <div class="stat-label">Following</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="gistCount">0</div>
+                        <div class="stat-label">Gists</div>
+                    </div>
+                </div>
+
+                <!-- Profile Link -->
+                <a id="profileLink" class="profile-link" href="#" target="_blank">Visit GitHub Profile →</a>
+            </div>
+
+            <!-- Repositories Section -->
+            <section class="repositories-section">
+                <h3 class="section-title">📚 Latest Repositories</h3>
+                <div id="repoContainer" class="repo-grid">
+                    <!-- Repos will be inserted here -->
+                </div>
+                <p id="noRepos" class="no-repos" style="display: none;">No public repositories found.</p>
+            </section>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

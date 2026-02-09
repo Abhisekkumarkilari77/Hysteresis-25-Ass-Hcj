@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Gallery | Diploma Guy</title>
+  <meta name="description" content="A CSS-only gallery with :target lightbox. No JavaScript, fully responsive." />
+  <style>
+    :root {
+      --bg:#ffffff;
+      --text:#0b1f16;
+      --primary:#16a34a;
+      --muted:#e6f3ea;
+      --border:#d1e7d9;
+      --max:1120px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font: 16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    }
+    a { color: var(--primary); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    header {
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(0deg, var(--bg), var(--muted));
+      padding: 0.75rem 0;
+    }
+    .container {
+      max-width: var(--max);
+      margin: auto;
+      padding: 0 1rem;
+    }
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 1rem;
+    }
+    nav a {
+      padding: .4rem .6rem;
+      border-radius: .3rem;
+    }
+    nav a:hover {
+      background: var(--muted);
+      text-decoration: none;
+    }
+    h1 {
+      font-size: 1.6rem;
+      margin: 1rem 0;
+      text-align: center;
+    }
+
+    /* Gallery grid */
+    .grid {
+      display: grid;
+      gap: 0.75rem;
+    }
+    @media (min-width: 720px) {
+      .grid-3 { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    .thumb {
+      border: 1px solid var(--border);
+      border-radius: .4rem;
+      overflow: hidden;
+      background: #fff;
+    }
+    .thumb img {
+      width: 100%;
+      height: 230px;
+      object-fit: cover;
+      display: block;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 1rem 0;
+      margin-top: 1.5rem;
+      font-size: 0.9rem;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container topbar">
+      <div class="brand">
+        <a href="index.html" style="font-weight:700; color:inherit;"> Diploma Guy</a>
+      </div>
+      <nav aria-label="Primary">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="articles.html">Articles</a></li>
+          <li><a aria-current="page" href="gallery.html">Gallery</a></li>
+          <li><a href="certifications.html">Certifications</a></li>
+          <li><a href="about.html">Profile</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <h1>Gallery</h1>
+    <div class="grid grid-3">
+      <div class="thumb"><img src="gallary/IMG-20251014-WA0006.jpg" alt="Project 1"></div>
+      <div class="thumb"><img src="gallary/IMG-20251014-WA0004.jpg" alt="Project 2"></div>
+      <div class="thumb"><img src="gallary/IMG-20251014-WA0005.jpg" alt="Project 3"></div>
+      <div class="thumb"><img src="gallary/IMG-20251014-WA0007.jpg" alt="Project 4"></div>
+      <div class="thumb"><img src="gallary/IMG-20251014-WA0003.jpg" alt="Project 5"></div>
+      <div class="thumb"><img src="gallary/IMG-20251014-WA0008.jpg" alt="Project 6"></div>
+      <div class="thumb"><img src="gallary/IMG-20251014-WA0009.jpg" alt="Project 7"></div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>© 2025  Diploma Guy</p>
+      <p>
+        <a href="index.html">Home</a> ·
+        <a href="articles.html">Articles</a> ·
+        <a href="certifications.html">Certifications</a> ·
+        <a href="about.html">Profile</a> ·
+        <a href="contact.html">Contact</a>
+      </p>
+    </div>
+  </footer>
+</body>
+</html>

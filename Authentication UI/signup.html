@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign Up | Auth UI</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body data-page="signup" class="light-theme">
+    <div id="toast-container"></div>
+
+    <main class="auth-wrapper">
+      <section class="auth-card fade-in-up">
+        <header class="auth-header">
+          <div class="brand">
+            <span class="brand-mark"></span>
+            <span class="brand-text">Hysteresis Auth</span>
+          </div>
+          <button class="theme-toggle" type="button" aria-label="Toggle dark mode">
+            <span class="theme-toggle-thumb"></span>
+            <span class="theme-toggle-label">Light</span>
+          </button>
+        </header>
+
+        <h1 class="auth-title">Create your account</h1>
+        <p class="auth-subtitle">Join in a few simple steps.</p>
+
+        <form id="signup-form" class="auth-form" novalidate>
+          <div class="form-field">
+            <label for="signup-name">Full name</label>
+            <input
+              id="signup-name"
+              name="fullName"
+              type="text"
+              autocomplete="name"
+              required
+            />
+            <p class="field-error" aria-live="polite"></p>
+          </div>
+
+          <div class="form-field">
+            <label for="signup-email">Email address</label>
+            <input
+              id="signup-email"
+              name="email"
+              type="email"
+              autocomplete="email"
+              required
+            />
+            <p class="field-error" aria-live="polite"></p>
+          </div>
+
+          <div class="form-field form-field--password">
+            <label for="signup-password">Password</label>
+            <div class="password-input-wrapper">
+              <input
+                id="signup-password"
+                name="password"
+                type="password"
+                autocomplete="new-password"
+                required
+              />
+              <button
+                class="password-toggle"
+                type="button"
+                aria-label="Show password"
+              >
+                Show
+              </button>
+            </div>
+            <div class="password-strength" aria-hidden="true">
+              <div class="password-strength-bar"></div>
+              <span class="password-strength-label">Password strength</span>
+            </div>
+            <p class="field-hint">
+              Use at least 8 characters with a mix of letters and numbers.
+            </p>
+            <p class="field-error" aria-live="polite"></p>
+          </div>
+
+          <div class="form-field">
+            <label for="signup-confirm-password">Confirm password</label>
+            <div class="password-input-wrapper">
+              <input
+                id="signup-confirm-password"
+                name="confirmPassword"
+                type="password"
+                autocomplete="new-password"
+                required
+              />
+              <button
+                class="password-toggle"
+                type="button"
+                aria-label="Show password"
+              >
+                Show
+              </button>
+            </div>
+            <p class="field-error" aria-live="polite"></p>
+          </div>
+
+          <div class="form-field">
+            <label class="checkbox">
+              <input
+                id="signup-terms"
+                name="terms"
+                type="checkbox"
+                required
+              />
+              <span class="checkbox-box"></span>
+              <span class="checkbox-label">
+                I agree to the Terms &amp; Conditions
+              </span>
+            </label>
+            <p class="field-error" aria-live="polite"></p>
+          </div>
+
+          <button
+            id="signup-submit"
+            class="btn btn-primary btn-full"
+            type="submit"
+            disabled
+          >
+            <span class="btn-label">Create account</span>
+            <span class="btn-spinner" aria-hidden="true"></span>
+          </button>
+        </form>
+
+        <footer class="auth-footer">
+          <p>
+            Already have an account?
+            <a href="login.html" class="link">Log in</a>
+          </p>
+        </footer>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+  </html>

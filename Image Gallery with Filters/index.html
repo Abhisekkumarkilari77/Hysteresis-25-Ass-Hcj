@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Image Gallery with Filters</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    :root {
+      --bg: #f3f4f6;
+      --card-bg: #ffffff;
+      --accent: #6366f1;
+      --accent-soft: #e0e7ff;
+      --text-main: #111827;
+      --text-muted: #6b7280;
+      --shadow-soft: 0 10px 25px rgba(15, 23, 42, 0.12);
+      --radius-card: 14px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      background: var(--bg);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      color: var(--text-main);
+      display: flex;
+      justify-content: center;
+    }
+
+    .page {
+      width: 100%;
+      max-width: 1100px;
+      padding: 1.75rem 1.25rem 2.5rem;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 1.75rem;
+    }
+
+    header h1 {
+      font-size: 1.9rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      margin-bottom: 0.45rem;
+    }
+
+    header p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: center;
+    }
+
+    .filter-btn {
+      border: none;
+      border-radius: 999px;
+      padding: 0.45rem 0.9rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+      background: #e5e7eb;
+      color: var(--text-main);
+      cursor: pointer;
+      transition:
+        background 0.15s ease,
+        color 0.15s ease,
+        transform 0.08s ease,
+        box-shadow 0.15s ease;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.1);
+    }
+
+    .filter-btn:hover {
+      background: #d1d5db;
+    }
+
+    .filter-btn.active {
+      background: var(--accent);
+      color: #eef2ff;
+      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+    }
+
+    .search-wrapper {
+      flex: 1 1 200px;
+      max-width: 260px;
+      position: relative;
+    }
+
+    .search-wrapper input {
+      width: 100%;
+      border-radius: 999px;
+      border: 1px solid #d1d5db;
+      padding: 0.45rem 0.9rem 0.45rem 2.1rem;
+      font-size: 0.9rem;
+      outline: none;
+      background: #f9fafb;
+      transition: border-color 0.12s ease, box-shadow 0.12s ease,
+        background 0.12s ease;
+    }
+
+    .search-wrapper input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.3);
+      background: #ffffff;
+    }
+
+    .search-wrapper span {
+      position: absolute;
+      left: 0.75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.8rem;
+      color: #9ca3af;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.2rem;
+    }
+
+    .gallery-item {
+      background: var(--card-bg);
+      border-radius: var(--radius-card);
+      overflow: hidden;
+      box-shadow: var(--shadow-soft);
+      cursor: pointer;
+      position: relative;
+      transform: translateY(0);
+      transition:
+        transform 0.18s ease,
+        box-shadow 0.18s ease;
+      animation: fadeInScale 0.35s ease both;
+    }
+
+    .gallery-item:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 35px rgba(15, 23, 42, 0.18);
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 170px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.35s ease;
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.03);
+    }
+
+    .gallery-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(15, 23, 42, 0.5),
+        rgba(15, 23, 42, 0)
+      );
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    .gallery-item:hover .gallery-overlay {
+      opacity: 1;
+    }
+
+    .gallery-info {
+      position: absolute;
+      left: 0.85rem;
+      right: 0.85rem;
+      bottom: 0.8rem;
+      color: #f9fafb;
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+      pointer-events: none;
+    }
+
+    .gallery-title {
+      font-size: 0.9rem;
+      font-weight: 500;
+      text-shadow: 0 1px 3px rgba(15, 23, 42, 0.7);
+    }
+
+    .gallery-category {
+      font-size: 0.75rem;
+      opacity: 0.9;
+    }
+
+    .empty-message {
+      grid-column: 1 / -1;
+      text-align: center;
+      color: var(--text-muted);
+      padding: 1.5rem 0;
+    }
+
+    /* Modal */
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.7);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      z-index: 20;
+    }
+
+    .modal.open {
+      display: flex;
+      animation: fadeIn 0.25s ease;
+    }
+
+    .modal-content {
+      max-width: 800px;
+      width: 100%;
+      background: #f9fafb;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 22px 50px rgba(15, 23, 42, 0.4);
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    }
+
+    .modal-image-wrapper {
+      background: #000;
+    }
+
+    .modal-image-wrapper img {
+      width: 100%;
+      height: 100%;
+      max-height: 480px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .modal-info {
+      padding: 1.1rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 0.75rem;
+    }
+
+    .modal-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    .modal-category {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.25rem 0.7rem;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: #4338ca;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+
+    .modal-close {
+      border: none;
+      background: transparent;
+      font-size: 1.4rem;
+      cursor: pointer;
+      color: #6b7280;
+      padding: 0.1rem 0.2rem;
+      margin-left: auto;
+      line-height: 1;
+    }
+
+    .modal-close:hover {
+      color: #111827;
+    }
+
+    .modal-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
+      color: #6b7280;
+    }
+
+    .modal-hint {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem 0.7rem;
+    }
+
+    .modal-hint span {
+      white-space: nowrap;
+    }
+
+    .modal-index {
+      opacity: 0.9;
+    }
+
+    @media (max-width: 768px) {
+      .modal-content {
+        grid-template-columns: 1fr;
+      }
+
+      .modal-image-wrapper img {
+        max-height: 320px;
+      }
+    }
+
+    @keyframes fadeInScale {
+      from {
+        opacity: 0;
+        transform: translateY(6px) scale(0.98);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <h1>Image Gallery</h1>
+      <p>Browse by category and preview images in a clean, responsive layout.</p>
+    </header>
+
+    <section class="controls">
+      <div class="filters" aria-label="Category filters">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="Nature">Nature</button>
+        <button class="filter-btn" data-filter="Travel">Travel</button>
+        <button class="filter-btn" data-filter="Technology">Technology</button>
+        <button class="filter-btn" data-filter="People">People</button>
+        <button class="filter-btn" data-filter="Architecture">Architecture</button>
+        <button class="filter-btn" data-filter="Others">Others</button>
+      </div>
+      <div class="search-wrapper">
+        <span>🔍</span>
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="Search by title..."
+          aria-label="Search images by title"
+        />
+      </div>
+    </section>
+
+    <section id="gallery" class="gallery-grid" aria-live="polite"></section>
+  </div>
+
+  <!-- Modal -->
+  <div id="imageModal" class="modal" aria-hidden="true">
+    <div class="modal-content" role="dialog" aria-modal="true">
+      <div class="modal-image-wrapper">
+        <img id="modalImage" src="" alt="" />
+      </div>
+      <div class="modal-info">
+        <div class="modal-header">
+          <div>
+            <div id="modalTitle" class="modal-title"></div>
+            <div id="modalCategory" class="modal-category"></div>
+          </div>
+          <button
+            id="modalClose"
+            class="modal-close"
+            aria-label="Close preview"
+          >
+            ×
+          </button>
+        </div>
+        <div class="modal-footer">
+          <div class="modal-hint">
+            <span>Esc to close</span>
+            <span>← / → to navigate</span>
+          </div>
+          <div id="modalIndex" class="modal-index"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ---- Static image data (replace with your own local paths) ----
+    const imagesData = [
+      {
+        src: "images/nature-forest.jpg",
+        title: "Misty Forest Morning",
+        category: "Nature",
+      },
+      {
+        src: "images/nature-lake.jpg",
+        title: "Lake Reflections",
+        category: "Nature",
+      },
+      {
+        src: "images/travel-city.jpg",
+        title: "City at Dusk",
+        category: "Travel",
+      },
+      {
+        src: "images/travel-mountain-road.jpg",
+        title: "Mountain Road Trip",
+        category: "Travel",
+      },
+      {
+        src: "images/tech-circuit.jpg",
+        title: "Circuit Board Close-up",
+        category: "Technology",
+      },
+      {
+        src: "images/tech-laptop.jpg",
+        title: "Minimal Workspace",
+        category: "Technology",
+      },
+      {
+        src: "images/people-portrait.jpg",
+        title: "Portrait in Light",
+        category: "People",
+      },
+      {
+        src: "images/people-street.jpg",
+        title: "Street Conversation",
+        category: "People",
+      },
+      {
+        src: "images/architecture-bridge.jpg",
+        title: "Suspension Bridge",
+        category: "Architecture",
+      },
+      {
+        src: "images/architecture-building.jpg",
+        title: "Modern Facade",
+        category: "Architecture",
+      },
+      {
+        src: "images/other-minimal.jpg",
+        title: "Soft Pastel Shapes",
+        category: "Others",
+      },
+      {
+        src: "images/other-abstract.jpg",
+        title: "Abstract Textures",
+        category: "Others",
+      },
+    ];
+
+    const galleryEl = document.getElementById("gallery");
+    const filterButtons = document.querySelectorAll(".filter-btn");
+    const searchInput = document.getElementById("searchInput");
+
+    const modalEl = document.getElementById("imageModal");
+    const modalImg = document.getElementById("modalImage");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalCategory = document.getElementById("modalCategory");
+    const modalIndex = document.getElementById("modalIndex");
+    const modalCloseBtn = document.getElementById("modalClose");
+
+    let currentFilter = "all";
+    let currentSearch = "";
+    let currentVisibleList = []; // currently displayed images
+    let currentIndex = 0; // index within currentVisibleList for modal navigation
+
+    // Render gallery based on currentFilter and currentSearch
+    function renderGallery() {
+      // Filter by category
+      let result = imagesData.filter((img) => {
+        const matchesCategory =
+          currentFilter === "all" || img.category === currentFilter;
+        const matchesSearch = img.title
+          .toLowerCase()
+          .includes(currentSearch.toLowerCase());
+        return matchesCategory && matchesSearch;
+      });
+
+      currentVisibleList = result;
+
+      galleryEl.innerHTML = "";
+
+      if (!result.length) {
+        const msg = document.createElement("div");
+        msg.className = "empty-message";
+        msg.textContent = "No images match your search and filter.";
+        galleryEl.appendChild(msg);
+        return;
+      }
+
+      result.forEach((img, index) => {
+        const item = document.createElement("article");
+        item.className = "gallery-item";
+        item.tabIndex = 0; // make card focusable
+        item.dataset.index = index.toString();
+
+        const imageEl = document.createElement("img");
+        imageEl.src = img.src;
+        imageEl.alt = img.title;
+
+        const overlay = document.createElement("div");
+        overlay.className = "gallery-overlay";
+
+        const info = document.createElement("div");
+        info.className = "gallery-info";
+
+        const titleEl = document.createElement("div");
+        titleEl.className = "gallery-title";
+        titleEl.textContent = img.title;
+
+        const catEl = document.createElement("div");
+        catEl.className = "gallery-category";
+        catEl.textContent = img.category;
+
+        info.appendChild(titleEl);
+        info.appendChild(catEl);
+
+        item.appendChild(imageEl);
+        item.appendChild(overlay);
+        item.appendChild(info);
+
+        // Click or Enter key opens modal
+        item.addEventListener("click", () => openModal(index));
+        item.addEventListener("keydown", (e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            openModal(index);
+          }
+        });
+
+        galleryEl.appendChild(item);
+      });
+    }
+
+    // Update active filter button
+    function setActiveFilterButton(filterValue) {
+      filterButtons.forEach((btn) => {
+        btn.classList.toggle("active", btn.dataset.filter === filterValue);
+      });
+    }
+
+    // Open modal with image by visible index
+    function openModal(visibleIndex) {
+      const imgData = currentVisibleList[visibleIndex];
+      if (!imgData) return;
+
+      currentIndex = visibleIndex;
+
+      modalImg.src = imgData.src;
+      modalImg.alt = imgData.title;
+      modalTitle.textContent = imgData.title;
+      modalCategory.textContent = imgData.category;
+      modalIndex.textContent = `${visibleIndex + 1} of ${
+        currentVisibleList.length
+      }`;
+
+      modalEl.classList.add("open");
+      modalEl.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeModal() {
+      modalEl.classList.remove("open");
+      modalEl.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+    }
+
+    // Show previous image in modal
+    function showPrev() {
+      if (!currentVisibleList.length) return;
+      currentIndex = (currentIndex - 1 + currentVisibleList.length) %
+        currentVisibleList.length;
+      openModal(currentIndex);
+    }
+
+    // Show next image in modal
+    function showNext() {
+      if (!currentVisibleList.length) return;
+      currentIndex = (currentIndex + 1) % currentVisibleList.length;
+      openModal(currentIndex);
+    }
+
+    // --- Event wiring ---
+
+    // Filter buttons
+    filterButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const value = btn.dataset.filter;
+        currentFilter = value;
+        setActiveFilterButton(value);
+        renderGallery();
+      });
+    });
+
+    // Search input
+    searchInput.addEventListener("input", (e) => {
+      currentSearch = e.target.value.trim();
+      renderGallery();
+    });
+
+    // Modal close (button and background)
+    modalCloseBtn.addEventListener("click", closeModal);
+    modalEl.addEventListener("click", (e) => {
+      if (e.target === modalEl) {
+        closeModal();
+      }
+    });
+
+    // Keyboard navigation for modal and general behavior
+    document.addEventListener("keydown", (e) => {
+      if (modalEl.classList.contains("open")) {
+        if (e.key === "Escape") {
+          closeModal();
+        } else if (e.key === "ArrowLeft") {
+          e.preventDefault();
+          showPrev();
+        } else if (e.key === "ArrowRight") {
+          e.preventDefault();
+          showNext();
+        }
+      }
+    });
+
+    // Initial render
+    renderGallery();
+  </script>
+</body>
+</html>
+
