@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Markdown Editor</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+    <div class="header">
+        <h1>📝 Markdown Editor</h1>
+        <div class="header-actions">
+            <button class="btn" id="clearBtn">Clear</button>
+            <button class="btn" id="downloadBtn">Download</button>
+            <button class="btn" id="themeBtn">🌙 Dark</button>
+        </div>
+    </div>
+
+    <div class="toolbar">
+        <button class="toolbar-btn" data-syntax="**bold**" data-offset="2">Bold</button>
+        <button class="toolbar-btn" data-syntax="*italic*" data-offset="1">Italic</button>
+        <button class="toolbar-btn" data-syntax="# " data-offset="0">Heading</button>
+        <button class="toolbar-btn" data-syntax="`code`" data-offset="1">Code</button>
+        <button class="toolbar-btn" data-syntax="[text](url)" data-offset="1">Link</button>
+    </div>
+
+    <div class="container">
+        <div class="editor-panel">
+            <textarea id="editor" placeholder="Start typing markdown here..."></textarea>
+        </div>
+        <div class="preview-panel">
+            <div id="preview"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
