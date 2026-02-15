@@ -6,7 +6,7 @@
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #76bdf8 0%, #58a24b 100%);
     min-height: 100vh;
     padding: 20px;
     color: #333;
@@ -102,14 +102,14 @@ header h1 {
 .value {
     font-size: 1.2rem;
     font-weight: 600;
-    color: #667eea;
+    color: #83ea66;
 }
 
 .toggle-btn {
     width: 100%;
     padding: 15px;
     background: white;
-    color: #667eea;
+    color: #ea9466;
     border: none;
     border-radius: 12px;
     font-size: 1rem;
