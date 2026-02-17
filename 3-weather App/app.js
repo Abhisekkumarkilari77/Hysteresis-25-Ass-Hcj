@@ -1,100 +1,158 @@
-// Weather icon mapping
-const weatherIcons = {
-    'Sunny': '☀️',
-    'Cloudy': '☁️',
-    'Rainy': '🌧️',
-    'Snowy': '❄️',
-    'Stormy': '⛈️',
-    'Foggy': '🌫️'
-};
+// API Configuration
+const API_KEY = 'f00c38e0279b7bc85480c3fe775d518c';
+const API_URL = 'https://api.openweathermap.org/data/2.5/weather';
 
-// Default weather data
-const defaultWeather = {
-    city: 'London',
-    temperature: 22,
-    condition: 'Sunny',
-    humidity: 65,
-    windSpeed: 12
-};
+// DOM Elements
+const cityInput = document.getElementById('cityInput');
+const searchBtn = document.getElementById('searchBtn');
+const loader = document.getElementById('loader');
+const error = document.getElementById('error');
+const weatherInfo = document.getElementById('weatherInfo');
+const errorMessage = document.getElementById('errorMessage');
 
-// DOM elements
+// Weather Data Elements
+const dateTime = document.getElementById('dateTime');
+const cityName = document.getElementById('cityName');
 const weatherIcon = document.getElementById('weatherIcon');
-const temperature = document.getElementById('temperature');
-const city = document.getElementById('city');
+const temp = document.getElementById('temp');
 const condition = document.getElementById('condition');
 const humidity = document.getElementById('humidity');
 const windSpeed = document.getElementById('windSpeed');
-const toggleBtn = document.getElementById('toggleForm');
-const formCard = document.getElementById('formCard');
-const weatherForm = document.getElementById('weatherForm');
-const cityInput = document.getElementById('cityInput');
-const tempInput = document.getElementById('tempInput');
-const conditionInput = document.getElementById('conditionInput');
-const humidityInput = document.getElementById('humidityInput');
-const windInput = document.getElementById('windInput');
+const pressure = document.getElementById('pressure');
 
-// Load weather from localStorage or use default
-function loadWeather() {
-    const saved = localStorage.getItem('weatherData');
-    const weatherData = saved ? JSON.parse(saved) : defaultWeather;
-    
-    // Save default if nothing exists
-    if (!saved) {
-        localStorage.setItem('weatherData', JSON.stringify(defaultWeather));
-    }
-    
-    displayWeather(weatherData);
-}
-
-// Display weather data
-function displayWeather(data) {
-    weatherIcon.textContent = weatherIcons[data.condition] || '🌤️';
-    temperature.textContent = `${data.temperature}°C`;
-    city.textContent = data.city;
-    condition.textContent = data.condition;
-    humidity.textContent = `${data.humidity}%`;
-    windSpeed.textContent = `${data.windSpeed} km/h`;
-}
-
-// Toggle form visibility
-toggleBtn.addEventListener('click', () => {
-    formCard.classList.toggle('active');
-    
-    if (formCard.classList.contains('active')) {
-        const saved = localStorage.getItem('weatherData');
-        const current = saved ? JSON.parse(saved) : defaultWeather;
-        
-        cityInput.value = current.city;
-        tempInput.value = current.temperature;
-        conditionInput.value = current.condition;
-        humidityInput.value = current.humidity;
-        windInput.value = current.windSpeed;
-        
-        toggleBtn.textContent = 'Cancel';
-    } else {
-        toggleBtn.textContent = 'Update Weather';
+// Event Listeners
+searchBtn.addEventListener('click', () => {
+    const city = cityInput.value.trim();
+    if (city) {
+        getWeatherData(city);
     }
 });
 
-// Handle form submission
-weatherForm.addEventListener('submit', (e) => {
-    e.preventDefault();
+cityInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+        const city = cityInput.value.trim();
+        if (city) {
+            getWeatherData(city);
+        }
+    }
+});
+
+// Fetch Weather Data
+async function getWeatherData(city) {
+    try {
+        // Show loader, hide other sections
+        showLoader();
+        
+        const response = await fetch(`${API_URL}?q=${city}&appid=${API_KEY}&units=metric`);
+        
+        if (!response.ok) {
+            throw new Error('Location not found');
+        }
+        
+        const data = await response.json();
+        displayWeatherData(data);
+        
+    } catch (err) {
+        showError(err.message);
+    }
+}
+
+// Display Weather Data
+function displayWeatherData(data) {
+    // Update date and time
+    updateDateTime();
     
-    const newWeather = {
-        city: cityInput.value.trim(),
-        temperature: parseInt(tempInput.value),
-        condition: conditionInput.value,
-        humidity: parseInt(humidityInput.value),
-        windSpeed: parseInt(windInput.value)
+    // Update location
+    cityName.textContent = `${data.name}, ${data.sys.country}`;
+    
+    // Update weather icon
+    const iconCode = data.weather[0].icon;
+    weatherIcon.src = `https://openweathermap.org/img/wn/${iconCode}@4x.png`;
+    weatherIcon.alt = data.weather[0].description;
+    
+    // Update temperature and condition
+    temp.textContent = `${Math.round(data.main.temp)}°C`;
+    condition.textContent = data.weather[0].description;
+    
+    // Update weather details
+    humidity.textContent = `${data.main.humidity}%`;
+    windSpeed.textContent = `${data.wind.speed} m/s`;
+    pressure.textContent = `${data.main.pressure} hPa`;
+    
+    // Change background based on weather condition
+    updateBackground(data.weather[0].main.toLowerCase());
+    
+    // Hide loader and error, show weather info
+    hideLoader();
+    hideError();
+    showWeatherInfo();
+}
+
+// Update Date and Time
+function updateDateTime() {
+    const now = new Date();
+    const options = { 
+        weekday: 'long', 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+    };
+    dateTime.textContent = now.toLocaleDateString('en-US', options);
+}
+
+// Update Background Based on Weather
+function updateBackground(weatherCondition) {
+    // Remove all weather classes
+    document.body.className = '';
+    
+    // Add appropriate class based on weather
+    const weatherClasses = {
+        'clear': 'clear',
+        'clouds': 'clouds',
+        'rain': 'rain',
+        'drizzle': 'rain',
+        'snow': 'snow',
+        'thunderstorm': 'thunderstorm',
+        'mist': 'mist',
+        'haze': 'haze',
+        'fog': 'fog'
     };
     
-    localStorage.setItem('weatherData', JSON.stringify(newWeather));
-    displayWeather(newWeather);
-    formCard.classList.remove('active');
-    toggleBtn.textContent = 'Update Weather';
-    
-    weatherForm.reset();
-});
+    const weatherClass = weatherClasses[weatherCondition] || '';
+    if (weatherClass) {
+        document.body.classList.add(weatherClass);
+    }
+}
 
-// Initialize app
-loadWeather();
+// UI State Management
+function showLoader() {
+    loader.classList.add('active');
+    weatherInfo.classList.remove('active');
+    error.classList.remove('active');
+}
+
+function hideLoader() {
+    loader.classList.remove('active');
+}
+
+function showError(message) {
+    errorMessage.textContent = message || 'Location not found. Please try again.';
+    error.classList.add('active');
+    loader.classList.remove('active');
+    weatherInfo.classList.remove('active');
+}
+
+function hideError() {
+    error.classList.remove('active');
+}
+
+function showWeatherInfo() {
+    weatherInfo.classList.add('active');
+}
+
+// Load default city on page load
+window.addEventListener('load', () => {
+    getWeatherData('London');
+});
