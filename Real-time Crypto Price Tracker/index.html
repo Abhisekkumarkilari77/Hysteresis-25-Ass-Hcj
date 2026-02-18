@@ -1,133 +1,240 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Real-time Crypto Price Tracker</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <div class="app-root">
-      <header class="app-header">
-        <div class="header-left">
-          <h1 class="app-title">Real-time Crypto Price Tracker</h1>
-          <div class="market-status" id="market-status">
-            <span class="status-dot status-unknown"></span>
-            <span class="status-text">Status: Initializing…</span>
-          </div>
-        </div>
-        <div class="header-right">
-          <div class="last-updated" id="last-updated">
-            Last updated: <span class="last-updated-value">–</span>
-          </div>
-          <button class="theme-toggle-btn" id="theme-toggle-btn" type="button">
-            Toggle theme
-          </button>
-        </div>
-      </header>
 
-      <main class="app-main">
-        <section class="sidebar">
-          <div class="controls-card">
-            <h2 class="section-title">Market Controls</h2>
-            <div class="control-group">
-              <label for="currency-select">Display currency</label>
-              <select id="currency-select">
-                <option value="USD">USD – US Dollar</option>
-                <option value="EUR">EUR – Euro</option>
-                <option value="INR">INR – Indian Rupee</option>
-              </select>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abhi Trade | Advanced Tracker</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <span class="icon">⚡</span>
+                <h2>Abhi <span class="highlight">Trade</span></h2>
             </div>
 
-            <div class="control-group control-inline">
-              <label class="inline-label">
-                <input type="checkbox" id="favorites-only-toggle" />
-                Show favorites only
-              </label>
+            <nav>
+                <a href="#" class="nav-item active">
+                    <span class="nav-icon">📊</span> Dashboard
+                </a>
+                <a href="#" class="nav-item">
+                    <span class="nav-icon">🚀</span> Trending
+                </a>
+                <a href="#" class="nav-item">
+                    <span class="nav-icon">💼</span> Portfolio
+                </a>
+                <a href="#" class="nav-item">
+                    <span class="nav-icon">📰</span> News
+                </a>
+                <a href="#" class="nav-item">
+                    <span class="nav-icon">⚙️</span> Settings
+                </a>
+            </nav>
+
+            <div class="user-profile">
+                <div class="avatar">U</div>
+                <div class="user-info">
+                    <h4>User</h4>
+                    <span>Pro Member</span>
+                </div>
             </div>
-          </div>
+        </aside>
 
-          <div class="legend-card">
-            <h3 class="legend-title">Legend</h3>
-            <ul class="legend-list">
-              <li><span class="legend-dot legend-gain"></span> 24h gain</li>
-              <li><span class="legend-dot legend-loss"></span> 24h loss</li>
-              <li>Click a row to view its chart</li>
-              <li>Click ★ to add/remove favorites</li>
-            </ul>
-          </div>
-        </section>
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-bar">
+                <div class="search-wrapper">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" id="searchInput" placeholder="Search assets...">
+                </div>
+                <div class="top-actions">
+                    <button id="refreshBtn" class="action-btn">↻</button>
+                    <button class="action-btn">🔔</button>
+                </div>
+            </header>
 
-        <section class="content">
-          <div id="error-banner" class="error-banner hidden"></div>
+            <!-- Views Container -->
+            <div id="content-area">
 
-          <section class="crypto-list-section">
-            <div class="section-header">
-              <h2 class="section-title">Top Cryptocurrencies</h2>
-              <span class="section-subtitle">Live prices &amp; 24h changes</span>
+                <!-- 1. DASHBOARD VIEW (Default) -->
+                <div id="view-dashboard" class="view-section active">
+                    <div class="dashboard-grid">
+                        <!-- Chart Section -->
+                        <section class="chart-section glass-panel">
+                            <div class="chart-header">
+                                <div class="coin-info-header">
+                                    <img id="selectedIcon" src="" alt="" style="display:none;">
+                                    <h2 id="selectedCoinName">Select a Coin</h2>
+                                    <span id="selectedCoinPrice" class="highlight-price"></span>
+                                </div>
+                                <div class="time-filters">
+                                    <button class="time-btn active" data-days="1">24H</button>
+                                    <button class="time-btn" data-days="7">7D</button>
+                                    <button class="time-btn" data-days="30">30D</button>
+                                </div>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="priceChart"></canvas>
+                            </div>
+                        </section>
+
+                        <!-- Market Overview -->
+                        <section class="market-list-section glass-panel">
+                            <h3>Market Overview</h3>
+                            <div class="table-header">
+                                <span>Asset</span>
+                                <span>Price</span>
+                                <span>24h %</span>
+                            </div>
+                            <div id="crypto-list" class="crypto-list-scroll">
+                                <div class="loader"></div>
+                            </div>
+                        </section>
+
+                        <!-- Details Cards -->
+                        <section class="details-grid">
+                            <div class="stat-card glass-panel">
+                                <h4>Market Cap</h4>
+                                <span id="detailMktCap">-</span>
+                            </div>
+                            <div class="stat-card glass-panel">
+                                <h4>24h Volume</h4>
+                                <span id="detailVol">-</span>
+                            </div>
+                            <div class="stat-card glass-panel">
+                                <h4>High 24h</h4>
+                                <span id="detailHigh" class="success">-</span>
+                            </div>
+                            <div class="stat-card glass-panel">
+                                <h4>Low 24h</h4>
+                                <span id="detailLow" class="danger">-</span>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+
+                <!-- 2. TRENDING VIEW -->
+                <div id="view-trending" class="view-section" style="display: none;">
+                    <div class="glass-panel full-panel">
+                        <h2>🚀 Trending Coins (Top 7)</h2>
+                        <div id="trending-list" class="trending-grid">
+                            <div class="loader"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. PORTFOLIO VIEW -->
+                <div id="view-portfolio" class="view-section" style="display: none;">
+                    <div class="glass-panel full-panel">
+                        <h2>💼 My Portfolio</h2>
+                        <div class="portfolio-summary">
+                            <div class="p-card">
+                                <span>Total Balance</span>
+                                <h3>$12,450.00</h3>
+                            </div>
+                            <div class="p-card">
+                                <span>24h Profit</span>
+                                <h3 class="success">+$450.20</h3>
+                            </div>
+                        </div>
+                        <div class="portfolio-table-wrapper">
+                            <table class="simple-table">
+                                <thead>
+                                    <tr>
+                                        <th>Asset</th>
+                                        <th>Balance</th>
+                                        <th>Value</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Bitcoin (BTC)</td>
+                                        <td>0.15 BTC</td>
+                                        <td>$9,450.00</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Ethereum (ETH)</td>
+                                        <td>1.2 ETH</td>
+                                        <td>$3,000.00</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="add-coin-btn">
+                                <button class="action-btn" style="width: 100%; margin-top: 1rem;">+ Add Asset
+                                    (Demo)</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. NEWS VIEW -->
+                <div id="view-news" class="view-section" style="display: none;">
+                    <div class="glass-panel full-panel">
+                        <h2>📰 Crypto News</h2>
+                        <div class="news-list">
+                            <div class="news-item">
+                                <h4>Bitcoin hits new all-time high amidst institutional adoption</h4>
+                                <p>The leading cryptocurrency has shattered expectations...</p>
+                                <span class="news-date">2 hours ago</span>
+                            </div>
+                            <div class="news-item">
+                                <h4>Ethereum 2.0 upgrade scheduled for next month</h4>
+                                <p>Developers have confirmed the final testnet launch...</p>
+                                <span class="news-date">5 hours ago</span>
+                            </div>
+                            <div class="news-item">
+                                <h4>Regulatory framework discussions heat up in Europe</h4>
+                                <p>EU lawmakers are proposing new guidelines for DeFi...</p>
+                                <span class="news-date">1 day ago</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5. SETTINGS VIEW -->
+                <div id="view-settings" class="view-section" style="display: none;">
+                    <div class="glass-panel full-panel">
+                        <h2>⚙️ Settings</h2>
+                        <div class="settings-group">
+                            <label>Currency</label>
+                            <select class="styled-select">
+                                <option>USD ($)</option>
+                                <option>EUR (€)</option>
+                                <option>INR (₹)</option>
+                            </select>
+                        </div>
+                        <div class="settings-group">
+                            <label>Theme</label>
+                            <select class="styled-select">
+                                <option>Dark Cyber</option>
+                                <option>Light Glass</option>
+                            </select>
+                        </div>
+                        <div class="settings-group">
+                            <label>Notifications</label>
+                            <div class="toggle-switch">
+                                <input type="checkbox" checked>
+                                <span class="slider"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
-
-            <div class="crypto-table-wrapper">
-              <table class="crypto-table">
-                <thead>
-                  <tr>
-                    <th class="col-favorite"></th>
-                    <th class="col-name">Coin</th>
-                    <th
-                      class="col-price sortable"
-                      data-sort-key="price"
-                      id="th-price"
-                    >
-                      Price
-                      <span class="sort-indicator" data-for="price">↕</span>
-                    </th>
-                    <th
-                      class="col-change sortable"
-                      data-sort-key="change"
-                      id="th-change"
-                    >
-                      24h %
-                      <span class="sort-indicator" data-for="change">↕</span>
-                    </th>
-                    <th class="col-trend">Trend</th>
-                  </tr>
-                </thead>
-                <tbody id="crypto-table-body">
-                  <!-- Rows injected by script.js -->
-                </tbody>
-              </table>
-            </div>
-
-            <div id="loading-indicator" class="loading-indicator">
-              <div class="spinner"></div>
-              <span>Loading live market data…</span>
-            </div>
-          </section>
-
-          <section class="chart-section">
-            <div class="section-header">
-              <h2 class="section-title" id="chart-title">
-                Price chart
-              </h2>
-              <span
-                class="section-subtitle"
-                id="chart-subtitle"
-              >Select a coin to view its recent price movement.</span>
-            </div>
-
-            <div class="selected-coin-summary" id="selected-coin-summary">
-              <!-- Populated dynamically -->
-            </div>
-
-            <div class="chart-card">
-              <canvas id="price-chart" aria-label="Price chart" role="img"></canvas>
-            </div>
-          </section>
-        </section>
-      </main>
+        </main>
     </div>
 
     <script src="script.js"></script>
-  </body>
-</html>
+</body>
 
+</html>
