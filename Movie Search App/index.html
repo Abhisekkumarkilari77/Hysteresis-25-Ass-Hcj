@@ -1,59 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Movie Search - Cinematic Experience</title>
+    <title>CineSearch | Explore Worldwide Cinema</title>
+    <meta name="description"
+        content="Discover and search for your favorite movies with CineSearch. Real-time data, premium design, and personalized favorites.">
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <div class="container">
         <header>
-            <h1>Movie Search</h1>
+            <h1>CineSearch</h1>
             <div class="controls">
-                <button id="themeToggle" class="btn-icon" title="Toggle Theme">🌓</button>
-                <button id="viewToggle" class="btn-icon" title="Toggle View">⊞</button>
+                <button id="apiKeyBtn" class="btn-icon" title="Set API Key" aria-label="Set API Key">🔑</button>
+                <button id="themeToggle" class="btn-icon" title="Toggle Theme" aria-label="Toggle Theme">🌓</button>
+                <button id="viewToggle" class="btn-icon" title="Toggle View" aria-label="Toggle View">⊞</button>
             </div>
         </header>
 
         <div class="search-section">
-            <input type="text" id="searchInput" placeholder="Search movies by title, genre, or year..." autocomplete="off">
+            <input type="text" id="searchInput" placeholder="Search for movies (e.g. Inception, Batman)..."
+                autocomplete="off" aria-label="Search Movies">
         </div>
 
         <div class="filter-section">
-            <select id="sortBy">
+            <select id="sortBy" aria-label="Sort By">
                 <option value="">Sort By</option>
                 <option value="rating-desc">Rating (High to Low)</option>
                 <option value="year-desc">Year (Newest First)</option>
                 <option value="title-asc">Title (A-Z)</option>
             </select>
-            <select id="genreFilter">
+            <select id="genreFilter" aria-label="Filter by Genre">
                 <option value="">All Genres</option>
             </select>
-            <select id="languageFilter">
+            <select id="languageFilter" aria-label="Filter by Language">
                 <option value="">All Languages</option>
             </select>
         </div>
 
         <div class="tabs">
-            <button class="tab active" data-tab="all">All Movies</button>
+            <button class="tab active" data-tab="all">Discover</button>
             <button class="tab" data-tab="favorites">Favorites</button>
-            <button class="tab" data-tab="recent">Recently Viewed</button>
+            <button class="tab" data-tab="recent">History</button>
         </div>
 
-        <div id="movieGrid" class="movie-grid"></div>
+        <div id="movieGrid" class="movie-grid">
+            <!-- Movie cards will be injected here -->
+        </div>
+
         <div id="loadMore" class="load-more">
-            <button id="loadMoreBtn">Load More</button>
+            <button id="loadMoreBtn">Load More Discoveries</button>
         </div>
     </div>
 
+    <!-- Enhanced Modal -->
     <div id="modal" class="modal">
         <div class="modal-content">
-            <button class="modal-close">&times;</button>
-            <div id="modalBody"></div>
+            <button class="modal-close" aria-label="Close Modal">&times;</button>
+            <div id="modalBody" class="modal-grid">
+                <!-- Modal content will be injected here -->
+            </div>
         </div>
     </div>
 
     <script src="script.js"></script>
 </body>
+
 </html>
