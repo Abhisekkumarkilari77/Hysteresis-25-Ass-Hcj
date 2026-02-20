@@ -847,18 +847,19 @@ const UI = (() => {
 
   // Modals
   function openModal({ title, bodyHtml, onSubmit, submitLabel = "Save" }) {
+    const formId = `modal_form_${Utils.id("f")}`;
     els.modalContainer.innerHTML = `
       <div class="modal__header">
         <h3>${title}</h3>
         <button class="icon-btn icon-btn--small" data-modal-close>✕</button>
       </div>
-      <form class="modal__body form-grid">
+      <form id="${formId}" class="modal__body form-grid">
         ${bodyHtml}
         <div class="error-text" data-error></div>
       </form>
       <div class="modal__footer">
         <button class="secondary-btn" data-modal-close type="button">Cancel</button>
-        <button class="primary-btn" data-modal-submit type="submit">${submitLabel}</button>
+        <button class="primary-btn" data-modal-submit type="submit" form="${formId}">${submitLabel}</button>
       </div>
     `;
     els.modalBackdrop.hidden = false;
@@ -874,13 +875,9 @@ const UI = (() => {
       .querySelectorAll("[data-modal-close]")
       .forEach((btn) => btn.addEventListener("click", close));
 
-    els.modalBackdrop.addEventListener(
-      "click",
-      (e) => {
-        if (e.target === els.modalBackdrop) close();
-      },
-      { once: true }
-    );
+    els.modalBackdrop.onclick = (e) => {
+      if (e.target === els.modalBackdrop) close();
+    };
 
     form.addEventListener("submit", (e) => {
       e.preventDefault();
@@ -1278,7 +1275,7 @@ const UI = (() => {
       if (
         !els.notifPanel.hidden &&
         !els.notifPanel.contains(e.target) &&
-        e.target !== els.notifBtn
+        !els.notifBtn.contains(e.target)
       ) {
         els.notifPanel.hidden = true;
       }

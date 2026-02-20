@@ -17,9 +17,40 @@ if (isDark) {
 }
 
 // Update preview
+function escapeHtml(text) {
+    return text
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+
+function basicMarkdownToHtml(markdown) {
+    const escaped = escapeHtml(markdown);
+
+    return escaped
+        .replace(/^###\s+(.*)$/gim, '<h3>$1</h3>')
+        .replace(/^##\s+(.*)$/gim, '<h2>$1</h2>')
+        .replace(/^#\s+(.*)$/gim, '<h1>$1</h1>')
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\*(.*?)\*/g, '<em>$1</em>')
+        .replace(/`([^`]+)`/g, '<code>$1</code>')
+        .replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>')
+        .replace(/\n/g, '<br>');
+}
+
+function parseMarkdown(markdown) {
+    if (window.marked && typeof window.marked.parse === 'function') {
+        return window.marked.parse(markdown);
+    }
+
+    return basicMarkdownToHtml(markdown);
+}
+
 function updatePreview() {
     const markdown = editor.value;
-    preview.innerHTML = marked.parse(markdown);
+    preview.innerHTML = parseMarkdown(markdown);
     localStorage.setItem('markdown', markdown);
 }
 
@@ -60,7 +91,7 @@ downloadBtn.addEventListener('click', () => {
 toolbarBtns.forEach(btn => {
     btn.addEventListener('click', () => {
         const syntax = btn.dataset.syntax;
-        const offset = parseInt(btn.dataset.offset);
+        const offset = parseInt(btn.dataset.offset, 10);
         const start = editor.selectionStart;
         const end = editor.selectionEnd;
         const selectedText = editor.value.substring(start, end);
@@ -68,20 +99,18 @@ toolbarBtns.forEach(btn => {
         let newText;
         let cursorPos;
 
-        if (syntax.includes('text') || syntax.includes('code') || syntax.includes('bold') || syntax.includes('italic')) {
-            // Replace placeholder with selected text or keep placeholder
-            if (selectedText) {
-                if (syntax.includes('[text](url)')) {
-                    newText = `[${selectedText}](url)`;
-                    cursorPos = start + selectedText.length + 3;
-                } else {
-                    newText = syntax.replace(/\*\*bold\*\*|\*italic\*|`code`/, selectedText);
-                    cursorPos = start + newText.length;
-                }
-            } else {
-                newText = syntax;
-                cursorPos = start + offset;
-            }
+        if (syntax === '**bold**') {
+            newText = selectedText ? `**${selectedText}**` : syntax;
+            cursorPos = selectedText ? start + newText.length : start + offset;
+        } else if (syntax === '*italic*') {
+            newText = selectedText ? `*${selectedText}*` : syntax;
+            cursorPos = selectedText ? start + newText.length : start + offset;
+        } else if (syntax === '`code`') {
+            newText = selectedText ? `\`${selectedText}\`` : syntax;
+            cursorPos = selectedText ? start + newText.length : start + offset;
+        } else if (syntax === '[text](url)') {
+            newText = selectedText ? `[${selectedText}](url)` : syntax;
+            cursorPos = selectedText ? start + selectedText.length + 3 : start + offset;
         } else {
             newText = syntax + selectedText;
             cursorPos = start + syntax.length + selectedText.length;
