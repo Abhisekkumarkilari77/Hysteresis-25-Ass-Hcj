@@ -1,100 +1,122 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weather App</title>
+    <meta name="description"
+        content="Advanced Weather Dashboard featuring real-time data, hourly temperature/wind graphs, and monthly historical analysis using Open-Meteo API.">
+    <title>AuraWeather | Precision Weather Insights</title>
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-    <div class="container">
-        <div class="weather-card">
+    <main class="container">
+        <!-- Dashboard Header -->
+        <header class="header">
+            <div class="logo">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path
+                        d="M17.5 19A3.5 3.5 0 0 0 21 15.5c0-1.93-1.57-3.5-3.5-3.5h-.12A7.5 7.5 0 0 0 4.09 14.5c.02.17.04.34.07.51a3.5 3.5 0 0 0-3.16 3.49A3.5 3.5 0 0 0 4.5 22h13">
+                    </path>
+                </svg>
+                <h1>AuraWeather</h1>
+            </div>
             <div class="search-box">
-                <input type="text" id="cityInput" placeholder="Enter city or village name..." autocomplete="off">
-                <button id="searchBtn">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <input type="text" id="cityInput" placeholder="Search for a city..." autocomplete="off">
+                <button id="searchBtn" aria-label="Search">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.5">
                         <circle cx="11" cy="11" r="8"></circle>
                         <path d="m21 21-4.35-4.35"></path>
                     </svg>
                 </button>
             </div>
+        </header>
 
-            <!-- Loading Animation -->
-            <div class="loader" id="loader">
-                <div class="spinner"></div>
-            </div>
-
-            <!-- Error Message -->
-            <div class="error" id="error">
-                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <line x1="12" y1="8" x2="12" y2="12"></line>
-                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
-                </svg>
-                <p id="errorMessage">Location not found. Please try again.</p>
-            </div>
-
-            <!-- Weather Info -->
-            <div class="weather-info" id="weatherInfo">
-                <div class="date-time">
-                    <p id="dateTime"></p>
+        <!-- Main Dashboard Content -->
+        <section class="dashboard-grid">
+            <!-- Current Weather Card -->
+            <div class="card current-weather-card">
+                <div class="loader" id="loader">
+                    <div class="spinner"></div>
                 </div>
 
-                <div class="location">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                        <circle cx="12" cy="10" r="3"></circle>
-                    </svg>
-                    <h2 id="cityName"></h2>
+                <div class="error" id="error">
+                    <p id="errorMessage">Location not found. Please try again.</p>
                 </div>
 
-                <div class="weather-icon">
-                    <img id="weatherIcon" src="" alt="Weather icon">
-                </div>
+                <div class="weather-content" id="weatherInfo">
+                    <div class="location-info">
+                        <h2 id="cityName">London, UK</h2>
+                        <p id="dateTime">Monday, 20 February</p>
+                    </div>
 
-                <div class="temperature">
-                    <h1 id="temp"></h1>
-                    <p id="condition"></p>
-                </div>
-
-                <div class="weather-details">
-                    <div class="detail-item">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path>
-                        </svg>
-                        <div>
-                            <p class="detail-label">Humidity</p>
-                            <p class="detail-value" id="humidity"></p>
+                    <div class="main-display">
+                        <div class="temp-group">
+                            <h3 id="temp">22°C</h3>
+                            <p id="condition">Partly Cloudy</p>
+                        </div>
+                        <div class="weather-icon-container">
+                            <img id="weatherIcon" src="" alt="Weather condition">
                         </div>
                     </div>
 
-                    <div class="detail-item">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2"></path>
-                        </svg>
-                        <div>
-                            <p class="detail-label">Wind Speed</p>
-                            <p class="detail-value" id="windSpeed"></p>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <span class="label">Humidity</span>
+                            <span class="value" id="humidity">65%</span>
                         </div>
-                    </div>
-
-                    <div class="detail-item">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
-                        </svg>
-                        <div>
-                            <p class="detail-label">Pressure</p>
-                            <p class="detail-value" id="pressure"></p>
+                        <div class="stat-item">
+                            <span class="label">Wind Speed</span>
+                            <span class="value" id="windSpeed">12 km/h</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="label">Min/Max</span>
+                            <span class="value" id="minMax">18° / 24°</span>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
+
+            <!-- Hourly Temperature Graph -->
+            <div class="card graph-card hourly-temp">
+                <h4>Hourly Temperature (°C)</h4>
+                <div class="chart-container">
+                    <canvas id="hourlyTempChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Hourly Wind Graph -->
+            <div class="card graph-card hourly-wind">
+                <h4>Hourly Wind Speed (km/h)</h4>
+                <div class="chart-container">
+                    <canvas id="hourlyWindChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Monthly/Daily Trends Graph -->
+            <div class="card graph-card monthly-trend">
+                <h4>30-Day Climate Analysis (Temp & Wind)</h4>
+                <div class="chart-container">
+                    <canvas id="monthlyChart"></canvas>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>Data provided by <a href="https://open-meteo.com/" target="_blank">Open-Meteo</a></p>
+    </footer>
 
     <script src="app.js"></script>
 </body>
+
 </html>
