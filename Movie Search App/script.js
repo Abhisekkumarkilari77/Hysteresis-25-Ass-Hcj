@@ -5,9 +5,8 @@
 
 // Configuration - REPLACE WITH YOUR OWN API KEY FROM http://www.omdbapi.com/
 // Try a few fallback keys or use the one from localStorage if user sets it
-const DEFAULT_API_KEY = '44a714ef';
-let API_KEY = localStorage.getItem('cine_api_key') || DEFAULT_API_KEY;
-let BASE_URL = `https://www.omdbapi.com/?apikey=${API_KEY}`;
+const API_KEY = '44a714ef';
+const BASE_URL = `https://www.omdbapi.com/?apikey=${API_KEY}`;
 
 // Update Base URL whenever API key changes
 function updateApiKey(newKey) {
@@ -245,15 +244,6 @@ function loadPreferences() {
 
 // Event Listeners
 function attachEventListeners() {
-    document.getElementById('apiKeyBtn').addEventListener('click', () => {
-        const newKey = prompt('Enter your OMDb API Key (get one free at omdbapi.com):', API_KEY);
-        if (newKey && newKey.trim() !== '') {
-            updateApiKey(newKey.trim());
-            state.currentPage = 1;
-            fetchMovies();
-        }
-    });
-
     let debounceTimer;
     searchInput.addEventListener('input', (e) => {
         clearTimeout(debounceTimer);
