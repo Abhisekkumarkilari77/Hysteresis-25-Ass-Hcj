@@ -1,538 +1,116 @@
-/* =====================================================
-   CALCULATOR APP - STYLESHEET
-   Clean, Professional, Minimal Design
-   ===================================================== */
-
 :root {
-    /* Light Mode Colors */
-    --primary-bg: #ffffff;
-    --secondary-bg: #f5f5f5;
-    --display-bg: #e8e8e8;
-    --text-primary: #333333;
-    --text-secondary: #666666;
-    --border-color: #ddd;
-    --button-bg: #f0f0f0;
-    --button-hover: #e0e0e0;
-    --operator-bg: #ff9500;
-    --operator-hover: #e68900;
-    --equals-bg: #4caf50;
-    --equals-hover: #45a049;
-    --delete-bg: #ff5252;
-    --delete-hover: #ff3838;
-    --memory-bg: #2196f3;
-    --memory-hover: #0b7dda;
-    --history-bg: #7c3aed;
-    --history-hover: #6d28d9;
-    --shadow: rgba(0, 0, 0, 0.1);
-    --shadow-dark: rgba(0, 0, 0, 0.2);
+  --bg: #f1f5f9;
+  --panel: #ffffff;
+  --text: #0f172a;
+  --muted: #334155;
+  --eq: #f97316;
+  --action: #e2e8f0;
+  --shadow: 0 20px 50px rgba(15, 23, 42, 0.15);
 }
-
-body.dark-mode {
-    /* Dark Mode Colors */
-    --primary-bg: #1e1e1e;
-    --secondary-bg: #2d2d2d;
-    --display-bg: #3a3a3a;
-    --text-primary: #f0f0f0;
-    --text-secondary: #b0b0b0;
-    --border-color: #444;
-    --button-bg: #404040;
-    --button-hover: #505050;
-    --operator-bg: #ff9500;
-    --operator-hover: #e68900;
-    --equals-bg: #4caf50;
-    --equals-hover: #45a049;
-    --delete-bg: #ff5252;
-    --delete-hover: #ff3838;
-    --memory-bg: #2196f3;
-    --memory-hover: #0b7dda;
-    --history-bg: #7c3aed;
-    --history-hover: #6d28d9;
-    --shadow: rgba(0, 0, 0, 0.3);
-    --shadow-dark: rgba(0, 0, 0, 0.5);
-}
-
-/* =====================================================
-   RESET & BASE STYLES
-   ===================================================== */
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-html, body {
-    height: 100%;
-    width: 100%;
+  box-sizing: border-box;
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
-    background-color: var(--primary-bg);
-    color: var(--text-primary);
-    transition: background-color 0.3s ease, color 0.3s ease;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    padding: 20px;
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+  background: radial-gradient(circle at top right, #cbd5e1, var(--bg));
+  color: var(--text);
 }
 
-/* =====================================================
-   CONTAINER & HEADER
-   ===================================================== */
-
-.container {
-    width: 100%;
-    max-width: 400px;
+.app {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
 }
-
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 30px;
-    padding-bottom: 20px;
-    border-bottom: 2px solid var(--border-color);
-}
-
-.header h1 {
-    font-size: 28px;
-    font-weight: 600;
-    letter-spacing: -0.5px;
-}
-
-.theme-toggle {
-    background: none;
-    border: none;
-    font-size: 24px;
-    cursor: pointer;
-    padding: 8px 12px;
-    border-radius: 8px;
-    transition: background-color 0.2s ease, transform 0.2s ease;
-}
-
-.theme-toggle:hover {
-    background-color: var(--button-hover);
-    transform: scale(1.1);
-}
-
-.theme-toggle:active {
-    transform: scale(0.95);
-}
-
-/* =====================================================
-   CALCULATOR MAIN
-   ===================================================== */
 
 .calculator {
-    background-color: var(--secondary-bg);
-    border-radius: 16px;
-    padding: 20px;
-    box-shadow: 0 8px 24px var(--shadow);
-    border: 1px solid var(--border-color);
+  width: min(380px, 100%);
+  background: var(--panel);
+  border-radius: 22px;
+  padding: 22px;
+  box-shadow: var(--shadow);
 }
 
-/* =====================================================
-   DISPLAY SECTION
-   ===================================================== */
-
-.display-container {
-    background-color: var(--display-bg);
-    border-radius: 12px;
-    padding: 20px;
-    margin-bottom: 20px;
-    text-align: right;
-    box-shadow: inset 0 2px 6px var(--shadow);
-    border: 1px solid var(--border-color);
-    min-height: 90px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
+h1 {
+  margin: 0 0 14px;
+  font-size: 1.1rem;
+  color: var(--muted);
 }
 
-.previous-operand {
-    font-size: 16px;
-    color: var(--text-secondary);
-    min-height: 24px;
-    margin-bottom: 8px;
-    word-wrap: break-word;
-    word-break: break-all;
-    opacity: 0.8;
+.display {
+  width: 100%;
+  min-height: 86px;
+  background: #0f172a;
+  color: #e2e8f0;
+  border-radius: 14px;
+  margin-bottom: 16px;
+  padding: 14px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  font-size: 2rem;
+  overflow-x: auto;
 }
 
-.current-operand {
-    font-size: 32px;
-    font-weight: 600;
-    color: var(--text-primary);
-    word-wrap: break-word;
-    word-break: break-all;
-    line-height: 1.2;
+.keys {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
 }
 
-/* =====================================================
-   BUTTONS GRID
-   ===================================================== */
-
-.buttons-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-    margin-bottom: 15px;
+.key {
+  border: none;
+  border-radius: 12px;
+  height: 58px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  background: #f8fafc;
+  color: var(--text);
+  cursor: pointer;
 }
 
-.buttons-grid > .full-width {
-    grid-column: 1 / -1;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
+.key:hover {
+  filter: brightness(0.97);
 }
 
-/* =====================================================
-   BUTTON STYLES
-   ===================================================== */
-
-.btn {
-    padding: 16px;
-    font-size: 18px;
-    font-weight: 500;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    box-shadow: 0 2px 6px var(--shadow);
-    color: var(--text-primary);
-    background-color: var(--button-bg);
-    outline: none;
-    user-select: none;
+.key:active {
+  transform: translateY(1px);
 }
 
-.btn:hover:not(:disabled) {
-    background-color: var(--button-hover);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px var(--shadow-dark);
+.key-op {
+  background: #e0f2fe;
+  color: #075985;
 }
 
-.btn:active:not(:disabled) {
-    transform: translateY(0);
-    box-shadow: 0 1px 3px var(--shadow);
+.key-action {
+  background: var(--action);
 }
 
-.btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
+.key-eq {
+  background: var(--eq);
+  color: #fff;
 }
 
-/* Number buttons */
-.btn-number {
-    background-color: var(--button-bg);
-    color: var(--text-primary);
+.key-wide {
+  grid-column: span 2;
 }
-
-/* Zero button spans 2 columns */
-.btn-zero {
-    grid-column: 1 / 3;
-}
-
-/* Operator buttons */
-.btn-operator {
-    background-color: var(--operator-bg);
-    color: white;
-    font-weight: 600;
-}
-
-.btn-operator:hover {
-    background-color: var(--operator-hover);
-}
-
-/* Equals button */
-.btn-equals {
-    background-color: var(--equals-bg);
-    color: white;
-    font-weight: 600;
-    grid-column: 3 / 5;
-}
-
-.btn-equals:hover {
-    background-color: var(--equals-hover);
-}
-
-/* AC button */
-.btn-ac {
-    background-color: var(--delete-bg);
-    color: white;
-    font-weight: 600;
-}
-
-.btn-ac:hover {
-    background-color: var(--delete-hover);
-}
-
-/* Delete button */
-.btn-delete {
-    background-color: var(--delete-bg);
-    color: white;
-    font-weight: 600;
-}
-
-.btn-delete:hover {
-    background-color: var(--delete-hover);
-}
-
-/* History button */
-.btn-history {
-    background-color: var(--history-bg);
-    color: white;
-    font-weight: 600;
-}
-
-.btn-history:hover {
-    background-color: var(--history-hover);
-}
-
-/* Decimal button */
-.btn-decimal {
-    background-color: var(--button-bg);
-    color: var(--text-primary);
-}
-
-/* =====================================================
-   MEMORY SECTION
-   ===================================================== */
-
-.memory-section {
-    display: flex;
-    gap: 8px;
-    margin-top: 15px;
-    align-items: center;
-    padding-top: 15px;
-    border-top: 1px solid var(--border-color);
-}
-
-.btn-memory {
-    flex: 1;
-    background-color: var(--memory-bg);
-    color: white;
-    font-weight: 600;
-    font-size: 14px;
-    padding: 12px 8px;
-}
-
-.btn-memory:hover {
-    background-color: var(--memory-hover);
-}
-
-.memory-indicator {
-    flex: 1;
-    text-align: center;
-    font-size: 12px;
-    color: var(--memory-bg);
-    font-weight: 600;
-    min-height: 18px;
-}
-
-/* =====================================================
-   MODAL (HISTORY)
-   ===================================================== */
-
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    animation: fadeIn 0.3s ease;
-}
-
-.modal.show {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
-
-.modal-content {
-    background-color: var(--secondary-bg);
-    border-radius: 12px;
-    box-shadow: 0 10px 40px var(--shadow-dark);
-    width: 100%;
-    max-width: 500px;
-    max-height: 80vh;
-    display: flex;
-    flex-direction: column;
-    border: 1px solid var(--border-color);
-    animation: slideUp 0.3s ease;
-}
-
-@keyframes slideUp {
-    from {
-        transform: translateY(20px);
-        opacity: 0;
-    }
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
-}
-
-.modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px;
-    border-bottom: 1px solid var(--border-color);
-}
-
-.modal-header h2 {
-    font-size: 20px;
-    margin: 0;
-}
-
-.modal-close {
-    background: none;
-    border: none;
-    font-size: 28px;
-    cursor: pointer;
-    color: var(--text-secondary);
-    transition: color 0.2s ease;
-}
-
-.modal-close:hover {
-    color: var(--text-primary);
-}
-
-.history-list {
-    flex: 1;
-    overflow-y: auto;
-    padding: 20px;
-}
-
-.history-item {
-    padding: 12px;
-    background-color: var(--display-bg);
-    border-radius: 8px;
-    margin-bottom: 10px;
-    border-left: 3px solid var(--history-bg);
-    font-size: 14px;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-}
-
-.history-item:hover {
-    background-color: var(--button-hover);
-}
-
-.history-expression {
-    color: var(--text-secondary);
-    font-size: 12px;
-    margin-bottom: 4px;
-}
-
-.history-result {
-    color: var(--text-primary);
-    font-weight: 600;
-    font-size: 16px;
-}
-
-.empty-message {
-    text-align: center;
-    color: var(--text-secondary);
-    font-style: italic;
-    padding: 40px 20px;
-}
-
-.btn-danger {
-    background-color: var(--delete-bg);
-    color: white;
-    font-weight: 600;
-    margin-top: auto;
-}
-
-.btn-danger:hover {
-    background-color: var(--delete-hover);
-}
-
-/* =====================================================
-   RESPONSIVE DESIGN
-   ===================================================== */
 
 @media (max-width: 480px) {
-    .header {
-        margin-bottom: 20px;
-    }
+  .calculator {
+    padding: 18px;
+    border-radius: 18px;
+  }
 
-    .header h1 {
-        font-size: 24px;
-    }
+  .key {
+    height: 54px;
+  }
 
-    .calculator {
-        padding: 16px;
-    }
-
-    .display-container {
-        padding: 16px;
-        min-height: 80px;
-    }
-
-    .current-operand {
-        font-size: 28px;
-    }
-
-    .btn {
-        padding: 14px;
-        font-size: 16px;
-    }
-
-    .buttons-grid {
-        gap: 8px;
-    }
-
-    .buttons-grid > .full-width {
-        gap: 8px;
-    }
-
-    .memory-section {
-        gap: 6px;
-        padding-top: 12px;
-    }
-
-    .btn-memory {
-        font-size: 12px;
-        padding: 10px 6px;
-    }
-
-    .modal-content {
-        max-height: 90vh;
-    }
-}
-
-@media (max-width: 360px) {
-    .btn {
-        padding: 12px;
-        font-size: 14px;
-    }
-
-    .current-operand {
-        font-size: 24px;
-    }
-
-    .header h1 {
-        font-size: 20px;
-    }
-
-    .buttons-grid {
-        gap: 6px;
-    }
+  .display {
+    min-height: 74px;
+    font-size: 1.7rem;
+  }
 }

@@ -1,6 +1,3 @@
-// -----------------------------
-// Utilities
-// -----------------------------
 
 const STORAGE_KEYS = {
   HABITS: "habitTracker.habits",
@@ -38,12 +35,8 @@ const diffDays = (a, b) => {
   return Math.round(ms / (1000 * 60 * 60 * 24));
 };
 
-// -----------------------------
-// State & persistence
-// -----------------------------
-
 let habits = [];
-let completions = {}; // { "YYYY-MM-DD": ["habit_1", ...] }
+let completions = {};
 let meta = {
   longestStreak: 0,
 };
@@ -72,10 +65,6 @@ function saveState() {
   localStorage.setItem(STORAGE_KEYS.COMPLETIONS, JSON.stringify(completions));
   localStorage.setItem(STORAGE_KEYS.META, JSON.stringify(meta));
 }
-
-// -----------------------------
-// DOM references
-// -----------------------------
 
 const els = {};
 
@@ -109,10 +98,6 @@ function cacheDom() {
 
   els.tooltip = document.getElementById("tooltip");
 }
-
-// -----------------------------
-// Rendering helpers
-// -----------------------------
 
 function updateHeader() {
   const today = new Date();
@@ -241,10 +226,6 @@ function renderTodayList() {
   els.todaySummary.textContent = summary;
 }
 
-// -----------------------------
-// Habit CRUD
-// -----------------------------
-
 function addHabitFromForm(e) {
   e.preventDefault();
 
@@ -318,8 +299,6 @@ function deleteHabit(id) {
   if (!ok) return;
 
   habits.splice(idx, 1);
-
-  // Remove this habit from all completion records
   Object.keys(completions).forEach((dateKey) => {
     completions[dateKey] = (completions[dateKey] || []).filter(
       (hid) => hid !== id
@@ -335,17 +314,12 @@ function deleteHabit(id) {
   renderStats();
 }
 
-// -----------------------------
-// Completions & streaks
-// -----------------------------
-
 function toggleCompletionForToday(habitId) {
   const todayKey = todayDateString();
   const list = completions[todayKey] || [];
   const idx = list.indexOf(habitId);
 
   if (idx >= 0) {
-    // unmark
     list.splice(idx, 1);
   } else {
     list.push(habitId);
@@ -372,12 +346,10 @@ function recomputeStreaks() {
     return;
   }
 
-  daysWithCompletion.sort(); // ascending ISO
+  daysWithCompletion.sort();
 
   let longest = meta.longestStreak || 0;
   let currentStreak = 0;
-
-  // walk from oldest to newest
   let lastDate = null;
   for (const dateStr of daysWithCompletion) {
     if (!lastDate) {
@@ -398,7 +370,6 @@ function recomputeStreaks() {
 }
 
 function getCurrentStreak() {
-  // Count consecutive days ending today that have at least one completion
   const todayKey = todayDateString();
   let streak = 0;
   let cursor = new Date(todayKey);
@@ -416,11 +387,7 @@ function getCurrentStreak() {
   return streak;
 }
 
-// -----------------------------
-// Heatmap rendering
-// -----------------------------
-
-let currentRange = "year"; // "year" | "month"
+let currentRange = "year";
 
 function getHeatmapRange() {
   const today = new Date();
@@ -468,10 +435,8 @@ function renderHeatmap() {
   if (totalDays <= 0) return;
 
   const weeksCount = Math.ceil(totalDays / 7);
-
-  // align start to Monday
-  const startDay = start.getDay(); // 0-6, Sun=0
-  const offsetToMonday = (startDay + 6) % 7; // Mon=0
+  const startDay = start.getDay();
+  const offsetToMonday = (startDay + 6) % 7;
   let cursor = addDays(start, -offsetToMonday);
 
   let hasAnyCompletion = false;
@@ -529,10 +494,6 @@ function renderHeatmap() {
 
   els.heatmapEmpty.style.display = hasAnyCompletion ? "none" : "block";
 }
-
-// -----------------------------
-// Tooltip
-// -----------------------------
 
 function showTooltipForCell(event, dateKey) {
   const t = els.tooltip;
@@ -606,10 +567,6 @@ function hideTooltip() {
   els.tooltip.setAttribute("aria-hidden", "true");
 }
 
-// -----------------------------
-// Stats
-// -----------------------------
-
 function renderStats(skipRecomputeLongest) {
   if (!skipRecomputeLongest) {
     recomputeStreaks();
@@ -646,8 +603,6 @@ function renderStats(skipRecomputeLongest) {
     els.completedTodayNote.textContent =
       "You can always gently add more, but what you've done already counts.";
   }
-
-  // Overall completion: total unique daily completions / total possible check-ins
   const allDates = Object.keys(completions);
   let totalCompletions = 0;
   allDates.forEach((d) => {
@@ -658,8 +613,6 @@ function renderStats(skipRecomputeLongest) {
     els.completionRateValue.textContent = "0%";
     return;
   }
-
-  // Estimate total possible check-ins from earliest start date to today
   const earliestStart = habits.reduce((min, h) => {
     return !min || h.startDate < min ? h.startDate : min;
   }, null);
@@ -674,10 +627,6 @@ function renderStats(skipRecomputeLongest) {
 
   els.completionRateValue.textContent = `${Math.min(100, Math.max(0, pct))}%`;
 }
-
-// -----------------------------
-// Event wiring
-// -----------------------------
 
 function wireEvents() {
   els.addHabitForm.addEventListener("submit", addHabitFromForm);
@@ -697,17 +646,11 @@ function wireEvents() {
   });
 }
 
-// -----------------------------
-// Init
-// -----------------------------
-
 document.addEventListener("DOMContentLoaded", () => {
   cacheDom();
   updateHeader();
   loadState();
   wireEvents();
-
-  // default start date to today for convenience
   els.habitStartDateInput.value = todayDateString();
 
   renderTodayList();

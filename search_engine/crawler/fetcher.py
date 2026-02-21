@@ -14,7 +14,6 @@ class Fetcher:
         self.robot_parsers = {}
 
     def can_fetch(self, url):
-        # Basic robots.txt handling
         parsed_url = urlparse(url)
         base_url = f"{parsed_url.scheme}://{parsed_url.netloc}"
         
@@ -25,8 +24,6 @@ class Fetcher:
                 rp.read()
                 self.robot_parsers[base_url] = rp
             except Exception:
-                # If robots.txt fails, assume we can crawl (or be conservative and say no)
-                # For this project, we'll be permissive but log it.
                 logger.warning(f"Could not read robots.txt for {base_url}")
                 return True
         

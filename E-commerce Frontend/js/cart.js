@@ -1,4 +1,3 @@
-// Cart management and derived totals using localStorage.
 
 const CART_STORAGE_KEY = "ecommerce_cart";
 
@@ -18,7 +17,6 @@ function saveCart(cart) {
   try {
     window.localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
   } catch (_) {
-    // ignore quota / privacy mode errors
   }
 }
 
@@ -26,7 +24,6 @@ function clearCart() {
   try {
     window.localStorage.removeItem(CART_STORAGE_KEY);
   } catch (_) {
-    // noop
   }
 }
 

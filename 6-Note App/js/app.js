@@ -1,12 +1,7 @@
-// Notes App - Vanilla JS + LocalStorage
-// Beginner-friendly, well-commented, single-file app logic.
 
 (() => {
-  // LocalStorage key
   const LS_KEY = 'notes_app_notes_v1';
   const THEME_KEY = 'notes_app_theme_v1';
-
-  // DOM elements
   const form = document.getElementById('note-form');
   const titleInput = document.getElementById('note-title');
   const contentInput = document.getElementById('note-content');
@@ -28,12 +23,8 @@
   const modalEdit = document.getElementById('modal-edit');
   const modalDelete = document.getElementById('modal-delete');
   const modalPin = document.getElementById('modal-pin');
-
-  // In-memory notes array
   let notes = [];
-  let activeNoteId = null; // for modal
-
-  // Utility: safe localStorage get
+  let activeNoteId = null;
   function loadNotesFromStorage() {
     try {
       const raw = localStorage.getItem(LS_KEY);
@@ -55,8 +46,6 @@
       console.error('Failed to save notes:', e);
     }
   }
-
-  // Create a new note object
   function createNote({title, content, category}){
     const now = new Date().toISOString();
     return {
@@ -69,26 +58,20 @@
       pinned: false
     };
   }
-
-  // Render notes with search/filter/sort
   function renderNotes(){
     const q = searchInput.value.trim().toLowerCase();
     const cat = filterCategory.value;
-    const sort = sortOrder.value; // desc or asc
-
-    // Filter
+    const sort = sortOrder.value;
     let list = notes.filter(n => {
       const matchesText = n.title.toLowerCase().includes(q) || n.content.toLowerCase().includes(q);
       const matchesCat = cat === 'all' ? true : n.category === cat;
       return matchesText && matchesCat;
     });
-
-    // Sort by date
     list.sort((a,b)=>{
       if (a.pinned === b.pinned) {
         return sort==='desc' ? (b.createdAt.localeCompare(a.createdAt)) : (a.createdAt.localeCompare(b.createdAt));
       }
-      return a.pinned ? -1 : 1; // pinned first
+      return a.pinned ? -1 : 1;
     });
 
     notesList.innerHTML = '';
@@ -144,15 +127,11 @@
       notesList.appendChild(card);
     }
   }
-
-  // Add a new note from form
   function handleAddNote(e){
     e.preventDefault();
     const title = titleInput.value || '';
     const content = contentInput.value || '';
     const category = categorySelect.value;
-
-    // Validation
     let ok = true;
     document.getElementById('title-error').textContent = '';
     document.getElementById('content-error').textContent = '';
@@ -162,30 +141,24 @@
     if (!ok) return;
 
     const note = createNote({title,content,category});
-    notes.unshift(note); // newest-first
+    notes.unshift(note);
     saveNotesToStorage();
     renderNotes();
     form.reset();
     charCount.textContent = '0 chars';
     localStorage.removeItem('notes_app_draft_v1');
   }
-
-  // Remove note with confirmation
   function removeNote(id){
     if (!confirm('Delete this note? This cannot be undone.')) return;
     notes = notes.filter(n=>n.id!==id);
     saveNotesToStorage();
     renderNotes();
   }
-
-  // Toggle pin
   function togglePin(id){
     const n = notes.find(x=>x.id===id); if(!n) return;
     n.pinned = !n.pinned; n.updatedAt = new Date().toISOString();
     saveNotesToStorage(); renderNotes();
   }
-
-  // Modal open
   function openModal(id){
     const n = notes.find(x=>x.id===id); if(!n) return;
     activeNoteId = id;
@@ -197,37 +170,24 @@
   }
 
   function closeModal(){ modal.classList.add('hidden'); activeNoteId = null; }
-
-  // Edit currently open note
   function editActiveNote(){
     if (!activeNoteId) return;
     const n = notes.find(x=>x.id===activeNoteId); if(!n) return;
-    // Prefill composer for editing
     titleInput.value = n.title;
     contentInput.value = n.content;
     categorySelect.value = n.category || 'Others';
-    // Remove old note (we'll create new version on save)
     notes = notes.filter(x=>x.id!==activeNoteId);
     saveNotesToStorage(); renderNotes();
     closeModal();
   }
-
-  // Delete from modal
   function deleteActiveNote(){ if (activeNoteId) removeNote(activeNoteId); closeModal(); }
-
-  // Toggle pin from modal
   function pinActiveNote(){ if (!activeNoteId) return; togglePin(activeNoteId); openModal(activeNoteId); }
-
-  // Character counter + auto-save draft
   function handleTyping(){
     const len = contentInput.value.length + titleInput.value.length;
     charCount.textContent = `${len} chars`;
-    // Auto-save draft
     const draft = { title: titleInput.value, content: contentInput.value, category: categorySelect.value };
     localStorage.setItem('notes_app_draft_v1', JSON.stringify(draft));
   }
-
-  // Export a single note as text file
   function exportNote(n){
     const blob = new Blob([`${n.title}\n\n${n.content}`], {type:'text/plain;charset=utf-8'});
     const url = URL.createObjectURL(blob);
@@ -235,8 +195,6 @@
     a.href = url; a.download = `${n.title.replace(/[^a-z0-9]/gi,'_').slice(0,40)}.txt`;
     document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
   }
-
-  // Export all notes into a single txt
   function exportAll(){
     if (notes.length===0) { alert('No notes to export'); return; }
     const parts = notes.map(n=>`# ${n.title}\n${n.category} • ${new Date(n.createdAt).toLocaleString()}\n\n${n.content}\n\n---\n\n`);
@@ -244,18 +202,12 @@
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a'); a.href = url; a.download = 'notes_export.txt'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
   }
-
-  // Clear all notes (with confirm)
   function clearAll(){ if (!confirm('Clear all notes? This cannot be undone.')) return; notes=[]; saveNotesToStorage(); renderNotes(); }
-
-  // Theme toggle
   function initTheme(){
     const t = localStorage.getItem(THEME_KEY) || 'light';
     document.body.classList.toggle('dark', t==='dark');
   }
   function toggleTheme(){ const now = document.body.classList.toggle('dark'); localStorage.setItem(THEME_KEY, now? 'dark':'light'); }
-
-  // Restore draft if present
   function restoreDraft(){
     try{
       const raw = localStorage.getItem('notes_app_draft_v1');
@@ -265,10 +217,8 @@
       if (d.content) contentInput.value = d.content;
       if (d.category) categorySelect.value = d.category;
       charCount.textContent = `${(d.title||'').length + (d.content||'').length} chars`;
-    }catch(e){/* ignore */}
+    }catch(e){}
   }
-
-  // Boot
   function init(){
     notes = loadNotesFromStorage();
     initTheme();
@@ -288,12 +238,8 @@
     modalPin.addEventListener('click', pinActiveNote);
     exportAllBtn.addEventListener('click', exportAll);
     clearAllBtn.addEventListener('click', clearAll);
-
-    // Click outside modal to close
     modal.addEventListener('click', (e)=>{ if (e.target===modal) closeModal(); });
   }
-
-  // Start
   document.addEventListener('DOMContentLoaded', init);
 
 })();

@@ -1,11 +1,10 @@
-// Simple 3D tilt effect for glass cards
 function initTilt() {
   const tiltCards = document.querySelectorAll(".tilt-card");
   const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   if (!tiltCards.length || prefersReduced) return;
 
-  const maxTilt = 10; // degrees
+  const maxTilt = 10;
 
   tiltCards.forEach((card) => {
     card.dataset.tiltActive = "true";
@@ -34,8 +33,6 @@ function initTilt() {
     card.addEventListener("mouseleave", resetTilt);
   });
 }
-
-// Mobile nav toggle
 function initNavToggle() {
   const toggle = document.querySelector(".nav-toggle");
   const nav = document.querySelector(".nav-links");
@@ -51,8 +48,6 @@ function initNavToggle() {
     }
   });
 }
-
-// Smooth scroll for internal links (extra polish)
 function initSmoothAnchors() {
   const links = document.querySelectorAll('a[href^="#"]');
   links.forEach((link) => {
@@ -73,8 +68,6 @@ function initSmoothAnchors() {
     });
   });
 }
-
-// Footer year
 function initYear() {
   const yearEl = document.getElementById("year");
   if (yearEl) {

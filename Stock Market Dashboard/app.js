@@ -1,8 +1,8 @@
-// Core state
 const state = {
   market: 'india',
   trendRange: 'daily',
   modalTrendRange: 'daily',
+  selectedSymbol: null,
   search: '',
   sector: 'all',
   cap: 'all',
@@ -10,11 +10,9 @@ const state = {
   priceMax: null,
   sortField: 'percent',
   sortDirection: 'desc',
-  watchlist: {}, // symbol -> { symbol, alertPrice? }
+  watchlist: {},
   lastUpdated: null,
 };
-
-// --- Utilities ---
 
 function formatNumber(n, decimals = 2) {
   if (n === null || n === undefined || Number.isNaN(n)) return '–';
@@ -53,7 +51,6 @@ function saveWatchlist() {
   try {
     localStorage.setItem('stockDashboardWatchlist', JSON.stringify(state.watchlist));
   } catch {
-    // ignore
   }
 }
 
@@ -66,7 +63,6 @@ function applyThemeFromStorage() {
       root.dataset.theme = 'dark';
     }
   } catch {
-    // ignore localStorage errors (e.g. when opened from file://)
   }
 }
 
@@ -78,13 +74,12 @@ function toggleTheme() {
   try {
     localStorage.setItem('stockDashboardTheme', next);
   } catch {
-    // ignore
   }
 }
 
 function computeMarketStatus() {
   const now = new Date();
-  const day = now.getDay(); // 0 Sunday, 6 Saturday
+  const day = now.getDay();
   const hour = now.getHours();
   const minute = now.getMinutes();
 
@@ -113,8 +108,6 @@ function updateLastUpdated() {
     minute: '2-digit',
   })}`;
 }
-
-// --- Filtering / sorting ---
 
 function getVisibleStocks() {
   const market = state.market;
@@ -174,8 +167,6 @@ function getGainersAndLosers(limit = 10) {
   return { gainers, losers };
 }
 
-// --- Rendering: indices ---
-
 function renderIndices() {
   const container = document.getElementById('indicesGrid');
   if (!container) return;
@@ -231,8 +222,6 @@ function renderIndices() {
   });
 }
 
-// --- Rendering: sparkline ---
-
 function renderSparkline(svgEl, series, trend) {
   if (!svgEl || !series || !series.length) return;
   const width = svgEl.clientWidth || 100;
@@ -269,18 +258,22 @@ function renderSparkline(svgEl, series, trend) {
   `;
 }
 
-// --- Rendering: stocks grid ---
-
 function renderStocks() {
   const grid = document.getElementById('stocksGrid');
   const empty = document.getElementById('stocksEmptyState');
   if (!grid) return;
 
   const stocks = getVisibleStocks();
+  if (!stocks.length) {
+    state.selectedSymbol = null;
+  } else if (!state.selectedSymbol || !stocks.some((s) => s.symbol === state.selectedSymbol)) {
+    state.selectedSymbol = stocks[0].symbol;
+  }
   grid.innerHTML = '';
 
   if (!stocks.length) {
     if (empty) empty.hidden = false;
+    renderStockDetails(stocks);
     return;
   }
   if (empty) empty.hidden = true;
@@ -288,6 +281,9 @@ function renderStocks() {
   stocks.forEach((s) => {
     const card = document.createElement('article');
     card.className = 'stock-card';
+    if (state.selectedSymbol === s.symbol) {
+      card.classList.add('active');
+    }
     card.dataset.symbol = s.symbol;
 
     const isWatched = !!state.watchlist[s.symbol];
@@ -364,8 +360,6 @@ function renderStocks() {
     card.appendChild(priceRow);
     card.appendChild(spark);
     card.appendChild(footer);
-
-    // delegate watch button
     header
       .querySelector('[data-action="toggle-watch"]')
       .addEventListener('click', (evt) => {
@@ -374,17 +368,98 @@ function renderStocks() {
       });
 
     grid.appendChild(card);
-
-    // draw sparkline after in DOM
     let history = null;
     if (s.history) {
       history = s.history[state.trendRange] || s.history.daily;
     }
     renderSparkline(spark, history || [], s.trend);
+
+    card.addEventListener('click', () => {
+      if (state.selectedSymbol === s.symbol) return;
+      state.selectedSymbol = s.symbol;
+      renderStocks();
+    });
   });
+
+  renderStockDetails(stocks);
 }
 
-// --- Rendering: movers ---
+function renderStockDetails(visibleStocks = getVisibleStocks()) {
+  const empty = document.getElementById('stockDetailsEmpty');
+  const content = document.getElementById('stockDetailsContent');
+  if (!empty || !content) return;
+
+  if (!visibleStocks.length) {
+    empty.hidden = false;
+    content.hidden = true;
+    content.innerHTML = '';
+    return;
+  }
+
+  let stock = visibleStocks.find((s) => s.symbol === state.selectedSymbol);
+  if (!stock) {
+    stock = visibleStocks[0];
+    state.selectedSymbol = stock.symbol;
+  }
+
+  const sign = stock.percent > 0 ? '+' : '';
+  const dirClass =
+    stock.percent > 0 ? 'change-positive' : stock.percent < 0 ? 'change-negative' : '';
+
+  empty.hidden = true;
+  content.hidden = false;
+  content.innerHTML = `
+    <div class="stock-details-header">
+      <div class="stock-meta">
+        <span class="stock-symbol">${stock.symbol}</span>
+        <span class="stock-name">${stock.name}</span>
+        <span class="stock-exchange">${stock.exchange}</span>
+      </div>
+      <span class="change-chip ${dirClass}">
+        ${sign}${formatNumber(stock.change, 2)} (${sign}${formatNumber(stock.percent, 2)}%)
+      </span>
+    </div>
+    <div class="stock-details-price">${formatNumber(stock.price, 2)}</div>
+    <div class="stock-details-grid">
+      <div class="stat-group">
+        <span class="stat-label">Open</span>
+        <span class="stat-value">${formatNumber(stock.open, 2)}</span>
+      </div>
+      <div class="stat-group">
+        <span class="stat-label">High</span>
+        <span class="stat-value">${formatNumber(stock.high, 2)}</span>
+      </div>
+      <div class="stat-group">
+        <span class="stat-label">Low</span>
+        <span class="stat-value">${formatNumber(stock.low, 2)}</span>
+      </div>
+      <div class="stat-group">
+        <span class="stat-label">Prev close</span>
+        <span class="stat-value">${formatNumber(stock.prevClose, 2)}</span>
+      </div>
+      <div class="stat-group">
+        <span class="stat-label">Volume</span>
+        <span class="stat-value">${formatInteger(stock.volume)}</span>
+      </div>
+      <div class="stat-group">
+        <span class="stat-label">P/E</span>
+        <span class="stat-value">${formatNumber(stock.pe, 1)}</span>
+      </div>
+      <div class="stat-group">
+        <span class="stat-label">Market cap</span>
+        <span class="stat-value">${formatMarketCap(stock.marketCapValue)}</span>
+      </div>
+      <div class="stat-group">
+        <span class="stat-label">52W high</span>
+        <span class="stat-value">${formatNumber(stock.week52High, 2)}</span>
+      </div>
+      <div class="stat-group">
+        <span class="stat-label">52W low</span>
+        <span class="stat-value">${formatNumber(stock.week52Low, 2)}</span>
+      </div>
+    </div>
+  `;
+}
 
 function renderMovers() {
   const { gainers, losers } = getGainersAndLosers();
@@ -415,8 +490,6 @@ function renderMovers() {
     losersBody.appendChild(tr);
   });
 }
-
-// --- Rendering: watchlist ---
 
 function renderWatchlist() {
   const list = document.getElementById('watchlistList');
@@ -476,8 +549,6 @@ function toggleWatchlist(symbol) {
   renderWatchlist();
 }
 
-// --- Rendering: news ---
-
 function renderNews() {
   const list = document.getElementById('newsList');
   if (!list) return;
@@ -495,16 +566,11 @@ function renderNews() {
   });
 }
 
-// --- Event wiring ---
-
 function initControls() {
-  // theme
   const themeToggle = document.getElementById('themeToggle');
   if (themeToggle) {
     themeToggle.addEventListener('click', toggleTheme);
   }
-
-  // market toggle
   document.querySelectorAll('.market-toggle .toggle-button').forEach((btn) => {
     btn.addEventListener('click', () => {
       const market = btn.dataset.market;
@@ -518,8 +584,6 @@ function initControls() {
       renderMovers();
     });
   });
-
-  // search
   const searchInput = document.getElementById('searchInput');
   if (searchInput) {
     searchInput.addEventListener('input', () => {
@@ -527,8 +591,6 @@ function initControls() {
       renderStocks();
     });
   }
-
-  // filters
   const sectorFilter = document.getElementById('sectorFilter');
   if (sectorFilter) {
     sectorFilter.addEventListener('change', (e) => {
@@ -574,8 +636,6 @@ function initControls() {
       renderStocks();
     });
   }
-
-  // trend toggle (cards)
   document.querySelectorAll('#trendToggle .toggle-button-sm').forEach((btn) => {
     btn.addEventListener('click', () => {
       const range = btn.dataset.range;
@@ -587,8 +647,6 @@ function initControls() {
       renderStocks();
     });
   });
-
-  // movers tabs
   const gainersTable = document.getElementById('gainersTable');
   const losersTable = document.getElementById('losersTable');
   document.querySelectorAll('#moversTabs .toggle-button-sm').forEach((btn) => {
@@ -606,8 +664,6 @@ function initControls() {
       }
     });
   });
-
-  // refresh
   const refreshButton = document.getElementById('refreshButton');
   if (refreshButton) {
     refreshButton.addEventListener('click', () => {
@@ -615,8 +671,6 @@ function initControls() {
     });
   }
 }
-
-// --- Initialisation ---
 
 function populateSectorFilter() {
   const select = document.getElementById('sectorFilter');

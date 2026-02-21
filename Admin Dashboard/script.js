@@ -1,4 +1,3 @@
-// Simple utility for Local Storage with JSON handling
 const Storage = {
   get(key, fallback) {
     try {
@@ -13,7 +12,6 @@ const Storage = {
     try {
       window.localStorage.setItem(key, JSON.stringify(value));
     } catch (e) {
-      // Ignore quota/security errors in this demo.
     }
   },
 };
@@ -22,8 +20,6 @@ const PERSIST_KEYS = {
   SIDEBAR_COLLAPSED: "admin-dashboard.sidebar-collapsed",
   THEME: "admin-dashboard.theme",
 };
-
-// Simple front-end authentication using Local Storage
 const Auth = (() => {
   const DEFAULT_USER = {
     id: "admin",
@@ -187,7 +183,6 @@ const Auth = (() => {
     try {
       window.localStorage.removeItem("admin-dashboard.currentUser");
     } catch (e) {
-      // ignore
     }
     showAuth();
   }
@@ -213,8 +208,6 @@ const Auth = (() => {
 
   return { init, signOut, getCurrentUser };
 })();
-
-// Sidebar behaviour: desktop collapse + mobile drawer
 const Sidebar = (() => {
   function applyCollapsedState(isCollapsed) {
     document.body.classList.toggle("sidebar-collapsed", !!isCollapsed);
@@ -290,8 +283,6 @@ const Sidebar = (() => {
 
   return { init };
 })();
-
-// Theme toggle (light/dark, no neon)
 const Theme = (() => {
   function applyTheme(theme) {
     const body = document.body;
@@ -337,8 +328,6 @@ const Theme = (() => {
 
   return { init };
 })();
-
-// Canvas-based charts with simple rendering
 const Charts = (() => {
   function drawAxes(ctx, width, height, padding) {
     ctx.strokeStyle = "rgba(148, 163, 184, 0.8)";
@@ -502,8 +491,6 @@ const Charts = (() => {
 
   return { init };
 })();
-
-// Profile dropdown
 const ProfileMenu = (() => {
   function init() {
     const button = document.querySelector(".profile__button");
@@ -535,8 +522,6 @@ const ProfileMenu = (() => {
 
   return { init };
 })();
-
-// CSV export for the current table
 const TableExport = (() => {
   function toCSV(table) {
     const rows = Array.from(table.querySelectorAll("tr"));

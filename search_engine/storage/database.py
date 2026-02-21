@@ -3,8 +3,6 @@ import threading
 from contextlib import contextmanager
 from . import config
 import logging
-
-# Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
@@ -21,7 +19,6 @@ class Database:
         return cls._instance
 
     def __init__(self):
-        # Already handled in __new__, but kept for safety if instantiated differently
         pass
 
     @contextmanager
@@ -42,8 +39,6 @@ class Database:
         """Initialize the database schema."""
         with self.get_connection() as conn:
             cursor = conn.cursor()
-            
-            # Pages table
             cursor.execute('''
                 CREATE TABLE IF NOT EXISTS pages (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -55,8 +50,6 @@ class Database:
                     crawled_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
                 )
             ''')
-
-            # Links table (Graph structure)
             cursor.execute('''
                 CREATE TABLE IF NOT EXISTS links (
                     source_id INTEGER,
@@ -66,9 +59,6 @@ class Database:
                     FOREIGN KEY(target_id) REFERENCES pages(id)
                 )
             ''')
-
-            # Inverted Index table (Word -> Doc mapping)
-            # We store term frequency here directly for simplicity in this schema
             cursor.execute('''
                 CREATE TABLE IF NOT EXISTS keywords (
                     word TEXT,
@@ -78,8 +68,6 @@ class Database:
                     FOREIGN KEY(doc_id) REFERENCES pages(id)
                 )
             ''')
-            
-            # Index for faster search
             cursor.execute('CREATE INDEX IF NOT EXISTS idx_keywords_word ON keywords(word)')
             cursor.execute('CREATE INDEX IF NOT EXISTS idx_pages_url ON pages(url)')
 
@@ -113,8 +101,6 @@ class Database:
     def add_link(self, source_id, target_id):
         if source_id is None or target_id is None:
             return
-        
-        # Avoid self-loops
         if source_id == target_id:
             return
 

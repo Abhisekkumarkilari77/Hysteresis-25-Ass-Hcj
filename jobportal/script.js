@@ -1,4 +1,3 @@
-// Job Data
 const jobsData = [
     {
         id: 1,
@@ -251,8 +250,6 @@ const jobsData = [
         salary: "$80,000 - $105,000"
     }
 ];
-
-// Local Storage Manager
 const storage = {
     get: (key) => {
         try {
@@ -269,8 +266,6 @@ const storage = {
         }
     }
 };
-
-// State Management
 let state = {
     jobs: jobsData,
     filteredJobs: jobsData,
@@ -287,15 +282,11 @@ let state = {
     currentJob: null,
     sortBy: 'newest'
 };
-
-// Initialize App
 document.addEventListener('DOMContentLoaded', () => {
     initializeFilters();
     applyFilters();
     attachEventListeners();
 });
-
-// Event Listeners
 function attachEventListeners() {
     document.getElementById('searchInput').addEventListener('input', handleSearch);
     document.getElementById('searchBtn').addEventListener('click', handleSearch);
@@ -324,8 +315,6 @@ function attachEventListeners() {
         closeModal();
     });
 }
-
-// Initialize Filters from Storage
 function initializeFilters() {
     document.getElementById('searchInput').value = state.filters.search;
     document.getElementById('locationFilter').value = state.filters.location;
@@ -343,8 +332,6 @@ function initializeFilters() {
         if (checkbox) checkbox.checked = true;
     });
 }
-
-// Filter Handlers
 function handleSearch() {
     state.filters.search = document.getElementById('searchInput').value.toLowerCase();
     saveFilters();
@@ -401,8 +388,6 @@ function clearFilters() {
 function saveFilters() {
     storage.set('filters', state.filters);
 }
-
-// Apply Filters
 function applyFilters() {
     let filtered = state.jobs;
     
@@ -440,8 +425,6 @@ function applyFilters() {
     state.filteredJobs = filtered;
     renderJobListings();
 }
-
-// Sort Jobs
 function sortJobs(jobs) {
     const sorted = [...jobs];
     if (state.sortBy === 'newest') {
@@ -451,8 +434,6 @@ function sortJobs(jobs) {
     }
     return sorted;
 }
-
-// Render Job Listings
 function renderJobListings() {
     const container = document.getElementById('jobListings');
     const emptyState = document.getElementById('emptyState');
@@ -492,8 +473,6 @@ function renderJobListings() {
         });
     });
 }
-
-// Create Job Card HTML
 function createJobCard(job) {
     const isSaved = state.savedJobs.includes(job.id);
     const daysAgo = Math.floor((new Date() - new Date(job.posted)) / (1000 * 60 * 60 * 24));
@@ -525,8 +504,6 @@ function createJobCard(job) {
         </div>
     `;
 }
-
-// Show Job Detail
 function showJobDetail(job) {
     state.currentJob = job;
     addToRecentJobs(job.id);
@@ -616,8 +593,6 @@ function showJobDetail(job) {
     
     window.scrollTo(0, 0);
 }
-
-// Save/Unsave Job
 function toggleSaveJob(jobId) {
     if (state.savedJobs.includes(jobId)) {
         state.savedJobs = state.savedJobs.filter(id => id !== jobId);
@@ -627,14 +602,10 @@ function toggleSaveJob(jobId) {
     storage.set('savedJobs', state.savedJobs);
     renderJobListings();
 }
-
-// Add to Recent Jobs
 function addToRecentJobs(jobId) {
     state.recentJobs = [jobId, ...state.recentJobs.filter(id => id !== jobId)].slice(0, 10);
     storage.set('recentJobs', state.recentJobs);
 }
-
-// Navigation
 function handleNavigation(e) {
     e.preventDefault();
     const view = e.target.dataset.view;
@@ -645,13 +616,9 @@ function handleNavigation(e) {
     
     applyFilters();
 }
-
-// Toggle Filters (Mobile)
 function toggleFilters() {
     document.getElementById('filtersPanel').classList.toggle('active');
 }
-
-// Close Modal
 function closeModal() {
     document.getElementById('applyModal').classList.add('hidden');
 }

@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Header -->
+    
     <header class="header">
         <div class="header-content">
             <h1 class="header-title">📋 Kanban Board</h1>
@@ -15,46 +15,46 @@
         </div>
     </header>
 
-    <!-- Main Container -->
+    
     <main class="container">
-        <!-- Kanban Board -->
+        
         <div class="board">
-            <!-- To Do Column -->
+            
             <div class="column" data-status="todo">
                 <div class="column-header">
                     <h2 class="column-title">To Do</h2>
                     <span class="task-count" id="count-todo">0</span>
                 </div>
                 <div class="tasks-container" id="todo-tasks">
-                    <!-- Tasks will be inserted here -->
+                    
                 </div>
             </div>
 
-            <!-- In Progress Column -->
+            
             <div class="column" data-status="inprogress">
                 <div class="column-header">
                     <h2 class="column-title">In Progress</h2>
                     <span class="task-count" id="count-inprogress">0</span>
                 </div>
                 <div class="tasks-container" id="inprogress-tasks">
-                    <!-- Tasks will be inserted here -->
+                    
                 </div>
             </div>
 
-            <!-- Done Column -->
+            
             <div class="column" data-status="done">
                 <div class="column-header">
                     <h2 class="column-title">Done</h2>
                     <span class="task-count" id="count-done">0</span>
                 </div>
                 <div class="tasks-container" id="done-tasks">
-                    <!-- Tasks will be inserted here -->
+                    
                 </div>
             </div>
         </div>
     </main>
 
-    <!-- Add/Edit Task Modal -->
+    
     <div class="modal" id="taskModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -90,7 +90,7 @@
         </div>
     </div>
 
-    <!-- Delete Confirmation Modal -->
+    
     <div class="modal" id="confirmModal">
         <div class="modal-content modal-confirm">
             <h2>Delete Task?</h2>
@@ -102,7 +102,7 @@
         </div>
     </div>
 
-    <!-- Toast Notification -->
+    
     <div class="toast" id="toast"></div>
 
     <script src="script.js"></script>

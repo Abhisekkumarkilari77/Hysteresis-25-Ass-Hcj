@@ -1,12 +1,9 @@
-// DOM Elements
 const cityInput = document.getElementById('cityInput');
 const searchBtn = document.getElementById('searchBtn');
 const loader = document.getElementById('loader');
 const error = document.getElementById('error');
 const weatherInfo = document.getElementById('weatherInfo');
 const errorMessage = document.getElementById('errorMessage');
-
-// Data Elements
 const cityNameInfo = document.getElementById('cityName');
 const dateTimeInfo = document.getElementById('dateTime');
 const tempInfo = document.getElementById('temp');
@@ -15,13 +12,9 @@ const weatherIcon = document.getElementById('weatherIcon');
 const humidityInfo = document.getElementById('humidity');
 const windSpeedInfo = document.getElementById('windSpeed');
 const minMaxInfo = document.getElementById('minMax');
-
-// Chart instances
 let hourlyTempChart = null;
 let hourlyWindChart = null;
 let monthlyChart = null;
-
-// WMO Weather Codes Mapping
 const weatherCodes = {
     0: { desc: 'Clear Sky', icon: '01d' },
     1: { desc: 'Mainly Clear', icon: '02d' },
@@ -40,8 +33,6 @@ const weatherCodes = {
     75: { desc: 'Heavy Snow Fall', icon: '13d' },
     95: { desc: 'Thunderstorm', icon: '11d' }
 };
-
-// Event Listeners
 searchBtn.addEventListener('click', () => {
     const city = cityInput.value.trim();
     if (city) getWeatherData(city);
@@ -53,18 +44,14 @@ cityInput.addEventListener('keypress', (e) => {
         if (city) getWeatherData(city);
     }
 });
-
-// Initialization
 window.addEventListener('load', () => {
-    getWeatherData('Mumbai'); // Default city
+    getWeatherData('Mumbai');
 });
 
 async function getWeatherData(city) {
     try {
         showLoader();
         hideError();
-
-        // 1. Geocoding
         const geoUrl = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=1&language=en&format=json`;
         const geoRes = await fetch(geoUrl);
         const geoData = await geoRes.json();
@@ -75,13 +62,9 @@ async function getWeatherData(city) {
 
         const { latitude, longitude, name, country } = geoData.results[0];
         cityNameInfo.textContent = `${name}, ${country}`;
-
-        // 2. Fetch Forecast (Hourly)
         const forecastUrl = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m&hourly=temperature_2m,wind_speed_10m&daily=temperature_2m_max,temperature_2m_min&timezone=auto&forecast_days=1`;
         const forecastRes = await fetch(forecastUrl);
         const forecastData = await forecastRes.json();
-
-        // 3. Fetch Monthly (Historical - Last 30 days)
         const now = new Date();
         const twoDaysAgo = new Date(now.getTime() - 2 * 24 * 60 * 60 * 1000);
         const thirtyDaysAgo = new Date(now.getTime() - 32 * 24 * 60 * 60 * 1000);
@@ -103,7 +86,6 @@ async function getWeatherData(city) {
 }
 
 function displayData(forecast, archive) {
-    // Current Weather
     const current = forecast.current;
     const code = weatherCodes[current.weather_code] || { desc: 'Unknown', icon: '01d' };
 
@@ -117,8 +99,6 @@ function displayData(forecast, archive) {
     minMaxInfo.textContent = `${Math.round(daily.temperature_2m_min[0])}° / ${Math.round(daily.temperature_2m_max[0])}°`;
 
     updateDateTime();
-
-    // Update Charts
     updateHourlyCharts(forecast.hourly);
     updateMonthlyChart(archive.daily);
 
@@ -129,12 +109,8 @@ function updateHourlyCharts(hourly) {
     const labels = hourly.time.slice(0, 24).map(t => new Date(t).getHours() + ':00');
     const temps = hourly.temperature_2m.slice(0, 24);
     const winds = hourly.wind_speed_10m.slice(0, 24);
-
-    // Temp Chart
     if (hourlyTempChart) hourlyTempChart.destroy();
     hourlyTempChart = createChart('hourlyTempChart', labels, temps, 'Temp (°C)', '#818cf8');
-
-    // Wind Chart
     if (hourlyWindChart) hourlyWindChart.destroy();
     hourlyWindChart = createChart('hourlyWindChart', labels, winds, 'Wind (km/h)', '#c084fc');
 }
@@ -216,7 +192,7 @@ function createChart(id, labels, data, label, color) {
                 label: label,
                 data: data,
                 borderColor: color,
-                backgroundColor: color + '20', // Add transparency
+                backgroundColor: color + '20',
                 fill: true,
                 tension: 0.4,
                 borderWidth: 3,

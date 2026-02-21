@@ -472,6 +472,16 @@ select {
   background: radial-gradient(circle at top left, #020617 0, #020617 40%, #020617 100%);
 }
 
+.stock-card.active {
+  border-color: #1d4ed8;
+  box-shadow: 0 0 0 1px rgba(29, 78, 216, 0.3), 0 12px 30px rgba(15, 23, 42, 0.05);
+}
+
+[data-theme='dark'] .stock-card.active {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.45), 0 12px 30px rgba(15, 23, 42, 0.25);
+}
+
 .stock-card-header {
   display: flex;
   justify-content: space-between;
@@ -656,6 +666,32 @@ select {
 
 .watchlist {
   font-size: 11px;
+}
+
+.stock-details {
+  font-size: 11px;
+}
+
+.stock-details-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.stock-details-price {
+  margin-top: 8px;
+  font-size: 22px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' 1;
+}
+
+.stock-details-grid {
+  margin-top: 8px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px 10px;
 }
 
 .watchlist-list {

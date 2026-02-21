@@ -1,9 +1,3 @@
-// Full Project Manager Dashboard
-// Vanilla JS, Local Storage only
-
-// -----------------------------
-// Storage Manager
-// -----------------------------
 
 const Storage = (() => {
   const KEY = "pmDashboard_v1";
@@ -59,13 +53,7 @@ const Storage = (() => {
 
   return { load, save, update };
 })();
-
-// Global in-memory state (mirrors storage)
 let appState = Storage.load();
-
-// -----------------------------
-// Utilities
-// -----------------------------
 
 const Utils = {
   id(prefix) {
@@ -132,10 +120,6 @@ const Utils = {
     UI.renderNotifications();
   }
 };
-
-// -----------------------------
-// Modules: Projects, Tasks, Team
-// -----------------------------
 
 const Projects = {
   getAll() {
@@ -285,12 +269,7 @@ const Team = {
   }
 };
 
-// -----------------------------
-// UI Renderer
-// -----------------------------
-
 const UI = (() => {
-  // Cache selectors
   const els = {};
 
   function cacheElements() {
@@ -305,8 +284,6 @@ const UI = (() => {
     els.settingsThemeToggle = document.getElementById("settingsThemeToggle");
     els.settingShowActivity = document.getElementById("setting-showActivity");
     els.settingShowDeadlines = document.getElementById("setting-showDeadlines");
-
-    // KPI
     els.kpi = {
       totalProjects: document.querySelector('[data-kpi="totalProjects"]'),
       activeProjects: document.querySelector('[data-kpi="activeProjects"]'),
@@ -314,8 +291,6 @@ const UI = (() => {
       overdueTasks: document.querySelector('[data-kpi="overdueTasks"]'),
       teamUtilization: document.querySelector('[data-kpi="teamUtilization"]')
     };
-
-    // Projects view
     els.projectStatusFilter = document.getElementById("projectStatusFilter");
     els.projectPriorityFilter = document.getElementById("projectPriorityFilter");
     els.projectSort = document.getElementById("projectSort");
@@ -323,8 +298,6 @@ const UI = (() => {
     els.emptyAddProjectBtn = document.getElementById("emptyAddProjectBtn");
     els.projectsTableBody = document.querySelector("#projectsTable tbody");
     els.projectsEmptyState = document.getElementById("projectsEmptyState");
-
-    // Tasks / Kanban
     els.taskProjectSelect = document.getElementById("taskProjectSelect");
     els.addTaskBtn = document.getElementById("addTaskBtn");
     els.kanbanLists = {
@@ -333,36 +306,22 @@ const UI = (() => {
       review: document.getElementById("kanban-review"),
       completed: document.getElementById("kanban-completed")
     };
-
-    // Team
     els.teamDirectory = document.getElementById("teamDirectory");
     els.addMemberBtn = document.getElementById("addMemberBtn");
-
-    // Dashboard panels
     els.deadlineList = document.getElementById("deadlineList");
     els.activityFeed = document.getElementById("activityFeed");
-
-    // Charts
     els.chartProject = document.getElementById("projectProgressChart");
     els.chartTasks = document.getElementById("taskCompletionChart");
     els.chartTeam = document.getElementById("teamWorkloadChart");
-
-    // Modal
     els.modalBackdrop = document.getElementById("modalBackdrop");
     els.modalContainer = document.getElementById("modalContainer");
-
-    // Notifications
     els.notifBtn = document.getElementById("notifBtn");
     els.notifPanel = document.getElementById("notifPanel");
     els.notifCloseBtn = document.getElementById("notifCloseBtn");
     els.notifList = document.getElementById("notifList");
-
-    // Reports
     els.exportProjectsCsvBtn = document.getElementById("exportProjectsCsvBtn");
     els.exportTasksCsvBtn = document.getElementById("exportTasksCsvBtn");
   }
-
-  // View Switching
   function switchView(viewName) {
     const views = {
       dashboard: "view-dashboard",
@@ -397,8 +356,6 @@ const UI = (() => {
       return s;
     });
   }
-
-  // Theme & role
   function applyTheme() {
     const theme = appState.preferences.theme || "light";
     document.documentElement.setAttribute("data-theme", theme === "dark" ? "dark" : "light");
@@ -415,7 +372,6 @@ const UI = (() => {
   function applyRole() {
     const role = appState.preferences.role || "manager";
     els.roleLabel.textContent = role === "manager" ? "Manager View" : "Member View";
-    // Member view: hide some controls (only in UI)
     document.body.classList.toggle("role-member", role === "member");
   }
 
@@ -426,8 +382,6 @@ const UI = (() => {
     });
     applyRole();
   }
-
-  // KPI rendering
   function renderKpis() {
     const projects = Projects.getAll();
     const tasks = Tasks.getAll();
@@ -438,8 +392,6 @@ const UI = (() => {
     const overdueTasks = tasks.filter(
       (t) => t.dueDate && t.dueDate < today && t.status !== "completed"
     ).length;
-
-    // simple utilization: percentage of tasks in progress vs total *some factor
     const inProgress = tasks.filter((t) => t.status === "in_progress").length;
     const teamSize = Team.getAll().length || 1;
     const utilization = Utils.clamp(Math.round((inProgress / (teamSize * 5)) * 100), 0, 120);
@@ -450,8 +402,6 @@ const UI = (() => {
     els.kpi.overdueTasks.textContent = overdueTasks;
     els.kpi.teamUtilization.textContent = `${utilization}%`;
   }
-
-  // Projects table
   function renderProjectsTable() {
     const projects = Projects.getAll();
     if (!projects.length) {
@@ -545,8 +495,6 @@ const UI = (() => {
       critical: "Critical"
     }[priority] || priority;
   }
-
-  // Kanban
   let dragTaskId = null;
 
   function renderTaskProjectSelect() {
@@ -649,8 +597,6 @@ const UI = (() => {
       });
     });
   }
-
-  // Team
   function renderTeamDirectory() {
     const members = Team.getAll();
     const tasks = Tasks.getAll();
@@ -689,8 +635,6 @@ const UI = (() => {
       els.teamDirectory.appendChild(card);
     });
   }
-
-  // Deadlines & Activity
   function renderDeadlines() {
     const tasks = Tasks.getAll();
     const today = Utils.todayISO();
@@ -749,8 +693,6 @@ const UI = (() => {
       els.activityFeed.appendChild(item);
     });
   }
-
-  // Notifications
   function renderNotifications() {
     els.notifList.innerHTML = "";
     if (!appState.notifications.length) {
@@ -775,8 +717,6 @@ const UI = (() => {
       els.notifList.appendChild(div);
     });
   }
-
-  // Charts (simple canvas-based bar charts)
   function drawBarChart(canvas, labels, values, options = {}) {
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
@@ -844,8 +784,6 @@ const UI = (() => {
       members.map((m) => Tasks.getAll().filter((t) => t.assigneeId === m.id).length)
     );
   }
-
-  // Modals
   function openModal({ title, bodyHtml, onSubmit, submitLabel = "Save" }) {
     const formId = `modal_form_${Utils.id("f")}`;
     els.modalContainer.innerHTML = `
@@ -1090,8 +1028,6 @@ const UI = (() => {
       }
     });
   }
-
-  // Global search
   function handleGlobalSearch(value) {
     const q = value.trim().toLowerCase();
     if (!q) return;
@@ -1106,7 +1042,6 @@ const UI = (() => {
     );
     if (foundProject) {
       switchView("projects");
-      // highlight? just scroll into view later if needed
       return;
     }
     const foundTask = tasks.find(
@@ -1129,8 +1064,6 @@ const UI = (() => {
       switchView("team");
     }
   }
-
-  // Reports
   function exportProjectsCsv() {
     const rows = [
       [
@@ -1194,8 +1127,6 @@ const UI = (() => {
     });
     Utils.exportCsv("tasks.csv", rows);
   }
-
-  // Settings
   function applySettingsFromState() {
     els.settingShowActivity.checked = appState.preferences.showActivity !== false;
     els.settingShowDeadlines.checked = appState.preferences.showDeadlines !== false;
@@ -1204,8 +1135,6 @@ const UI = (() => {
       deadlinesPanel.style.display = els.settingShowDeadlines.checked ? "" : "none";
     }
   }
-
-  // Public helpers
   function refreshAll() {
     cacheElements();
     renderKpis();
@@ -1221,36 +1150,25 @@ const UI = (() => {
   }
 
   function bindEvents() {
-    // Sidebar
     els.sidebarToggle.addEventListener("click", () => {
       els.sidebar.classList.toggle("sidebar--collapsed");
     });
-
-    // Navigation
     els.navButtons.forEach((btn) =>
       btn.addEventListener("click", () => switchView(btn.dataset.view))
     );
-
-    // Theme & role
     els.themeToggle.addEventListener("click", toggleTheme);
     els.settingsThemeToggle.addEventListener("click", toggleTheme);
     els.roleToggle.addEventListener("click", toggleRole);
-
-    // Global search
     els.globalSearch.addEventListener("keydown", (e) => {
       if (e.key === "Enter") {
         handleGlobalSearch(e.target.value);
       }
     });
-
-    // Projects
     [els.projectStatusFilter, els.projectPriorityFilter, els.projectSort].forEach((el) =>
       el.addEventListener("change", renderProjectsTable)
     );
     els.addProjectBtn.addEventListener("click", () => openProjectModal());
     els.emptyAddProjectBtn.addEventListener("click", () => openProjectModal());
-
-    // Tasks
     els.taskProjectSelect.addEventListener("change", () => {
       appState = Storage.update((s) => {
         s.dashboardState.lastOpenedProjectId = els.taskProjectSelect.value || null;
@@ -1260,11 +1178,7 @@ const UI = (() => {
     });
     els.addTaskBtn.addEventListener("click", () => openTaskModal());
     setupKanbanDnD();
-
-    // Team
     els.addMemberBtn.addEventListener("click", openMemberModal);
-
-    // Notifications
     els.notifBtn.addEventListener("click", () => {
       els.notifPanel.hidden = !els.notifPanel.hidden;
     });
@@ -1280,12 +1194,8 @@ const UI = (() => {
         els.notifPanel.hidden = true;
       }
     });
-
-    // Reports
     els.exportProjectsCsvBtn.addEventListener("click", exportProjectsCsv);
     els.exportTasksCsvBtn.addEventListener("click", exportTasksCsv);
-
-    // Settings
     els.settingShowActivity.addEventListener("change", () => {
       appState = Storage.update((s) => {
         s.preferences.showActivity = els.settingShowActivity.checked;
@@ -1300,8 +1210,6 @@ const UI = (() => {
       });
       applySettingsFromState();
     });
-
-    // Keyboard shortcuts
     document.addEventListener("keydown", (e) => {
       if (e.key === "/" && document.activeElement !== els.globalSearch) {
         e.preventDefault();
@@ -1346,13 +1254,8 @@ const UI = (() => {
   };
 })();
 
-// -----------------------------
-// Bootstrap
-// -----------------------------
-
 document.addEventListener("DOMContentLoaded", () => {
   UI.cacheElements();
-  // Apply theme & role up front
   (function initialPreferences() {
     const prefs = appState.preferences || {};
     document.documentElement.setAttribute(
@@ -1367,8 +1270,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   UI.refreshAll();
   UI.bindEvents();
-
-  // Restore last view
   const lastView = appState.preferences.lastView || "dashboard";
   const btn = document.querySelector(`.nav-item[data-view="${lastView}"]`);
   if (btn) btn.click();

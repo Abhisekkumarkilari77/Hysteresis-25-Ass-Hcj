@@ -1,4 +1,3 @@
-// Shared UI logic and per-page initialization.
 
 document.addEventListener("DOMContentLoaded", () => {
   const page = document.body.dataset.page || "home";

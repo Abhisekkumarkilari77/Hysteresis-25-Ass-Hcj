@@ -33,7 +33,7 @@ body {
     flex: 1;
 }
 
-/* Header & Search */
+
 .header {
     display: flex;
     justify-content: space-between;
@@ -104,7 +104,7 @@ body {
     background: var(--primary-hover);
 }
 
-/* Dashboard Grid */
+
 .dashboard-grid {
     display: grid;
     grid-template-columns: repeat(12, 1fr);
@@ -121,7 +121,7 @@ body {
     box-shadow: var(--glass-shadow);
 }
 
-/* Current Weather Card */
+
 .current-weather-card {
     grid-column: span 4;
     display: flex;
@@ -194,7 +194,7 @@ body {
     font-size: 14px;
 }
 
-/* Graph Cards */
+
 .graph-card {
     grid-column: span 8;
 }
@@ -225,7 +225,7 @@ body {
     width: 100%;
 }
 
-/* Loader & Error */
+
 .loader {
     position: absolute;
     inset: 0;
@@ -266,7 +266,7 @@ body {
     display: block;
 }
 
-/* Footer */
+
 .footer {
     text-align: center;
     padding: 40px 0 20px;
@@ -279,7 +279,7 @@ body {
     text-decoration: none;
 }
 
-/* Responsive */
+
 @media (max-width: 1024px) {
 
     .current-weather-card,

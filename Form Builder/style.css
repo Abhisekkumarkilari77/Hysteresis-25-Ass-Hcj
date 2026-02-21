@@ -1,11 +1,7 @@
-/* ============================================
-   Form Builder - Admin Dashboard Style
-   Neutral palette: white, gray, soft blue, charcoal
-   No neon colors
-   ============================================ */
+
 
 :root {
-  /* Light theme (default) */
+  
   --bg-primary: #f5f6f8;
   --bg-secondary: #ffffff;
   --bg-tertiary: #e8eaed;
@@ -22,7 +18,7 @@
   --danger-hover: #9b2c2c;
 }
 
-/* Dark theme */
+
 [data-theme="dark"] {
   --bg-primary: #1a202c;
   --bg-secondary: #2d3748;
@@ -40,7 +36,7 @@
   --danger-hover: #fc8181;
 }
 
-/* Reset & base */
+
 *,
 *::before,
 *::after {
@@ -58,14 +54,14 @@ body {
   min-height: 100vh;
 }
 
-/* App layout */
+
 .app {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
 
-/* Header */
+
 .header {
   display: flex;
   align-items: center;
@@ -88,7 +84,7 @@ body {
   gap: 0.75rem;
 }
 
-/* Buttons */
+
 .btn {
   display: inline-flex;
   align-items: center;
@@ -149,7 +145,7 @@ body {
   color: var(--text-primary);
 }
 
-/* Main content */
+
 .main {
   display: grid;
   grid-template-columns: 220px 1fr;
@@ -165,7 +161,7 @@ body {
   }
 }
 
-/* Sidebar */
+
 .sidebar {
   background: var(--bg-secondary);
   border-radius: 8px;
@@ -217,7 +213,7 @@ body {
   outline-offset: 1px;
 }
 
-/* Canvas section */
+
 .canvas-section {
   background: var(--bg-secondary);
   border-radius: 8px;
@@ -264,13 +260,13 @@ body {
   outline-offset: 2px;
 }
 
-/* Canvas */
+
 .canvas {
   min-height: 200px;
   position: relative;
 }
 
-/* Empty state */
+
 .empty-state {
   display: flex;
   flex-direction: column;
@@ -296,14 +292,14 @@ body {
   margin-top: 0.25rem;
 }
 
-/* Fields container */
+
 .fields-container {
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
 
-/* Field card */
+
 .field-card {
   background: var(--bg-primary);
   border: 1px solid var(--border);
@@ -376,7 +372,7 @@ body {
   background: rgba(229, 62, 62, 0.2);
 }
 
-/* Preview input styles (inside field card) */
+
 .field-preview {
   font-size: 0.9rem;
 }
@@ -404,7 +400,7 @@ body {
   min-height: 80px;
 }
 
-/* Radio / checkbox options */
+
 .options-preview {
   display: flex;
   flex-direction: column;
@@ -423,14 +419,14 @@ body {
   width: auto;
 }
 
-/* Canvas footer */
+
 .canvas-footer {
   margin-top: 1.5rem;
   padding-top: 1rem;
   border-top: 1px solid var(--border);
 }
 
-/* Preview mode styles */
+
 .preview-mode .sidebar,
 .preview-mode .field-actions,
 .preview-mode .header-edit,
@@ -460,7 +456,7 @@ body {
   box-shadow: none;
 }
 
-/* Modal */
+
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -543,7 +539,7 @@ body {
   border-top: 1px solid var(--border);
 }
 
-/* Modal form fields */
+
 .form-group {
   margin-bottom: 1rem;
 }
@@ -591,7 +587,7 @@ body {
   width: auto;
 }
 
-/* Options editor (radio, checkbox, select) */
+
 .options-editor {
   display: flex;
   flex-direction: column;
@@ -617,12 +613,12 @@ body {
   font-size: 0.85rem;
 }
 
-/* Utility */
+
 .hidden {
   display: none !important;
 }
 
-/* Subtle animations */
+
 .field-card {
   animation: fadeIn 0.2s ease;
 }

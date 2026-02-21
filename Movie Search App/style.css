@@ -361,7 +361,7 @@ h1 {
     box-shadow: 0 10px 20px var(--accent-glow);
 }
 
-/* Modal Styling */
+
 .modal {
     display: none;
     position: fixed;
@@ -515,7 +515,7 @@ h1 {
     box-shadow: 0 10px 20px var(--accent-glow);
 }
 
-/* Skeleton Loader */
+
 .skeleton {
     background: linear-gradient(90deg, var(--bg-card) 25%, var(--border) 50%, var(--bg-card) 75%);
     background-size: 200% 100%;

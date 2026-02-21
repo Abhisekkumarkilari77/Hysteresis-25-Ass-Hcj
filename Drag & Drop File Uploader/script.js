@@ -4,12 +4,10 @@ const fileList = document.getElementById('file-list');
 const uploadBtn = document.getElementById('upload-btn');
 const clearBtn = document.getElementById('clear-btn');
 
-const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+const MAX_FILE_SIZE = 5 * 1024 * 1024;
 const ALLOWED_TYPES = ['image/png', 'image/jpeg', 'image/jpg', 'image/gif', 'application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/zip', 'video/mp4'];
 
 let files = [];
-
-// Drag & Drop Events
 dropZone.addEventListener('dragover', (e) => {
   e.preventDefault();
   dropZone.classList.add('active');
@@ -32,8 +30,6 @@ dropZone.addEventListener('click', () => {
 fileInput.addEventListener('change', (e) => {
   handleFiles(e.target.files);
 });
-
-// Handle Files
 function handleFiles(newFiles) {
   Array.from(newFiles).forEach(file => {
     if (!validateFile(file)) return;
@@ -51,8 +47,6 @@ function handleFiles(newFiles) {
   
   updateButtons();
 }
-
-// Validate File
 function validateFile(file) {
   if (files.some(f => f.file.name === file.name && f.file.size === file.size)) {
     showError('Duplicate file: ' + file.name);
@@ -71,8 +65,6 @@ function validateFile(file) {
   
   return true;
 }
-
-// Render File Card
 function renderFile(fileObj) {
   const card = document.createElement('div');
   card.className = 'file-card';
@@ -112,8 +104,6 @@ function renderFile(fileObj) {
   
   fileList.appendChild(card);
 }
-
-// Create Preview
 function createPreview(file) {
   const container = document.createElement('div');
   
@@ -132,8 +122,6 @@ function createPreview(file) {
   
   return container;
 }
-
-// Format File Size
 function formatFileSize(bytes) {
   if (bytes === 0) return '0 Bytes';
   const k = 1024;
@@ -141,23 +129,17 @@ function formatFileSize(bytes) {
   const i = Math.floor(Math.log(bytes) / Math.log(k));
   return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
 }
-
-// Remove File
 function removeFile(id) {
   files = files.filter(f => f.id !== id);
   const card = document.querySelector(`[data-id="${id}"]`);
   card.remove();
   updateButtons();
 }
-
-// Clear All Files
 clearBtn.addEventListener('click', () => {
   files = [];
   fileList.innerHTML = '';
   updateButtons();
 });
-
-// Upload Files
 uploadBtn.addEventListener('click', () => {
   files.forEach(fileObj => {
     if (fileObj.status === 'pending') {
@@ -166,8 +148,6 @@ uploadBtn.addEventListener('click', () => {
   });
   uploadBtn.disabled = true;
 });
-
-// Simulate Upload
 function uploadFile(fileObj) {
   const card = document.querySelector(`[data-id="${fileObj.id}"]`);
   const progressFill = card.querySelector('.progress-fill');
@@ -197,15 +177,11 @@ function uploadFile(fileObj) {
     }
   }, 200);
 }
-
-// Update Buttons
 function updateButtons() {
   const hasPendingFiles = files.some(f => f.status === 'pending');
   uploadBtn.disabled = !hasPendingFiles;
   clearBtn.disabled = files.length === 0;
 }
-
-// Show Error
 function showError(message) {
   const existing = document.querySelector('.error-message');
   if (existing) existing.remove();

@@ -3,89 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Advanced Calculator</title>
+    <title>Calculator</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <!-- Header with theme toggle -->
-        <header class="header">
+    <main class="app">
+        <section class="calculator">
             <h1>Calculator</h1>
-            <button class="theme-toggle" id="themeToggle" title="Toggle dark/light mode">
-                🌙
-            </button>
-        </header>
+            <div class="display" id="display">0</div>
+            <div class="keys">
+                <button data-action="clear" class="key key-action">C</button>
+                <button data-action="delete" class="key key-action">DEL</button>
+                <button data-operator="%" class="key key-op">%</button>
+                <button data-operator="/" class="key key-op">/</button>
 
-        <!-- Main calculator section -->
-        <main class="calculator">
-            <!-- Display screen -->
-            <div class="display-container">
-                <div class="previous-operand" id="previousOperand"></div>
-                <div class="current-operand" id="currentOperand">0</div>
+                <button data-number="7" class="key">7</button>
+                <button data-number="8" class="key">8</button>
+                <button data-number="9" class="key">9</button>
+                <button data-operator="*" class="key key-op">*</button>
+
+                <button data-number="4" class="key">4</button>
+                <button data-number="5" class="key">5</button>
+                <button data-number="6" class="key">6</button>
+                <button data-operator="-" class="key key-op">-</button>
+
+                <button data-number="1" class="key">1</button>
+                <button data-number="2" class="key">2</button>
+                <button data-number="3" class="key">3</button>
+                <button data-operator="+" class="key key-op">+</button>
+
+                <button data-number="0" class="key key-wide">0</button>
+                <button data-number="." class="key">.</button>
+                <button data-action="equals" class="key key-eq">=</button>
             </div>
-
-            <!-- Button grid -->
-            <div class="buttons-grid">
-                <!-- Row 1: History & Clear buttons -->
-                <div class="full-width">
-                    <button class="btn btn-history" id="historyBtn" title="Show calculation history">History</button>
-                    <button class="btn btn-ac" id="acBtn">AC</button>
-                </div>
-
-                <!-- Row 2: Percent, Delete, Divide -->
-                <button class="btn btn-operator" id="percentBtn">%</button>
-                <button class="btn btn-delete" id="delBtn">DEL</button>
-                <button class="btn btn-operator" id="divideBtn">÷</button>
-
-                <!-- Row 3: 7, 8, 9, Multiply -->
-                <button class="btn btn-number">7</button>
-                <button class="btn btn-number">8</button>
-                <button class="btn btn-number">9</button>
-                <button class="btn btn-operator" id="multiplyBtn">×</button>
-
-                <!-- Row 4: 4, 5, 6, Subtract -->
-                <button class="btn btn-number">4</button>
-                <button class="btn btn-number">5</button>
-                <button class="btn btn-number">6</button>
-                <button class="btn btn-operator" id="subtractBtn">−</button>
-
-                <!-- Row 5: 1, 2, 3, Add -->
-                <button class="btn btn-number">1</button>
-                <button class="btn btn-number">2</button>
-                <button class="btn btn-number">3</button>
-                <button class="btn btn-operator" id="addBtn">+</button>
-
-                <!-- Row 6: 0, Decimal, Equals -->
-                <button class="btn btn-number btn-zero">0</button>
-                <button class="btn btn-decimal" id="decimalBtn">.</button>
-                <button class="btn btn-equals" id="equalsBtn">=</button>
-            </div>
-
-            <!-- Memory buttons section -->
-            <div class="memory-section">
-                <button class="btn btn-memory" id="memoryClearBtn" title="Clear memory">MC</button>
-                <button class="btn btn-memory" id="memoryRecallBtn" title="Recall memory (M)">MR</button>
-                <button class="btn btn-memory" id="memoryAddBtn" title="Add to memory">M+</button>
-                <button class="btn btn-memory" id="memorySubtractBtn" title="Subtract from memory">M−</button>
-                <span class="memory-indicator" id="memoryIndicator"></span>
-            </div>
-        </main>
-    </div>
-
-    <!-- History modal -->
-    <div class="modal" id="historyModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Calculation History</h2>
-                <button class="modal-close" id="closeHistoryBtn">&times;</button>
-            </div>
-            <div class="history-list" id="historyList">
-                <p class="empty-message">No calculations yet</p>
-            </div>
-            <button class="btn btn-danger" id="clearHistoryBtn">Clear History</button>
-        </div>
-    </div>
-
+        </section>
+    </main>
     <script src="script.js"></script>
 </body>
 </html>

@@ -1,4 +1,3 @@
-// DOM Elements
 const todoInput = document.getElementById('todoInput');
 const addBtn = document.getElementById('addBtn');
 const todoList = document.getElementById('todoList');
@@ -6,22 +5,14 @@ const filterBtns = document.querySelectorAll('.filter-btn');
 const clearBtn = document.getElementById('clearBtn');
 const totalTodosSpan = document.getElementById('totalTodos');
 const completedTodosSpan = document.getElementById('completedTodos');
-
-// Todos array
 let todos = [];
 let currentFilter = 'all';
-
-// LocalStorage keys
 const STORAGE_KEY = 'todos';
-
-// Initialize app
 document.addEventListener('DOMContentLoaded', () => {
     loadTodosFromStorage();
     renderTodos();
     attachEventListeners();
 });
-
-// Event listeners
 function attachEventListeners() {
     addBtn.addEventListener('click', addTodo);
     todoInput.addEventListener('keypress', (e) => {
@@ -41,8 +32,6 @@ function attachEventListeners() {
 
     clearBtn.addEventListener('click', clearCompletedTodos);
 }
-
-// Add new todo
 function addTodo() {
     const text = todoInput.value.trim();
     
@@ -64,8 +53,6 @@ function addTodo() {
     todoInput.value = '';
     todoInput.focus();
 }
-
-// Toggle todo completion
 function toggleTodoComplete(id) {
     todos = todos.map(todo => 
         todo.id === id ? { ...todo, completed: !todo.completed } : todo
@@ -73,8 +60,6 @@ function toggleTodoComplete(id) {
     saveTodosToStorage();
     renderTodos();
 }
-
-// Edit todo
 function editTodo(id) {
     const todo = todos.find(t => t.id === id);
     if (!todo) return;
@@ -89,8 +74,6 @@ function editTodo(id) {
         renderTodos();
     }
 }
-
-// Delete todo
 function deleteTodo(id) {
     if (confirm('Are you sure you want to delete this todo?')) {
         todos = todos.filter(todo => todo.id !== id);
@@ -98,8 +81,6 @@ function deleteTodo(id) {
         renderTodos();
     }
 }
-
-// Clear all completed todos
 function clearCompletedTodos() {
     if (todos.some(t => t.completed)) {
         if (confirm('Are you sure you want to clear all completed todos?')) {
@@ -111,8 +92,6 @@ function clearCompletedTodos() {
         alert('No completed todos to clear!');
     }
 }
-
-// Render todos based on filter
 function renderTodos() {
     todoList.innerHTML = '';
 
@@ -149,8 +128,6 @@ function renderTodos() {
 
     updateStats();
 }
-
-// Update statistics
 function updateStats() {
     const total = todos.length;
     const completed = todos.filter(todo => todo.completed).length;
@@ -158,13 +135,9 @@ function updateStats() {
     totalTodosSpan.textContent = `Total: ${total}`;
     completedTodosSpan.textContent = `Completed: ${completed}`;
 }
-
-// Save todos to localStorage
 function saveTodosToStorage() {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(todos));
 }
-
-// Load todos from localStorage
 function loadTodosFromStorage() {
     const storedTodos = localStorage.getItem(STORAGE_KEY);
     if (storedTodos) {
@@ -173,8 +146,6 @@ function loadTodosFromStorage() {
         todos = [];
     }
 }
-
-// Escape HTML to prevent XSS
 function escapeHtml(text) {
     const div = document.createElement('div');
     div.textContent = text;

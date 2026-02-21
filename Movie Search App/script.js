@@ -1,21 +1,12 @@
-/**
- * CineSearch - Movie Search App
- * Powered by OMDb API
- */
 
-// Configuration - REPLACE WITH YOUR OWN API KEY FROM http://www.omdbapi.com/
-// Try a few fallback keys or use the one from localStorage if user sets it
 const API_KEY = '44a714ef';
 const BASE_URL = `https://www.omdbapi.com/?apikey=${API_KEY}`;
 
-// Update Base URL whenever API key changes
 function updateApiKey(newKey) {
     API_KEY = newKey;
     BASE_URL = `https://www.omdbapi.com/?apikey=${API_KEY}`;
     localStorage.setItem('cine_api_key', API_KEY);
 }
-
-// State Management
 let state = {
     allMovies: [],
     favorites: JSON.parse(localStorage.getItem('cine_favorites') || '[]'),
@@ -27,8 +18,6 @@ let state = {
     viewMode: 'grid',
     theme: 'dark'
 };
-
-// Selectors
 const movieGrid = document.getElementById('movieGrid');
 const searchInput = document.getElementById('searchInput');
 const loadMoreBtn = document.getElementById('loadMoreBtn');
@@ -36,15 +25,11 @@ const modal = document.getElementById('modal');
 const modalBody = document.getElementById('modalBody');
 const themeToggle = document.getElementById('themeToggle');
 const tabs = document.querySelectorAll('.tab');
-
-// Initialize
 async function init() {
     loadPreferences();
     attachEventListeners();
-    await fetchMovies(); // Initial load
+    await fetchMovies();
 }
-
-// Data Fetching
 async function fetchMovies(append = false) {
     if (state.isLoading) return;
 
@@ -91,8 +76,6 @@ async function fetchMovieDetails(imdbID) {
         return null;
     }
 }
-
-// Render Functions
 function renderMovies() {
     let moviesToDisplay = [];
 
@@ -139,14 +122,11 @@ function createMovieCard(movie) {
 }
 
 async function handleCardClick(imdbID) {
-    // Show modal with skeleton first
     modalBody.innerHTML = '<div style="padding: 100px; text-align: center; width: 100%;"><h3>Loading cinematic details...</h3></div>';
     modal.classList.add('active');
 
     const movie = await fetchMovieDetails(imdbID);
     if (!movie) return;
-
-    // Add to history
     addToHistory(movie);
 
     const isFavorite = state.favorites.some(m => m.imdbID === movie.imdbID);
@@ -183,8 +163,6 @@ async function handleCardClick(imdbID) {
         </div>
     `;
 }
-
-// State Utilities
 function toggleFavorite(imdbID, inModal = false) {
     const movieIndex = state.favorites.findIndex(m => m.imdbID === imdbID);
 
@@ -215,11 +193,9 @@ function addToHistory(movie) {
         Poster: movie.Poster,
         Year: movie.Year
     });
-    state.history = state.history.slice(0, 10); // Keep last 10
+    state.history = state.history.slice(0, 10);
     localStorage.setItem('cine_history', JSON.stringify(state.history));
 }
-
-// Helpers
 function showSkeletons(append) {
     const skeletons = Array(4).fill(0).map(() => `
         <div class="movie-card skeleton" style="height: 450px; border-radius: 24px;"></div>
@@ -241,8 +217,6 @@ function loadPreferences() {
     state.theme = localStorage.getItem('cine_theme') || 'dark';
     if (state.theme === 'light') document.body.classList.add('light-theme');
 }
-
-// Event Listeners
 function attachEventListeners() {
     let debounceTimer;
     searchInput.addEventListener('input', (e) => {

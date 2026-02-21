@@ -11,19 +11,13 @@ from .. import config
 import uvicorn
 import threading
 import logging
-
-# Configure Logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("SearchEngineAPI")
 
 app = FastAPI(title="Mini Google Search Engine")
-
-# Components
 ranker = Ranker()
 inverted_index = InvertedIndex()
 pagerank = PageRank()
-
-# Global Crawler State (for demo purposes)
 crawler_running = False
 crawler_thread = None
 
@@ -50,24 +44,14 @@ def run_crawler_task():
     queue = URLQueue()
     fetcher = Fetcher()
     parser = Parser()
-    
-    # Load seeds
     for url in SeedManager.get_seed_urls():
         queue.add_url(url)
         
     workers = []
-    # Start workers
     for _ in range(5): # 5 threads
         worker = CrawlerWorker(queue, fetcher, parser)
         worker.start()
         workers.append(worker)
-        
-    # Monitor queue (simple blocking for demo)
-    # In a real app, this would be more robust.
-    # We just let them run for a bit or until empty?
-    # Since workers are daemons, they die when we exit? 
-    # But this is a background task in FastAPI, so "we exit" is ambiguous.
-    # We'll just let them run.
     pass
 
 @app.post("/admin/crawl")

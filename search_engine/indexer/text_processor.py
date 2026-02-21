@@ -1,12 +1,9 @@
 import re
 import string
-# import nltk # Optional: meaningful stemming/lemmatization
-# from nltk.corpus import stopwords
 from .. import config
 
 class TextProcessor:
     def __init__(self):
-        # Basic stop words list (can be expanded)
         self.stopwords = {
             "a", "an", "the", "and", "or", "but", "is", "are", "was", "were",
             "in", "on", "at", "to", "for", "with", "by", "from", "of", "that",
@@ -18,20 +15,10 @@ class TextProcessor:
     def process_text(self, text):
         if not text:
             return []
-        
-        # Lowercase
         text = text.lower()
-        
-        # Remove punctuation
         text = text.translate(str.maketrans("", "", string.punctuation))
-        
-        # Tokenize (simple split by whitespace)
         tokens = text.split()
-        
-        # Remove stopwords
         tokens = [t for t in tokens if t not in self.stopwords and len(t) > 1]
-        
-        # Stemming (optional - simple suffix stripping for demo)
         if config.USE_STEMMING:
             tokens = [self._simple_stem(t) for t in tokens]
             

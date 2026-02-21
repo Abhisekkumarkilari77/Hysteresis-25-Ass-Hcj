@@ -180,8 +180,6 @@ class PomodoroApp {
                 icon: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="%2381c784"/></svg>'
             });
         }
-        
-        // Visual notification
         document.body.style.background = this.currentSession === 'focus' ? 
             'linear-gradient(135deg, #e8f5e8 0%, #c8e6c9 100%)' : 
             'linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%)';
@@ -248,8 +246,6 @@ class PomodoroApp {
         try {
             const state = JSON.parse(saved);
             const timeDiff = (Date.now() - state.timestamp) / 1000;
-            
-            // If more than 1 hour passed, reset
             if (timeDiff > 3600) {
                 this.timeLeft = this.settings.focusDuration * 60;
                 return;
@@ -258,8 +254,6 @@ class PomodoroApp {
             this.currentSession = state.currentSession;
             this.sessionCount = state.sessionCount;
             this.settings = { ...this.settings, ...state.settings };
-            
-            // Update settings inputs
             this.focusDurationEl.value = this.settings.focusDuration;
             this.shortBreakEl.value = this.settings.shortBreak;
             this.longBreakEl.value = this.settings.longBreak;
@@ -277,12 +271,8 @@ class PomodoroApp {
         }
     }
 }
-
-// Initialize app when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     new PomodoroApp();
-    
-    // Request notification permission
     if ('Notification' in window && Notification.permission === 'default') {
         Notification.requestPermission();
     }

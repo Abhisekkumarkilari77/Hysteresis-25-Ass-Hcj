@@ -1,9 +1,3 @@
-// Mock product catalog for the demo storefront.
-// In a real app this would be fetched from an API.
-
-// To keep code readable while still showing scale,
-// we define a small set of base products across many categories
-// and then generate a larger catalog (500 items) from them.
 
 const baseProducts = [
   {

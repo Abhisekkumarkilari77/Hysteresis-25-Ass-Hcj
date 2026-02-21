@@ -1,4 +1,3 @@
-// Quiz Questions Data
 const quizData = [
     {
         question: "What is the capital of France?",
@@ -51,18 +50,12 @@ const quizData = [
         correct: 2
     }
 ];
-
-// Quiz State
 let currentQuestionIndex = 0;
 let userAnswers = [];
 let score = 0;
-
-// Initialize App
 document.addEventListener('DOMContentLoaded', () => {
     displaySavedScores();
 });
-
-// Display saved scores from local storage
 function displaySavedScores() {
     const savedScoresDiv = document.getElementById('savedScores');
     const lastScore = localStorage.getItem('lastScore');
@@ -85,8 +78,6 @@ function displaySavedScores() {
         savedScoresDiv.innerHTML = '<p style="color: #999;">No previous attempts</p>';
     }
 }
-
-// Clear saved data
 function clearSavedData() {
     if (confirm('Are you sure you want to clear all saved data?')) {
         localStorage.removeItem('lastScore');
@@ -95,8 +86,6 @@ function clearSavedData() {
         displaySavedScores();
     }
 }
-
-// Start Quiz
 function startQuiz() {
     currentQuestionIndex = 0;
     userAnswers = new Array(quizData.length).fill(null);
@@ -106,22 +95,12 @@ function startQuiz() {
     document.getElementById('totalQuestions').textContent = quizData.length;
     displayQuestion();
 }
-
-// Display current question
 function displayQuestion() {
     const question = quizData[currentQuestionIndex];
-    
-    // Update question counter
     document.getElementById('currentQuestion').textContent = currentQuestionIndex + 1;
-    
-    // Update progress bar
     const progress = ((currentQuestionIndex + 1) / quizData.length) * 100;
     document.getElementById('progressFill').style.width = progress + '%';
-    
-    // Display question text
     document.getElementById('questionText').textContent = question.question;
-    
-    // Display options
     const optionsContainer = document.getElementById('optionsContainer');
     optionsContainer.innerHTML = '';
     
@@ -140,50 +119,32 @@ function displayQuestion() {
         optionDiv.onclick = () => selectOption(index);
         optionsContainer.appendChild(optionDiv);
     });
-    
-    // Update button states
     updateButtons();
 }
-
-// Select an option
 function selectOption(index) {
     userAnswers[currentQuestionIndex] = index;
-    
-    // Update UI
     const options = document.querySelectorAll('.option');
     options.forEach((opt, i) => {
         opt.classList.toggle('selected', i === index);
     });
-    
-    // Enable next button
     document.getElementById('nextBtn').disabled = false;
 }
-
-// Update button states
 function updateButtons() {
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
-    
-    // Previous button
     prevBtn.disabled = currentQuestionIndex === 0;
     prevBtn.style.visibility = currentQuestionIndex === 0 ? 'hidden' : 'visible';
-    
-    // Next button
     if (userAnswers[currentQuestionIndex] !== null) {
         nextBtn.disabled = false;
     } else {
         nextBtn.disabled = true;
     }
-    
-    // Change next button text on last question
     if (currentQuestionIndex === quizData.length - 1) {
         nextBtn.textContent = 'Submit';
     } else {
         nextBtn.textContent = 'Next';
     }
 }
-
-// Next question
 function nextQuestion() {
     if (currentQuestionIndex < quizData.length - 1) {
         currentQuestionIndex++;
@@ -192,16 +153,12 @@ function nextQuestion() {
         finishQuiz();
     }
 }
-
-// Previous question
 function previousQuestion() {
     if (currentQuestionIndex > 0) {
         currentQuestionIndex--;
         displayQuestion();
     }
 }
-
-// Finish quiz and calculate score
 function finishQuiz() {
     score = 0;
     
@@ -210,8 +167,6 @@ function finishQuiz() {
             score++;
         }
     });
-    
-    // Save to local storage
     const today = new Date().toLocaleDateString();
     localStorage.setItem('lastScore', score);
     localStorage.setItem('lastDate', today);
@@ -223,8 +178,6 @@ function finishQuiz() {
     
     displayResults();
 }
-
-// Display results
 function displayResults() {
     showScreen('resultScreen');
     
@@ -236,8 +189,6 @@ function displayResults() {
     document.getElementById('percentage').textContent = percentage + '%';
     document.getElementById('correctCount').textContent = score;
     document.getElementById('incorrectCount').textContent = incorrect;
-    
-    // Performance message
     const messageDiv = document.getElementById('performanceMessage');
     let message = '';
     let className = '';
@@ -256,8 +207,6 @@ function displayResults() {
     messageDiv.textContent = message;
     messageDiv.className = 'performance-message ' + className;
 }
-
-// Review answers
 function reviewAnswers() {
     showScreen('reviewScreen');
     
@@ -306,19 +255,13 @@ function reviewAnswers() {
         reviewContainer.appendChild(reviewItem);
     });
 }
-
-// Back to results
 function backToResults() {
     showScreen('resultScreen');
 }
-
-// Restart quiz
 function restartQuiz() {
     showScreen('welcomeScreen');
     displaySavedScores();
 }
-
-// Show screen helper
 function showScreen(screenId) {
     document.querySelectorAll('.screen').forEach(screen => {
         screen.classList.remove('active');

@@ -1,62 +1,39 @@
-// DOM Elements
 const cryptoList = document.getElementById('crypto-list');
 const searchInput = document.getElementById('searchInput');
 const refreshBtn = document.getElementById('refreshBtn');
 const navItems = document.querySelectorAll('.nav-item');
 const views = document.querySelectorAll('.view-section');
-
-// Chart & Detail Elements
 const chartCanvas = document.getElementById('priceChart').getContext('2d');
 const selectedIcon = document.getElementById('selectedIcon');
 const selectedCoinName = document.getElementById('selectedCoinName');
 const selectedCoinPrice = document.getElementById('selectedCoinPrice');
-// Stat Cards
 const detailMktCap = document.getElementById('detailMktCap');
 const detailVol = document.getElementById('detailVol');
 const detailHigh = document.getElementById('detailHigh');
 const detailLow = document.getElementById('detailLow');
-
-// Trending Element
 const trendingContainer = document.getElementById('trending-list');
-
-// Time filters
 const timeBtns = document.querySelectorAll('.time-btn');
-
-// State
 let allCoins = [];
 let chartInstance = null;
 let currentCoinId = 'bitcoin';
 let currentDays = 1;
-
-// API Endpoints
 const LIST_URL = 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=50&page=1&sparkline=false';
 const CHART_URL = (id, days) => `https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=usd&days=${days}`;
 const TRENDING_URL = 'https://api.coingecko.com/api/v3/search/trending';
-
-// Initialize
 async function init() {
     setupNavigation();
     await fetchMarketData();
     if (allCoins.length > 0) {
-        loadCoinDetails(allCoins[0]); // Load top coin
+        loadCoinDetails(allCoins[0]);
     }
 }
-
-// 0. Navigation Logic
 function setupNavigation() {
     navItems.forEach((item, index) => {
         item.addEventListener('click', (e) => {
             e.preventDefault();
-
-            // Remove active class
             navItems.forEach(nav => nav.classList.remove('active'));
             views.forEach(view => view.style.display = 'none');
-
-            // Add active class
             item.classList.add('active');
-
-            // Show corresponding view
-            // Index 0: Dashboard, 1: Trending, 2: Portfolio, 3: News, 4: Settings
             if (index === 0) document.getElementById('view-dashboard').style.display = 'block';
             if (index === 1) {
                 document.getElementById('view-trending').style.display = 'block';
@@ -68,8 +45,6 @@ function setupNavigation() {
         });
     });
 }
-
-// 1. Fetch Market List
 async function fetchMarketData() {
     try {
         refreshBtn.classList.add('rotating');
@@ -81,15 +56,12 @@ async function fetchMarketData() {
         console.error("List fetch error:", err);
     }
 }
-
-// 2. Render Sidebar List
 function renderList(data) {
     cryptoList.innerHTML = '';
     data.forEach(coin => {
         const el = document.createElement('div');
         el.className = 'list-row';
         el.onclick = () => {
-            // Force switch to dashboard if list item clicked (optional UX choice)
             navItems[0].click();
             loadCoinDetails(coin);
         };
@@ -107,8 +79,6 @@ function renderList(data) {
         cryptoList.appendChild(el);
     });
 }
-
-// 3. Load Specific Coin Details
 async function loadCoinDetails(coin) {
     currentCoinId = coin.id;
 
@@ -124,8 +94,6 @@ async function loadCoinDetails(coin) {
 
     await loadChart(currentCoinId, currentDays);
 }
-
-// 4. Fetch & Render Chart
 async function loadChart(coinId, days) {
     if (chartInstance) chartInstance.destroy();
 
@@ -200,14 +168,12 @@ async function loadChart(coinId, days) {
         console.error("Chart fetch error:", err);
     }
 }
-
-// 5. Fetch Trending
 async function fetchTrending() {
     trendingContainer.innerHTML = '<div class="loader"></div>';
     try {
         const res = await fetch(TRENDING_URL);
         const data = await res.json();
-        const coins = data.coins; // Top 7 trending
+        const coins = data.coins;
 
         trendingContainer.innerHTML = '';
         coins.forEach((item, index) => {
@@ -230,8 +196,6 @@ async function fetchTrending() {
         trendingContainer.innerHTML = '<p>Failed to load trending coins</p>';
     }
 }
-
-// 6. Time Filter Logic
 timeBtns.forEach(btn => {
     btn.addEventListener('click', (e) => {
         timeBtns.forEach(b => b.classList.remove('active'));
@@ -242,8 +206,6 @@ timeBtns.forEach(btn => {
         loadChart(currentCoinId, currentDays);
     });
 });
-
-// Search
 searchInput.addEventListener('input', (e) => {
     const term = e.target.value.toLowerCase();
     const filtered = allCoins.filter(c =>
@@ -254,6 +216,4 @@ searchInput.addEventListener('input', (e) => {
 });
 
 refreshBtn.addEventListener('click', fetchMarketData);
-
-// Run
 init();

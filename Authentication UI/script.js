@@ -1,4 +1,3 @@
-// Shared utilities
 const EMAIL_REGEX =
   /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -23,8 +22,6 @@ function evaluatePasswordStrength(password) {
   if (score === 3 || score === 4) return { level: 66, label: "Medium" };
   return { level: 100, label: "Strong" };
 }
-
-// Toast notifications
 function createToastContainer() {
   let container = document.getElementById("toast-container");
   if (!container) {
@@ -68,8 +65,6 @@ function showToast(message, type = "success", timeout = 2800) {
     }
   }, timeout);
 }
-
-// Theme toggle
 function initThemeToggle() {
   const storedTheme = localStorage.getItem("auth-ui-theme");
   const prefersDark =
@@ -110,8 +105,6 @@ function applyTheme(theme) {
   }
   localStorage.setItem("auth-ui-theme", theme);
 }
-
-// Password visibility
 function initPasswordToggles() {
   document
     .querySelectorAll(".password-toggle")
@@ -131,8 +124,6 @@ function initPasswordToggles() {
       });
     });
 }
-
-// Forms
 function setFieldError(fieldWrapper, message) {
   if (!fieldWrapper) return;
   const errorEl = fieldWrapper.querySelector(".field-error");
@@ -157,8 +148,6 @@ function withLoading(button, fn) {
     button.classList.remove("loading");
   }, 1200);
 }
-
-// Login form
 function initLoginForm() {
   const form = document.getElementById("login-form");
   if (!form) return;
@@ -167,9 +156,6 @@ function initLoginForm() {
   const passwordInput = document.getElementById("login-password");
   const rememberCheckbox = document.getElementById("remember-me");
   const submitBtn = document.getElementById("login-submit");
-
-  // Prefill identifier: use stored value if Remember Me was checked previously,
-  // otherwise fall back to the demo credentials for convenience.
   const storedIdentifier = localStorage.getItem("auth-ui-remember-identifier");
   if (identifierInput) {
     if (storedIdentifier) {
@@ -235,7 +221,6 @@ function initLoginForm() {
     }
 
     withLoading(submitBtn, () => {
-      // Remember identifier
       if (identifierInput && rememberCheckbox) {
         if (rememberCheckbox.checked) {
           localStorage.setItem(
@@ -248,16 +233,12 @@ function initLoginForm() {
       }
 
       showToast("Logged in (UI only).", "success");
-
-      // Navigate to a simple welcome page after a short delay.
       setTimeout(() => {
         window.location.href = "welcome.html";
       }, 900);
     });
   });
 }
-
-// Signup form
 function initSignupForm() {
   const form = document.getElementById("signup-form");
   if (!form) return;
@@ -356,7 +337,6 @@ function initSignupForm() {
       "--pw-strength-label",
       `"${label}"`
     );
-    // visual fill via ::after width
     strengthBar.style.setProperty(
       "--after-width",
       `${level}%`
@@ -471,8 +451,6 @@ function initSignupForm() {
     });
   });
 }
-
-// Forgot password form
 function initForgotForm() {
   const form = document.getElementById("forgot-form");
   if (!form) return;

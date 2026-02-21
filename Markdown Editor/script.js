@@ -1,4 +1,3 @@
-// Elements
 const editor = document.getElementById('editor');
 const preview = document.getElementById('preview');
 const themeBtn = document.getElementById('themeBtn');
@@ -7,16 +6,12 @@ const downloadBtn = document.getElementById('downloadBtn');
 const toolbarBtns = document.querySelectorAll('.toolbar-btn');
 const editorPanel = document.querySelector('.editor-panel');
 const previewPanel = document.querySelector('.preview-panel');
-
-// Load saved content and theme
 editor.value = localStorage.getItem('markdown') || '';
 const isDark = localStorage.getItem('theme') === 'dark';
 if (isDark) {
     document.body.classList.add('dark-mode');
     themeBtn.textContent = '☀️ Light';
 }
-
-// Update preview
 function escapeHtml(text) {
     return text
         .replace(/&/g, '&amp;')
@@ -53,30 +48,20 @@ function updatePreview() {
     preview.innerHTML = parseMarkdown(markdown);
     localStorage.setItem('markdown', markdown);
 }
-
-// Initial render
 updatePreview();
-
-// Real-time preview
 editor.addEventListener('input', updatePreview);
-
-// Theme toggle
 themeBtn.addEventListener('click', () => {
     document.body.classList.toggle('dark-mode');
     const isDark = document.body.classList.contains('dark-mode');
     themeBtn.textContent = isDark ? '☀️ Light' : '🌙 Dark';
     localStorage.setItem('theme', isDark ? 'dark' : 'light');
 });
-
-// Clear editor
 clearBtn.addEventListener('click', () => {
     if (confirm('Clear all content?')) {
         editor.value = '';
         updatePreview();
     }
 });
-
-// Download as .md file
 downloadBtn.addEventListener('click', () => {
     const blob = new Blob([editor.value], { type: 'text/markdown' });
     const url = URL.createObjectURL(blob);
@@ -86,8 +71,6 @@ downloadBtn.addEventListener('click', () => {
     a.click();
     URL.revokeObjectURL(url);
 });
-
-// Toolbar buttons - insert syntax
 toolbarBtns.forEach(btn => {
     btn.addEventListener('click', () => {
         const syntax = btn.dataset.syntax;
@@ -122,8 +105,6 @@ toolbarBtns.forEach(btn => {
         updatePreview();
     });
 });
-
-// Scroll sync
 let isEditorScrolling = false;
 let isPreviewScrolling = false;
 
@@ -146,8 +127,6 @@ previewPanel.addEventListener('scroll', () => {
     
     setTimeout(() => { isPreviewScrolling = false; }, 100);
 });
-
-// Tab key support
 editor.addEventListener('keydown', (e) => {
     if (e.key === 'Tab') {
         e.preventDefault();

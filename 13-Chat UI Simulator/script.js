@@ -1,21 +1,15 @@
-// Chat UI Simulator
-// Vanilla JS, Local Storage only – no networking.
 
 (function () {
   'use strict';
 
-  /**
-   * Local Storage keys
-   */
+  
   const STORAGE_KEYS = {
     messages: 'chatSimulator.messages',
     settings: 'chatSimulator.settings',
     botReplies: 'chatSimulator.botReplies',
   };
 
-  /**
-   * Default values
-   */
+  
   const DEFAULT_USERNAME = 'You';
   const DEFAULT_THEME = 'light';
 
@@ -27,9 +21,7 @@
     'Tip: Click your name above to edit your display name.',
   ];
 
-  /**
-   * Simple wrapper around Local Storage JSON read/write.
-   */
+  
   const Storage = {
     load(key, fallback) {
       try {
@@ -59,9 +51,7 @@
     },
   };
 
-  /**
-   * Date & time helpers
-   */
+  
   function formatTime(date) {
     const hours = date.getHours();
     const minutes = date.getMinutes();
@@ -97,9 +87,7 @@
     });
   }
 
-  /**
-   * Chat state & logic
-   */
+  
   const ChatApp = {
     state: {
       messages: [],
@@ -149,21 +137,16 @@
     },
 
     bindEvents() {
-      // Sending messages
       this.elements.form.addEventListener('submit', (event) => {
         event.preventDefault();
         this.handleSubmitMessage();
       });
-
-      // Theme toggle
       this.elements.themeToggle.addEventListener('click', () => {
         const nextTheme =
           this.state.settings.theme === 'dark' ? 'light' : 'dark';
         this.updateSettings({ theme: nextTheme });
         this.applyTheme(nextTheme);
       });
-
-      // Clear chat
       this.elements.clearChat.addEventListener('click', () => {
         const confirmed = window.confirm(
           'Clear the entire chat history from this browser?',
@@ -171,8 +154,6 @@
         if (!confirmed) return;
         this.clearMessages();
       });
-
-      // Username editing
       this.elements.usernameDisplay.addEventListener('click', () => {
         this.startEditingUsername();
       });
@@ -230,9 +211,7 @@
       document.body.setAttribute('data-theme', theme);
     },
 
-    /**
-     * Rendering
-     */
+    
     renderSettings() {
       const { username } = this.state.settings;
       this.elements.usernameText.textContent = username || DEFAULT_USERNAME;
@@ -309,8 +288,6 @@
       deleteBtn.addEventListener('click', () => {
         this.deleteMessageById(message.id);
       });
-
-      // Mark as newly entered for animation when appended
       bubble.classList.add('message-enter');
       bubble.addEventListener(
         'animationend',
@@ -344,9 +321,7 @@
       container.scrollTop = container.scrollHeight;
     },
 
-    /**
-     * Message operations
-     */
+    
     handleSubmitMessage() {
       const raw = this.elements.input.value;
       const text = raw.trim();
@@ -379,10 +354,6 @@
         this.renderMessages();
         return;
       }
-
-      // For simplicity and to keep date separators correct,
-      // re-render the entire message list when appending.
-      // This keeps the code readable and correct.
       this.renderMessages();
     },
 
@@ -400,9 +371,7 @@
       this.renderMessages();
     },
 
-    /**
-     * Bot behavior
-     */
+    
     maybeTriggerBotReply() {
       if (!this.state.botReplies.length || this.state.isBotTyping) return;
 
@@ -440,9 +409,7 @@
       }
     },
 
-    /**
-     * Username editing helpers
-     */
+    
     startEditingUsername() {
       const { username } = this.state.settings;
       this.elements.usernameInput.value = username || DEFAULT_USERNAME;
@@ -466,9 +433,7 @@
       this.elements.usernameDisplay.classList.remove('hidden');
     },
 
-    /**
-     * System messages & first-load behavior
-     */
+    
     maybeShowWelcomeSystemMessage() {
       if (this.state.messages.length > 0) {
         this.renderMessages();
@@ -489,9 +454,7 @@
     },
   };
 
-  /**
-   * Utility: ID generation
-   */
+  
   function generateId() {
     return (
       'm_' +

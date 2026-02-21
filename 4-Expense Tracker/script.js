@@ -1,14 +1,9 @@
-// Local Storage Keys
 const STORAGE_KEY = 'expenseTrackerData';
 const THEME_KEY = 'expenseTrackerTheme';
 const CURRENCY_KEY = 'expenseTrackerCurrency';
-
-// State
 let transactions = [];
 let editingId = null;
 let currency = '₹';
-
-// DOM Elements
 const form = document.getElementById('transactionForm');
 const nameInput = document.getElementById('name');
 const amountInput = document.getElementById('amount');
@@ -29,8 +24,6 @@ const themeToggle = document.getElementById('themeToggle');
 const resetData = document.getElementById('resetData');
 const exportCSV = document.getElementById('exportCSV');
 const categoryChart = document.getElementById('categoryChart');
-
-// Initialize App
 function init() {
     loadFromLocalStorage();
     loadTheme();
@@ -40,8 +33,6 @@ function init() {
     updateCategoryBreakdown();
     attachEventListeners();
 }
-
-// Local Storage Functions
 function loadFromLocalStorage() {
     const data = localStorage.getItem(STORAGE_KEY);
     if (data) {
@@ -72,14 +63,10 @@ function toggleTheme() {
     themeToggle.textContent = isDark ? '☀️' : '🌙';
     localStorage.setItem(THEME_KEY, isDark ? 'dark' : 'light');
 }
-
-// Set default date to today
 function setDefaultDate() {
     const today = new Date().toISOString().split('T')[0];
     dateInput.value = today;
 }
-
-// Event Listeners
 function attachEventListeners() {
     form.addEventListener('submit', handleSubmit);
     cancelBtn.addEventListener('click', cancelEdit);
@@ -90,8 +77,6 @@ function attachEventListeners() {
     resetData.addEventListener('click', handleReset);
     exportCSV.addEventListener('click', handleExportCSV);
 }
-
-// Form Submission
 function handleSubmit(e) {
     e.preventDefault();
     
@@ -100,8 +85,6 @@ function handleSubmit(e) {
     const type = typeSelect.value;
     const category = categorySelect.value;
     const date = dateInput.value;
-    
-    // Validation
     if (!name) {
         alert('Please enter a description');
         return;
@@ -113,7 +96,6 @@ function handleSubmit(e) {
     }
     
     if (editingId !== null) {
-        // Update existing transaction
         const index = transactions.findIndex(t => t.id === editingId);
         if (index !== -1) {
             transactions[index] = {
@@ -130,7 +112,6 @@ function handleSubmit(e) {
         cancelBtn.style.display = 'none';
         formTitle.textContent = 'Add Transaction';
     } else {
-        // Add new transaction
         const transaction = {
             id: Date.now(),
             name,
@@ -149,8 +130,6 @@ function handleSubmit(e) {
     updateSummary();
     updateCategoryBreakdown();
 }
-
-// Edit Transaction
 function editTransaction(id) {
     const transaction = transactions.find(t => t.id === id);
     if (!transaction) return;
@@ -165,12 +144,8 @@ function editTransaction(id) {
     submitBtn.textContent = 'Update Transaction';
     cancelBtn.style.display = 'inline-block';
     formTitle.textContent = 'Edit Transaction';
-    
-    // Scroll to form
     form.scrollIntoView({ behavior: 'smooth' });
 }
-
-// Cancel Edit
 function cancelEdit() {
     editingId = null;
     form.reset();
@@ -179,8 +154,6 @@ function cancelEdit() {
     cancelBtn.style.display = 'none';
     formTitle.textContent = 'Add Transaction';
 }
-
-// Delete Transaction
 function deleteTransaction(id) {
     if (confirm('Are you sure you want to delete this transaction?')) {
         transactions = transactions.filter(t => t.id !== id);
@@ -190,24 +163,16 @@ function deleteTransaction(id) {
         updateCategoryBreakdown();
     }
 }
-
-// Filter and Sort Transactions
 function getFilteredAndSortedTransactions() {
     let filtered = [...transactions];
-    
-    // Filter by type
     const typeFilter = filterType.value;
     if (typeFilter !== 'all') {
         filtered = filtered.filter(t => t.type === typeFilter);
     }
-    
-    // Filter by category
     const categoryFilter = filterCategory.value;
     if (categoryFilter !== 'all') {
         filtered = filtered.filter(t => t.category === categoryFilter);
     }
-    
-    // Sort
     const sortOption = sortBy.value;
     filtered.sort((a, b) => {
         switch (sortOption) {
@@ -226,8 +191,6 @@ function getFilteredAndSortedTransactions() {
     
     return filtered;
 }
-
-// Render Transactions
 function renderTransactions() {
     const filtered = getFilteredAndSortedTransactions();
     
@@ -261,8 +224,6 @@ function renderTransactions() {
         </div>
     `).join('');
 }
-
-// Update Summary
 function updateSummary() {
     const income = transactions
         .filter(t => t.type === 'income')
@@ -278,8 +239,6 @@ function updateSummary() {
     totalExpenseEl.textContent = `${currency}${expense.toFixed(2)}`;
     balanceEl.textContent = `${currency}${balance.toFixed(2)}`;
 }
-
-// Update Category Breakdown
 function updateCategoryBreakdown() {
     const expenses = transactions.filter(t => t.type === 'expense');
     const totalExpense = expenses.reduce((sum, t) => sum + t.amount, 0);
@@ -318,15 +277,11 @@ function updateCategoryBreakdown() {
         `;
     }).join('');
 }
-
-// Format Date
 function formatDate(dateString) {
     const date = new Date(dateString);
     const options = { year: 'numeric', month: 'short', day: 'numeric' };
     return date.toLocaleDateString('en-US', options);
 }
-
-// Reset All Data
 function handleReset() {
     if (confirm('Are you sure you want to reset all data? This action cannot be undone.')) {
         transactions = [];
@@ -337,8 +292,6 @@ function handleReset() {
         cancelEdit();
     }
 }
-
-// Export to CSV
 function handleExportCSV() {
     if (transactions.length === 0) {
         alert('No transactions to export');
@@ -367,6 +320,4 @@ function handleExportCSV() {
     a.click();
     window.URL.revokeObjectURL(url);
 }
-
-// Initialize on page load
 init();

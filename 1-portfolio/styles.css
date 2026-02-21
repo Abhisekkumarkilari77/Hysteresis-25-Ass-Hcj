@@ -48,7 +48,7 @@ body::before {
   z-index: -3;
 }
 
-/* 3D animated background elements */
+
 .bg-orbit {
   position: fixed;
   inset: -40vh;
@@ -112,7 +112,7 @@ body::before {
   padding: 20px 18px 40px;
 }
 
-/* Glassmorphism panels */
+
 .glass-panel {
   background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.75));
   border-radius: var(--radius-lg);
@@ -131,7 +131,7 @@ body::before {
   -webkit-backdrop-filter: blur(18px);
 }
 
-/* Top nav */
+
 .top-nav {
   position: sticky;
   top: 16px;
@@ -201,7 +201,7 @@ body::before {
   background: #e5e7eb;
 }
 
-/* Sections */
+
 .section {
   margin-bottom: 56px;
 }
@@ -272,7 +272,7 @@ body::before {
   margin-top: 8px;
 }
 
-/* Hero */
+
 .hero {
   margin-bottom: 52px;
 }
@@ -442,7 +442,7 @@ body::before {
   left: 20%;
 }
 
-/* Buttons */
+
 .btn {
   display: inline-flex;
   align-items: center;
@@ -515,7 +515,7 @@ body::before {
   transform: translateY(-1px);
 }
 
-/* Skills */
+
 .skills-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -552,7 +552,7 @@ body::before {
   color: #e5e7eb;
 }
 
-/* Projects */
+
 .featured-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -640,7 +640,7 @@ body::before {
   color: var(--text-muted);
 }
 
-/* Lists */
+
 .styled-list {
   list-style: none;
   padding-left: 0;
@@ -678,7 +678,7 @@ body::before {
   font-size: 0.8rem;
 }
 
-/* Timeline */
+
 .timeline {
   list-style: none;
   margin: 10px 0 0;
@@ -715,7 +715,7 @@ body::before {
   color: var(--text-muted);
 }
 
-/* Contact form */
+
 .contact-form {
   display: flex;
   flex-direction: column;
@@ -770,7 +770,7 @@ textarea {
   min-height: 120px;
 }
 
-/* Tilt / 3D interaction */
+
 .tilt-card {
   transform-style: preserve-3d;
   transform-origin: center center;
@@ -791,7 +791,7 @@ textarea {
   will-change: transform;
 }
 
-/* Social Buttons */
+
 .social-buttons {
   display: flex;
   flex-wrap: wrap;
@@ -853,7 +853,7 @@ textarea {
   box-shadow: 0 8px 24px rgba(37, 99, 235, 0.3);
 }
 
-/* Footer */
+
 .footer {
   margin-top: 24px;
   padding: 14px 16px;
@@ -876,7 +876,7 @@ textarea {
   color: var(--text-muted);
 }
 
-/* Utilities */
+
 a {
   color: inherit;
 }
@@ -885,7 +885,7 @@ a:hover {
   color: #e5e7eb;
 }
 
-/* Responsive */
+
 @media (max-width: 960px) {
   .page-shell {
     padding-inline: 14px;

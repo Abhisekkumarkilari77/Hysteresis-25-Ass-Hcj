@@ -215,7 +215,7 @@
       padding: 1.5rem 0;
     }
 
-    /* Modal */
+    
 
     .modal {
       position: fixed;
@@ -386,7 +386,7 @@
     <section id="gallery" class="gallery-grid" aria-live="polite"></section>
   </div>
 
-  <!-- Modal -->
+  
   <div id="imageModal" class="modal" aria-hidden="true">
     <div class="modal-content" role="dialog" aria-modal="true">
       <div class="modal-image-wrapper">
@@ -418,65 +418,64 @@
   </div>
 
   <script>
-    // ---- Static image data (replace with your own local paths) ----
     const imagesData = [
       {
-        src: "images/nature-forest.jpg",
+        src: "https://picsum.photos/id/1040/800/600",
         title: "Misty Forest Morning",
         category: "Nature",
       },
       {
-        src: "images/nature-lake.jpg",
+        src: "https://picsum.photos/id/1018/800/600",
         title: "Lake Reflections",
         category: "Nature",
       },
       {
-        src: "images/travel-city.jpg",
+        src: "https://picsum.photos/id/1031/800/600",
         title: "City at Dusk",
         category: "Travel",
       },
       {
-        src: "images/travel-mountain-road.jpg",
+        src: "https://picsum.photos/id/1002/800/600",
         title: "Mountain Road Trip",
         category: "Travel",
       },
       {
-        src: "images/tech-circuit.jpg",
+        src: "https://picsum.photos/id/180/800/600",
         title: "Circuit Board Close-up",
         category: "Technology",
       },
       {
-        src: "images/tech-laptop.jpg",
+        src: "https://picsum.photos/id/0/800/600",
         title: "Minimal Workspace",
         category: "Technology",
       },
       {
-        src: "images/people-portrait.jpg",
+        src: "https://picsum.photos/id/1027/800/600",
         title: "Portrait in Light",
         category: "People",
       },
       {
-        src: "images/people-street.jpg",
+        src: "https://picsum.photos/id/1025/800/600",
         title: "Street Conversation",
         category: "People",
       },
       {
-        src: "images/architecture-bridge.jpg",
+        src: "https://picsum.photos/id/1067/800/600",
         title: "Suspension Bridge",
         category: "Architecture",
       },
       {
-        src: "images/architecture-building.jpg",
+        src: "https://picsum.photos/id/1076/800/600",
         title: "Modern Facade",
         category: "Architecture",
       },
       {
-        src: "images/other-minimal.jpg",
+        src: "https://picsum.photos/id/1050/800/600",
         title: "Soft Pastel Shapes",
         category: "Others",
       },
       {
-        src: "images/other-abstract.jpg",
+        src: "https://picsum.photos/id/903/800/600",
         title: "Abstract Textures",
         category: "Others",
       },
@@ -495,12 +494,9 @@
 
     let currentFilter = "all";
     let currentSearch = "";
-    let currentVisibleList = []; // currently displayed images
-    let currentIndex = 0; // index within currentVisibleList for modal navigation
-
-    // Render gallery based on currentFilter and currentSearch
+    let currentVisibleList = [];
+    let currentIndex = 0;
     function renderGallery() {
-      // Filter by category
       let result = imagesData.filter((img) => {
         const matchesCategory =
           currentFilter === "all" || img.category === currentFilter;
@@ -525,12 +521,17 @@
       result.forEach((img, index) => {
         const item = document.createElement("article");
         item.className = "gallery-item";
-        item.tabIndex = 0; // make card focusable
+        item.tabIndex = 0;
         item.dataset.index = index.toString();
 
         const imageEl = document.createElement("img");
         imageEl.src = img.src;
         imageEl.alt = img.title;
+        imageEl.loading = "lazy";
+        imageEl.onerror = () => {
+          imageEl.onerror = null;
+          imageEl.src = "https://placehold.co/800x600/e5e7eb/6b7280?text=Image+Unavailable";
+        };
 
         const overlay = document.createElement("div");
         overlay.className = "gallery-overlay";
@@ -552,8 +553,6 @@
         item.appendChild(imageEl);
         item.appendChild(overlay);
         item.appendChild(info);
-
-        // Click or Enter key opens modal
         item.addEventListener("click", () => openModal(index));
         item.addEventListener("keydown", (e) => {
           if (e.key === "Enter" || e.key === " ") {
@@ -565,15 +564,11 @@
         galleryEl.appendChild(item);
       });
     }
-
-    // Update active filter button
     function setActiveFilterButton(filterValue) {
       filterButtons.forEach((btn) => {
         btn.classList.toggle("active", btn.dataset.filter === filterValue);
       });
     }
-
-    // Open modal with image by visible index
     function openModal(visibleIndex) {
       const imgData = currentVisibleList[visibleIndex];
       if (!imgData) return;
@@ -598,25 +593,17 @@
       modalEl.setAttribute("aria-hidden", "true");
       document.body.style.overflow = "";
     }
-
-    // Show previous image in modal
     function showPrev() {
       if (!currentVisibleList.length) return;
       currentIndex = (currentIndex - 1 + currentVisibleList.length) %
         currentVisibleList.length;
       openModal(currentIndex);
     }
-
-    // Show next image in modal
     function showNext() {
       if (!currentVisibleList.length) return;
       currentIndex = (currentIndex + 1) % currentVisibleList.length;
       openModal(currentIndex);
     }
-
-    // --- Event wiring ---
-
-    // Filter buttons
     filterButtons.forEach((btn) => {
       btn.addEventListener("click", () => {
         const value = btn.dataset.filter;
@@ -625,22 +612,16 @@
         renderGallery();
       });
     });
-
-    // Search input
     searchInput.addEventListener("input", (e) => {
       currentSearch = e.target.value.trim();
       renderGallery();
     });
-
-    // Modal close (button and background)
     modalCloseBtn.addEventListener("click", closeModal);
     modalEl.addEventListener("click", (e) => {
       if (e.target === modalEl) {
         closeModal();
       }
     });
-
-    // Keyboard navigation for modal and general behavior
     document.addEventListener("keydown", (e) => {
       if (modalEl.classList.contains("open")) {
         if (e.key === "Escape") {
@@ -654,8 +635,6 @@
         }
       }
     });
-
-    // Initial render
     renderGallery();
   </script>
 </body>

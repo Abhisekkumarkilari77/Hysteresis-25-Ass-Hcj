@@ -1,4 +1,3 @@
-// Mock index and stock data for the dashboard
 
 const INDEX_DATA = [
   {

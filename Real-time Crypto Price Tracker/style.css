@@ -4,7 +4,7 @@
     --text-main: #ffffff;
     --text-muted: #848e9c;
     --accent: #3b82f6;
-    /* Blue */
+    
     --accent-glow: rgba(59, 130, 246, 0.4);
     --border: #2a2e39;
     --success: #0ecb81;
@@ -28,14 +28,14 @@ body {
     overflow: hidden;
 }
 
-/* Layout */
+
 .app-container {
     display: grid;
     grid-template-columns: 260px 1fr;
     height: 100vh;
 }
 
-/* Sidebar */
+
 .sidebar {
     background-color: var(--bg-panel);
     border-right: 1px solid var(--border);
@@ -114,7 +114,7 @@ nav {
     font-weight: bold;
 }
 
-/* Main Content */
+
 .main-content {
     background-color: var(--bg-dark);
     padding: 2rem;
@@ -124,7 +124,7 @@ nav {
     gap: 1.5rem;
 }
 
-/* Header */
+
 .top-bar {
     display: flex;
     justify-content: space-between;
@@ -183,7 +183,7 @@ nav {
     border-color: var(--accent);
 }
 
-/* Dashboard Grid */
+
 .dashboard-grid {
     display: grid;
     grid-template-columns: 2fr 1fr;
@@ -201,7 +201,7 @@ nav {
     overflow: hidden;
 }
 
-/* Chart Section */
+
 .chart-section {
     grid-column: 1 / 2;
     grid-row: 1 / 3;
@@ -263,7 +263,7 @@ nav {
     width: 100%;
 }
 
-/* Market List */
+
 .market-list-section {
     grid-column: 2 / 3;
     grid-row: 1 / 2;
@@ -293,7 +293,7 @@ nav {
     padding-right: 5px;
 }
 
-/* Custom Scrollbar */
+
 .crypto-list-scroll::-webkit-scrollbar {
     width: 4px;
 }
@@ -337,7 +337,7 @@ nav {
     color: var(--danger);
 }
 
-/* Details Grid */
+
 .details-grid {
     grid-column: 2 / 3;
     grid-row: 2 / 3;
@@ -364,7 +364,7 @@ nav {
     font-weight: 600;
 }
 
-/* Loader */
+
 .loader {
     width: 30px;
     height: 30px;
@@ -385,7 +385,7 @@ nav {
     }
 }
 
-/* VIEW MANAGEMENT */
+
 .view-section {
     width: 100%;
     height: 100%;
@@ -396,7 +396,7 @@ nav {
     overflow-y: auto;
 }
 
-/* TRENDING GRID */
+
 .trending-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -427,7 +427,7 @@ nav {
     opacity: 0.5;
 }
 
-/* PORTFOLIO */
+
 .portfolio-summary {
     display: flex;
     gap: 2rem;
@@ -460,7 +460,7 @@ nav {
     color: var(--text-muted);
 }
 
-/* NEWS */
+
 .news-list {
     display: flex;
     flex-direction: column;
@@ -491,7 +491,7 @@ nav {
     color: var(--accent);
 }
 
-/* SETTINGS */
+
 .settings-group {
     margin-bottom: 2rem;
     padding-top: 1rem;
@@ -514,7 +514,7 @@ nav {
     outline: none;
 }
 
-/* Mobile Responsive */
+
 @media (max-width: 900px) {
     .app-container {
         grid-template-columns: 1fr;
@@ -524,7 +524,7 @@ nav {
 
     .sidebar {
         display: none;
-        /* Hidden for now on mobile for simplicity */
+        
     }
 
     .dashboard-grid {

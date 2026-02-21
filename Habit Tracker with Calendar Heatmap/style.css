@@ -1,6 +1,4 @@
-/* --------
-   Design tokens
-   -------- */
+
 :root {
   --bg: #f8fafc;
   --card-bg: #ffffff;
@@ -59,7 +57,7 @@ body {
   }
 }
 
-/* Header */
+
 .app-header {
   display: flex;
   flex-direction: column;
@@ -117,7 +115,7 @@ body {
   color: var(--text-secondary);
 }
 
-/* Layout */
+
 .app-main {
   display: flex;
   flex-direction: column;
@@ -143,7 +141,7 @@ body {
   }
 }
 
-/* Cards */
+
 .card {
   background: var(--card-bg);
   border-radius: var(--radius-lg);
@@ -191,7 +189,7 @@ body {
   color: var(--text-secondary);
 }
 
-/* Forms */
+
 .add-habit-form {
   display: flex;
   flex-direction: column;
@@ -320,7 +318,7 @@ input::placeholder {
   outline-offset: 2px;
 }
 
-/* Empty states */
+
 .empty-state {
   border-radius: var(--radius-md);
   border: 1px dashed rgba(148, 163, 184, 0.5);
@@ -350,7 +348,7 @@ input::placeholder {
   color: var(--text-secondary);
 }
 
-/* Habit list */
+
 .habit-list {
   list-style: none;
   margin: 0;
@@ -427,7 +425,7 @@ input::placeholder {
   align-items: center;
 }
 
-/* Custom checkbox / toggle */
+
 .checkbox {
   appearance: none;
   width: 20px;
@@ -497,7 +495,7 @@ input::placeholder {
   border-style: dashed;
 }
 
-/* Heatmap */
+
 .heatmap-section {
   overflow: hidden;
 }
@@ -644,7 +642,7 @@ input::placeholder {
   background-color: var(--heatmap-3);
 }
 
-/* Stats */
+
 .stats-grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
@@ -682,7 +680,7 @@ input::placeholder {
   color: rgba(148, 163, 184, 0.98);
 }
 
-/* Footer */
+
 .app-footer {
   margin-top: 24px;
   text-align: center;
@@ -694,7 +692,7 @@ input::placeholder {
   color: rgba(148, 163, 184, 0.98);
 }
 
-/* Tooltip */
+
 .tooltip {
   position: fixed;
   pointer-events: none;
@@ -735,7 +733,7 @@ input::placeholder {
   color: #bbf7d0;
 }
 
-/* Accessibility helpers */
+
 .sr-only {
   position: absolute;
   width: 1px;
@@ -748,7 +746,7 @@ input::placeholder {
   border: 0;
 }
 
-/* Scrollbar refinement */
+
 .heatmap-wrapper::-webkit-scrollbar {
   height: 6px;
 }

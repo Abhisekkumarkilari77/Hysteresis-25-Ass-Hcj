@@ -1,6 +1,4 @@
-/* =========
-   Base reset
-   ========= */
+
 *,
 *::before,
 *::after {
@@ -44,9 +42,7 @@ input:focus-visible {
   outline-offset: 2px;
 }
 
-/* =========
-   Layout
-   ========= */
+
 .auth-wrapper {
   min-height: 100vh;
   display: flex;
@@ -134,9 +130,7 @@ body.dark-theme .auth-footer {
   color: #9ca3af;
 }
 
-/* =========
-   Theme toggle
-   ========= */
+
 .theme-toggle {
   position: relative;
   display: inline-flex;
@@ -180,9 +174,7 @@ body.dark-theme .theme-toggle-thumb {
   margin-right: 0.4rem;
 }
 
-/* =========
-   Form fields
-   ========= */
+
 .form-field {
   display: flex;
   flex-direction: column;
@@ -302,9 +294,7 @@ body.dark-theme .inline-success {
   justify-content: space-between;
 }
 
-/* =========
-   Checkbox
-   ========= */
+
 .checkbox {
   display: inline-flex;
   align-items: center;
@@ -361,9 +351,7 @@ body.dark-theme .checkbox-label {
   color: #e5e7eb;
 }
 
-/* =========
-   Password strength
-   ========= */
+
 .password-strength {
   display: flex;
   align-items: center;
@@ -405,9 +393,7 @@ body.dark-theme .password-strength-label {
   color: #9ca3af;
 }
 
-/* =========
-   Buttons
-   ========= */
+
 .btn {
   display: inline-flex;
   align-items: center;
@@ -482,9 +468,7 @@ body.dark-theme .btn:disabled {
   opacity: 0.75;
 }
 
-/* =========
-   Links
-   ========= */
+
 .link {
   color: #2563eb;
   font-weight: 500;
@@ -498,9 +482,7 @@ body.dark-theme .link {
   color: #38bdf8;
 }
 
-/* =========
-   Toasts
-   ========= */
+
 #toast-container {
   position: fixed;
   top: 1rem;
@@ -549,9 +531,7 @@ body.dark-theme .link {
   cursor: pointer;
 }
 
-/* =========
-   Animations
-   ========= */
+
 .fade-in-up {
   animation: fadeInUp 0.5s ease-out;
 }
@@ -573,9 +553,7 @@ body.dark-theme .link {
   }
 }
 
-/* =========
-   Responsive
-   ========= */
+
 @media (max-width: 640px) {
   .auth-card {
     max-width: 100%;

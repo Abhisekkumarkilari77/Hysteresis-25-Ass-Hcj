@@ -246,7 +246,7 @@ h1 {
     font-size: 1.1em;
 }
 
-/* Scrollbar styling */
+
 .todo-list::-webkit-scrollbar {
     width: 8px;
 }

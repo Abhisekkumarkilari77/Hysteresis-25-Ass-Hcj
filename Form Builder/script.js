@@ -1,20 +1,8 @@
-/**
- * Form Builder - Vanilla JavaScript
- * Admin-style form builder with Local Storage persistence
- */
-
-// ============================================
-// State
-// ============================================
 
 const STORAGE_KEY = 'formBuilderData';
 let formFields = [];
 let editingFieldIndex = -1;
 let isPreviewMode = false;
-
-// ============================================
-// DOM Elements
-// ============================================
 
 const sidebar = document.getElementById('sidebar');
 const formCanvas = document.getElementById('formCanvas');
@@ -34,10 +22,6 @@ const modalClose = document.getElementById('modalClose');
 const modalCancel = document.getElementById('modalCancel');
 const modalSave = document.getElementById('modalSave');
 
-// ============================================
-// Field Definitions
-// ============================================
-
 const FIELD_TYPES = {
   text: { label: 'Text Input', placeholder: true },
   email: { label: 'Email Input', placeholder: true },
@@ -49,9 +33,7 @@ const FIELD_TYPES = {
   date: { label: 'Date Input', placeholder: false }
 };
 
-/**
- * Creates a new field object with default values
- */
+
 function createField(type) {
   const defaults = {
     type,
@@ -64,13 +46,7 @@ function createField(type) {
   return { ...defaults };
 }
 
-// ============================================
-// Field Rendering
-// ============================================
 
-/**
- * Renders the preview/input for a single field
- */
 function renderFieldPreview(field) {
   const div = document.createElement('div');
   div.className = 'field-preview';
@@ -176,9 +152,7 @@ function renderFieldPreview(field) {
   return div;
 }
 
-/**
- * Renders a single field card
- */
+
 function renderFieldCard(field, index) {
   const card = document.createElement('div');
   card.className = 'field-card';
@@ -249,9 +223,7 @@ function renderFieldCard(field, index) {
   return card;
 }
 
-/**
- * Renders all fields to the canvas
- */
+
 function renderFields() {
   fieldsContainer.innerHTML = '';
 
@@ -268,10 +240,6 @@ function renderFields() {
 
   saveToStorage();
 }
-
-// ============================================
-// Field Operations
-// ============================================
 
 function addField(type) {
   if (!FIELD_TYPES[type]) return;
@@ -298,10 +266,6 @@ function duplicateField(index) {
   formFields.splice(index + 1, 0, copy);
   renderFields();
 }
-
-// ============================================
-// Edit Modal
-// ============================================
 
 function openEditModal(index) {
   editingFieldIndex = index;
@@ -415,8 +379,6 @@ function saveFieldFromModal() {
   if (defaultInput) {
     field.defaultValue = defaultInput.value.trim();
   }
-
-  // If options changed, re-build default select - ensure default is valid
   if (optionsEditor && field.options && field.options.length && field.defaultValue) {
     if (!field.options.includes(field.defaultValue)) {
       field.defaultValue = '';
@@ -437,10 +399,6 @@ function saveFieldFromModal() {
   closeModal();
   renderFields();
 }
-
-// ============================================
-// Local Storage
-// ============================================
 
 function getFormData() {
   return {
@@ -484,10 +442,6 @@ function resetBuilder() {
   renderFields();
 }
 
-// ============================================
-// Preview Mode
-// ============================================
-
 function togglePreviewMode() {
   isPreviewMode = !isPreviewMode;
   document.body.classList.toggle('preview-mode', isPreviewMode);
@@ -510,10 +464,6 @@ function togglePreviewMode() {
   }
 }
 
-// ============================================
-// Export JSON
-// ============================================
-
 function exportJson() {
   const data = getFormData();
   const json = JSON.stringify(data, null, 2);
@@ -525,10 +475,6 @@ function exportJson() {
   a.click();
   URL.revokeObjectURL(url);
 }
-
-// ============================================
-// Theme Toggle
-// ============================================
 
 function toggleTheme() {
   const current = document.documentElement.getAttribute('data-theme') || 'light';
@@ -552,10 +498,6 @@ function loadTheme() {
 function updateThemeIcon() {
   themeToggleBtn.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀' : '☽';
 }
-
-// ============================================
-// Event Listeners
-// ============================================
 
 document.querySelectorAll('.field-btn').forEach(btn => {
   btn.addEventListener('click', () => {
@@ -590,8 +532,6 @@ document.addEventListener('keydown', (e) => {
     closeModal();
   }
 });
-
-// Delegate for dynamic modal content
 modalBody.addEventListener('click', (e) => {
   if (e.target.classList.contains('remove-option')) {
     const item = e.target.closest('.option-item');
@@ -611,10 +551,6 @@ modalBody.addEventListener('click', (e) => {
     editor.appendChild(div);
   }
 });
-
-// ============================================
-// Init
-// ============================================
 
 function init() {
   loadTheme();

@@ -190,7 +190,7 @@ body {
     margin-bottom: 2rem;
 }
 
-/* Break session styling */
+
 .break-session .progress-bar {
     stroke: #64b5f6;
 }
@@ -199,7 +199,7 @@ body {
     color: #1976d2;
 }
 
-/* Responsive Design */
+
 @media (max-width: 768px) {
     .container {
         flex-direction: column;

@@ -1,10 +1,8 @@
-/* ============================================
-   KANBAN BOARD - STYLES
-   ============================================ */
 
-/* Root & Global Variables */
+
+
 :root {
-    /* Colors - Soft & Professional Palette */
+    
     --primary-color: #6366f1;
     --primary-light: #e0e7ff;
     --primary-dark: #4f46e5;
@@ -29,7 +27,7 @@
     --transition: all 0.2s ease-in-out;
 }
 
-/* Reset & Base Styles */
+
 * {
     margin: 0;
     padding: 0;
@@ -48,9 +46,7 @@ body {
     line-height: 1.6;
 }
 
-/* ============================================
-   HEADER
-   ============================================ */
+
 .header {
     background: linear-gradient(135deg, #ffffff 0%, #f3f4f6 100%);
     border-bottom: 1px solid var(--border-color);
@@ -78,9 +74,7 @@ body {
     letter-spacing: -0.5px;
 }
 
-/* ============================================
-   BUTTONS
-   ============================================ */
+
 .btn {
     padding: var(--spacing-sm) var(--spacing-lg);
     border: none;
@@ -186,9 +180,7 @@ body {
     color: var(--danger-color);
 }
 
-/* ============================================
-   MAIN CONTAINER & BOARD LAYOUT
-   ============================================ */
+
 .container {
     max-width: 1400px;
     margin: 0 auto;
@@ -201,9 +193,7 @@ body {
     gap: var(--spacing-lg);
 }
 
-/* ============================================
-   COLUMN STYLES
-   ============================================ */
+
 .column {
     background-color: #ffffff;
     border-radius: var(--radius-lg);
@@ -246,9 +236,7 @@ body {
     text-align: center;
 }
 
-/* ============================================
-   TASKS CONTAINER & DRAG-DROP
-   ============================================ */
+
 .tasks-container {
     flex: 1;
     padding: var(--spacing-md);
@@ -258,7 +246,7 @@ body {
     gap: var(--spacing-md);
 }
 
-/* Scrollbar styling */
+
 .tasks-container::-webkit-scrollbar {
     width: 6px;
 }
@@ -281,9 +269,7 @@ body {
     border-radius: var(--radius-md);
 }
 
-/* ============================================
-   TASK CARD
-   ============================================ */
+
 .task-card {
     background-color: #ffffff;
     border: 1px solid var(--border-color);
@@ -358,7 +344,7 @@ body {
     font-size: 0.75rem;
 }
 
-/* Empty State */
+
 .empty-state {
     padding: var(--spacing-xl);
     text-align: center;
@@ -366,9 +352,7 @@ body {
     font-size: 0.875rem;
 }
 
-/* ============================================
-   MODAL STYLES
-   ============================================ */
+
 .modal {
     display: none;
     position: fixed;
@@ -432,9 +416,7 @@ body {
     margin-top: var(--spacing-lg);
 }
 
-/* ============================================
-   FORM STYLES
-   ============================================ */
+
 .task-form {
     width: 100%;
 }
@@ -482,9 +464,7 @@ body {
     margin-top: var(--spacing-xs);
 }
 
-/* ============================================
-   TOAST NOTIFICATION
-   ============================================ */
+
 .toast {
     position: fixed;
     bottom: -100px;
@@ -506,9 +486,7 @@ body {
     bottom: 2rem;
 }
 
-/* ============================================
-   ANIMATIONS
-   ============================================ */
+
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -540,9 +518,7 @@ body {
     }
 }
 
-/* ============================================
-   RESPONSIVE DESIGN
-   ============================================ */
+
 @media (max-width: 768px) {
     .board {
         grid-template-columns: 1fr;

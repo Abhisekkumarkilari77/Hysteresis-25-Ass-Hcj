@@ -7,18 +7,18 @@
     <meta name="description"
         content="Advanced Weather Dashboard featuring real-time data, hourly temperature/wind graphs, and monthly historical analysis using Open-Meteo API.">
     <title>AuraWeather | Precision Weather Insights</title>
-    <!-- Google Fonts -->
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Chart.js -->
+    
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
     <main class="container">
-        <!-- Dashboard Header -->
+        
         <header class="header">
             <div class="logo">
                 <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
@@ -41,9 +41,9 @@
             </div>
         </header>
 
-        <!-- Main Dashboard Content -->
+        
         <section class="dashboard-grid">
-            <!-- Current Weather Card -->
+            
             <div class="card current-weather-card">
                 <div class="loader" id="loader">
                     <div class="spinner"></div>
@@ -86,7 +86,7 @@
                 </div>
             </div>
 
-            <!-- Hourly Temperature Graph -->
+            
             <div class="card graph-card hourly-temp">
                 <h4>Hourly Temperature (°C)</h4>
                 <div class="chart-container">
@@ -94,7 +94,7 @@
                 </div>
             </div>
 
-            <!-- Hourly Wind Graph -->
+            
             <div class="card graph-card hourly-wind">
                 <h4>Hourly Wind Speed (km/h)</h4>
                 <div class="chart-container">
@@ -102,7 +102,7 @@
                 </div>
             </div>
 
-            <!-- Monthly/Daily Trends Graph -->
+            
             <div class="card graph-card monthly-trend">
                 <h4>30-Day Climate Analysis (Temp & Wind)</h4>
                 <div class="chart-container">

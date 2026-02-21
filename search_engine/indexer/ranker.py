@@ -13,8 +13,6 @@ class Ranker:
         tokens = self.processor.process_text(query)
         if not tokens:
             return []
-
-        # Get total number of documents (N)
         N = self.db.get_document_count()
         if N == 0:
             return []
@@ -23,21 +21,16 @@ class Ranker:
         candidates = {} # doc_id -> basic info
 
         for term in tokens:
-            # Calculate IDF
             df = self.db.get_doc_frequency(term)
             if df == 0:
                 continue
             
             idf = log(N / df)
-            
-            # Get documents containing the term
             docs = self.db.get_documents_with_word(term)
             
             for doc in docs:
                 doc_id = doc['doc_id']
                 tf = doc['term_frequency']
-                
-                # TF-IDF Score
                 tf_idf = tf * idf
                 
                 doc_scores[doc_id] += (tf_idf * config.TFIDF_WEIGHT)
@@ -49,8 +42,6 @@ class Ranker:
                         'pagerank': doc['pagerank'],
                         'text': doc['cleaned_text'] # Needed for snippet?
                     }
-
-        # Combine with PageRank
         results = []
         for doc_id, score in doc_scores.items():
             final_score = score + (candidates[doc_id]['pagerank'] * config.PAGERANK_WEIGHT)
@@ -64,16 +55,12 @@ class Ranker:
                 'score': final_score,
                 'pagerank': candidates[doc_id]['pagerank']
             })
-
-        # Sort by score descending
         results.sort(key=lambda x: x['score'], reverse=True)
         return results[:10] # Top 10
 
     def _generate_snippet(self, text, keywords, length=150):
         if not text:
             return ""
-        
-        # Simple snippet: find first occurrence of a keyword
         lower_text = text.lower()
         start_idx = -1
         
